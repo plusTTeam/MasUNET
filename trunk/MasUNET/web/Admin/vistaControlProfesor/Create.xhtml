@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaControlProfesorCreateDlg" widgetVar="VistaControlProfesorCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateVistaControlProfesorTitle}">
+
+            <h:form id="VistaControlProfesorCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vistaControlProfesorController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{vistaControlProfesorController.selected.cedula}" title="#{bundle.CreateVistaControlProfesorTitle_cedula}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_cedula}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{vistaControlProfesorController.selected.nombres}" title="#{bundle.CreateVistaControlProfesorTitle_nombres}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_nombres}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{vistaControlProfesorController.selected.apellidos}" title="#{bundle.CreateVistaControlProfesorTitle_apellidos}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_apellidos}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{vistaControlProfesorController.selected.correo}" title="#{bundle.CreateVistaControlProfesorTitle_correo}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_correo}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_materia}" for="materia" />
+                        <p:inputText id="materia" value="#{vistaControlProfesorController.selected.materia}" title="#{bundle.CreateVistaControlProfesorTitle_materia}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_materia}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_codMateria}" for="codMateria" />
+                        <p:inputText id="codMateria" value="#{vistaControlProfesorController.selected.codMateria}" title="#{bundle.CreateVistaControlProfesorTitle_codMateria}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_codMateria}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_seccion}" for="seccion" />
+                        <p:inputText id="seccion" value="#{vistaControlProfesorController.selected.seccion}" title="#{bundle.CreateVistaControlProfesorTitle_seccion}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_seccion}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaControlProfesorLabel_lapso}" for="lapso" />
+                        <p:inputText id="lapso" value="#{vistaControlProfesorController.selected.lapso}" title="#{bundle.CreateVistaControlProfesorTitle_lapso}" required="true" requiredMessage="#{bundle.CreateVistaControlProfesorRequiredMessage_lapso}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vistaControlProfesorController.saveNew}" value="#{bundle.Save}" update="display,:VistaControlProfesorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VistaControlProfesorCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VistaControlProfesorCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

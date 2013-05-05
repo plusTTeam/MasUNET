@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ValoracionViewDlg" widgetVar="ValoracionViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewValoracionTitle}">
+
+            <h:form id="ValoracionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{valoracionController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewValoracionLabel_calificacion}"/>
+                        <h:outputText value="#{valoracionController.selected.calificacion}" title="#{bundle.ViewValoracionTitle_calificacion}"/>
+
+                        <h:outputText value="#{bundle.ViewValoracionLabel_comentario}"/>
+                        <h:outputText value="#{valoracionController.selected.comentario}" title="#{bundle.ViewValoracionTitle_comentario}"/>
+
+                        <h:outputText value="#{bundle.ViewValoracionLabel_fecha}"/>
+                        <h:outputText value="#{valoracionController.selected.fecha}" title="#{bundle.ViewValoracionTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{bundle.ViewValoracionLabel_recurso}"/>
+                        <h:outputText value="#{valoracionController.selected.recurso.descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewValoracionLabel_usuario}"/>
+                        <h:outputText value="#{valoracionController.selected.usuario.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ValoracionViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

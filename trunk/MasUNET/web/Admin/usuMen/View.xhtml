@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuMenViewDlg" widgetVar="UsuMenViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewUsuMenTitle}">
+
+            <h:form id="UsuMenViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuMenController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewUsuMenLabel_estado}"/>
+                        <h:outputText value="#{usuMenController.selected.estado}" title="#{bundle.ViewUsuMenTitle_estado}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuMenLabel_mensaje}"/>
+                        <h:outputText value="#{usuMenController.selected.mensaje.idmensaje}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuMenLabel_usuario}"/>
+                        <h:outputText value="#{usuMenController.selected.usuario.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="UsuMenViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

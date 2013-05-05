@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PaginaCreateDlg" widgetVar="PaginaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreatePaginaTitle}">
+
+            <h:form id="PaginaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{paginaController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreatePaginaLabel_titulo}" for="titulo" />
+                        <p:inputText id="titulo" value="#{paginaController.selected.titulo}" title="#{bundle.CreatePaginaTitle_titulo}" required="true" requiredMessage="#{bundle.CreatePaginaRequiredMessage_titulo}"/>
+
+                        <h:outputLabel value="#{bundle.CreatePaginaLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{paginaController.selected.url}" title="#{bundle.CreatePaginaTitle_url}" required="true" requiredMessage="#{bundle.CreatePaginaRequiredMessage_url}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{paginaController.saveNew}" value="#{bundle.Save}" update="display,:PaginaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaginaCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PaginaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

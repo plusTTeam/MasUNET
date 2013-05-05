@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserEvenViewDlg" widgetVar="UserEvenViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewUserEvenTitle}">
+
+            <h:form id="UserEvenViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userEvenController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewUserEvenLabel_cheked}"/>
+                        <h:selectBooleanCheckbox id="cheked" value="#{userEvenController.selected.cheked}" title="#{bundle.EditUserEvenTitle_cheked}" required="true" requiredMessage="#{bundle.EditUserEvenRequiredMessage_cheked}" disabled="true"/>
+
+                        <h:outputText value="#{bundle.ViewUserEvenLabel_notificado}"/>
+                        <h:selectBooleanCheckbox id="notificado" value="#{userEvenController.selected.notificado}" title="#{bundle.EditUserEvenTitle_notificado}" required="true" requiredMessage="#{bundle.EditUserEvenRequiredMessage_notificado}" disabled="true"/>
+
+                        <h:outputText value="#{bundle.ViewUserEvenLabel_usuario}"/>
+                        <h:outputText value="#{userEvenController.selected.usuario.descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewUserEvenLabel_evento}"/>
+                        <h:outputText value="#{userEvenController.selected.evento.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="UserEvenViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

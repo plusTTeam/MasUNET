@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="UsuarioListForm">
+
+        <p:panel header="#{bundle.ListUsuarioTitle}">
+
+            <p:dataTable id="datalist" value="#{usuarioController.items}" var="item"
+                         selectionMode="single" selection="#{usuarioController.selected}"
+                         rowKey="#{item.idusuario}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.idusuario}" filterBy="#{item.idusuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_idusuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idusuario}"/>
+                </p:column>
+                <p:column sortBy="#{item.alias}" filterBy="#{item.alias}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_alias}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.alias}"/>
+                </p:column>
+                <p:column sortBy="#{item.email}" filterBy="#{item.email}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_email}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.email}"/>
+                </p:column>
+                <p:column sortBy="#{item.telefono}" filterBy="#{item.telefono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_telefono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.telefono}"/>
+                </p:column>
+                <p:column sortBy="#{item.fotoUrl}" filterBy="#{item.fotoUrl}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_fotoUrl}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fotoUrl}"/>
+                </p:column>
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+                <p:column sortBy="#{item.ultimaConexion}" filterBy="#{item.ultimaConexion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_ultimaConexion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ultimaConexion}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.online}" filterBy="#{item.online}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_online}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="online" value="#{item.online}" title="#{bundle.EditUsuarioTitle_online}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_online}" disabled="true"/>
+                </p:column>
+                <p:column sortBy="#{item.usuario}" filterBy="#{item.usuario}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_usuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuario}"/>
+                </p:column>
+                <p:column sortBy="#{item.cedula}" filterBy="#{item.cedula}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_cedula}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cedula}"/>
+                </p:column>
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+                <p:column sortBy="#{item.notificacionIdnotificacion.idnotificacion}" filterBy="#{item.notificacionIdnotificacion.idnotificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_notificacionIdnotificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.notificacionIdnotificacion.idnotificacion}"/>
+                </p:column>
+                <p:column sortBy="#{item.rolIdrol.descripcion}" filterBy="#{item.rolIdrol.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListUsuarioTitle_rolIdrol}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rolIdrol.descripcion}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{usuarioController.prepareCreate}" update=":UsuarioCreateForm" oncomplete="UsuarioCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":UsuarioViewForm" oncomplete="UsuarioViewDialog.show()" disabled="#{empty usuarioController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":UsuarioEditForm" oncomplete="UsuarioEditDialog.show()" disabled="#{empty usuarioController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{usuarioController.delete}" update=":growl,datalist" disabled="#{empty usuarioController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoEventoEditDlg" widgetVar="TipoEventoEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditTipoEventoTitle}">
+
+            <h:form id="TipoEventoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{tipoEventoController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditTipoEventoLabel_idtipoEvento}" for="idtipoEvento" />
+                        <h:outputText id="idtipoEvento" value="#{tipoEventoController.selected.idtipoEvento}" />
+
+                        <h:outputLabel value="#{bundle.EditTipoEventoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoEventoController.selected.nombre}" title="#{bundle.EditTipoEventoTitle_nombre}" required="true" requiredMessage="#{bundle.EditTipoEventoRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoEventoController.save}" value="#{bundle.Save}" update="display,:TipoEventoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TipoEventoEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoEventoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaControlProfesorViewDlg" widgetVar="VistaControlProfesorViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewVistaControlProfesorTitle}">
+
+            <h:form id="VistaControlProfesorViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vistaControlProfesorController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_idControlProfesor}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.idControlProfesor}" title="#{bundle.ViewVistaControlProfesorTitle_idControlProfesor}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_cedula}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.cedula}" title="#{bundle.ViewVistaControlProfesorTitle_cedula}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_nombres}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.nombres}" title="#{bundle.ViewVistaControlProfesorTitle_nombres}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_apellidos}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.apellidos}" title="#{bundle.ViewVistaControlProfesorTitle_apellidos}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_correo}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.correo}" title="#{bundle.ViewVistaControlProfesorTitle_correo}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_materia}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.materia}" title="#{bundle.ViewVistaControlProfesorTitle_materia}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_codMateria}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.codMateria}" title="#{bundle.ViewVistaControlProfesorTitle_codMateria}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_seccion}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.seccion}" title="#{bundle.ViewVistaControlProfesorTitle_seccion}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlProfesorLabel_lapso}"/>
+                        <h:outputText value="#{vistaControlProfesorController.selected.lapso}" title="#{bundle.ViewVistaControlProfesorTitle_lapso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VistaControlProfesorViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

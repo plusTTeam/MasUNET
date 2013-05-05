@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioCreateDlg" widgetVar="UsuarioCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateUsuarioTitle}">
+
+            <h:form id="UsuarioCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_alias}" for="alias" />
+                        <p:inputText id="alias" value="#{usuarioController.selected.alias}" title="#{bundle.CreateUsuarioTitle_alias}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_alias}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{usuarioController.selected.email}" title="#{bundle.CreateUsuarioTitle_email}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_email}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{usuarioController.selected.telefono}" title="#{bundle.CreateUsuarioTitle_telefono}" />
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_fotoUrl}" for="fotoUrl" />
+                        <p:inputText id="fotoUrl" value="#{usuarioController.selected.fotoUrl}" title="#{bundle.CreateUsuarioTitle_fotoUrl}" />
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{usuarioController.selected.descripcion}" title="#{bundle.CreateUsuarioTitle_descripcion}" />
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_ultimaConexion}" for="ultimaConexion" />
+                        <p:calendar id="ultimaConexion" pattern="MM/dd/yyyy HH:mm:ss" value="#{usuarioController.selected.ultimaConexion}" title="#{bundle.EditUsuarioTitle_ultimaConexion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_ultimaConexion}" showOn="button"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_online}" for="online" />
+                        <p:selectBooleanCheckbox id="online" value="#{usuarioController.selected.online}" title="#{bundle.EditUsuarioTitle_online}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_online}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{usuarioController.selected.usuario}" title="#{bundle.CreateUsuarioTitle_usuario}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_usuario}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{usuarioController.selected.cedula}" title="#{bundle.CreateUsuarioTitle_cedula}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_cedula}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{usuarioController.selected.nombre}" title="#{bundle.CreateUsuarioTitle_nombre}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_notificacionIdnotificacion}" for="notificacionIdnotificacion" />
+                        <p:selectOneMenu id="notificacionIdnotificacion" value="#{usuarioController.selected.notificacionIdnotificacion}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_notificacionIdnotificacion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{notificacionController.items}"
+                                           var="notificacionIdnotificacionItem"
+                                           itemValue="#{notificacionIdnotificacionItem}"
+                                           itemLabel="#{notificacionIdnotificacionItem.idnotificacion.toString()}"
+                                           />
+                            <f:converter binding="#{notificacionConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateUsuarioLabel_rolIdrol}" for="rolIdrol" />
+                        <p:selectOneMenu id="rolIdrol" value="#{usuarioController.selected.rolIdrol}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_rolIdrol}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{rolController.items}"
+                                           var="rolIdrolItem"
+                                           itemValue="#{rolIdrolItem}"
+                                           itemLabel="#{rolIdrolItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{rolConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuarioController.saveNew}" value="#{bundle.Save}" update="display,:UsuarioListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,UsuarioCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuarioCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RecursoEditDlg" widgetVar="RecursoEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditRecursoTitle}">
+
+            <h:form id="RecursoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{recursoController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_idrecurso}" for="idrecurso" />
+                        <h:outputText id="idrecurso" value="#{recursoController.selected.idrecurso}" />
+
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{recursoController.selected.nombre}" title="#{bundle.EditRecursoTitle_nombre}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_url}" for="url" />
+                        <p:inputText id="url" value="#{recursoController.selected.url}" title="#{bundle.EditRecursoTitle_url}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_url}"/>
+
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{recursoController.selected.descripcion}" title="#{bundle.EditRecursoTitle_descripcion}" />
+
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_numeroDescargas}" for="numeroDescargas" />
+                        <p:inputText id="numeroDescargas" value="#{recursoController.selected.numeroDescargas}" title="#{bundle.EditRecursoTitle_numeroDescargas}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_numeroDescargas}"/>
+
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_idTiporecurso}" for="idTiporecurso" />
+                        <p:selectOneMenu id="idTiporecurso" value="#{recursoController.selected.idTiporecurso}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_idTiporecurso}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoRecursoController.items}"
+                                           var="idTiporecursoItem"
+                                           itemValue="#{idTiporecursoItem}"
+                                           itemLabel="#{idTiporecursoItem.idTiporecurso.toString()}"
+                                           />
+                            <f:converter binding="#{tipoRecursoConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_usuarioIdusuario}" for="usuarioIdusuario" />
+                        <p:selectOneMenu id="usuarioIdusuario" value="#{recursoController.selected.usuarioIdusuario}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_usuarioIdusuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioIdusuarioItem"
+                                           itemValue="#{usuarioIdusuarioItem}"
+                                           itemLabel="#{usuarioIdusuarioItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{recursoController.save}" value="#{bundle.Save}" update="display,:RecursoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RecursoEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="RecursoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

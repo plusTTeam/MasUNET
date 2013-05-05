@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BitacoraViewDlg" widgetVar="BitacoraViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewBitacoraTitle}">
+
+            <h:form id="BitacoraViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bitacoraController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewBitacoraLabel_idbitacora}"/>
+                        <h:outputText value="#{bitacoraController.selected.idbitacora}" title="#{bundle.ViewBitacoraTitle_idbitacora}"/>
+
+                        <h:outputText value="#{bundle.ViewBitacoraLabel_fecha}"/>
+                        <h:outputText value="#{bitacoraController.selected.fecha}" title="#{bundle.ViewBitacoraTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{bundle.ViewBitacoraLabel_ip}"/>
+                        <h:outputText value="#{bitacoraController.selected.ip}" title="#{bundle.ViewBitacoraTitle_ip}"/>
+
+                        <h:outputText value="#{bundle.ViewBitacoraLabel_informacion}"/>
+                        <h:outputText value="#{bitacoraController.selected.informacion}" title="#{bundle.ViewBitacoraTitle_informacion}"/>
+
+                        <h:outputText value="#{bundle.ViewBitacoraLabel_accionIdaccion}"/>
+                        <h:outputText value="#{bitacoraController.selected.accionIdaccion.descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewBitacoraLabel_paginaIdpagina}"/>
+                        <h:outputText value="#{bitacoraController.selected.paginaIdpagina.idpagina}"/>
+
+                        <h:outputText value="#{bundle.ViewBitacoraLabel_usuarioIdusuario}"/>
+                        <h:outputText value="#{bitacoraController.selected.usuarioIdusuario.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="BitacoraViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

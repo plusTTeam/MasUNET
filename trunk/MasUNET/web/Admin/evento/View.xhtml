@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EventoViewDlg" widgetVar="EventoViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewEventoTitle}">
+
+            <h:form id="EventoViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{eventoController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_idevento}"/>
+                        <h:outputText value="#{eventoController.selected.idevento}" title="#{bundle.ViewEventoTitle_idevento}"/>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_nombre}"/>
+                        <h:outputText value="#{eventoController.selected.nombre}" title="#{bundle.ViewEventoTitle_nombre}"/>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_descripcion}"/>
+                        <h:outputText value="#{eventoController.selected.descripcion}" title="#{bundle.ViewEventoTitle_descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_fechaIni}"/>
+                        <h:outputText value="#{eventoController.selected.fechaIni}" title="#{bundle.ViewEventoTitle_fechaIni}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_fechaFin}"/>
+                        <h:outputText value="#{eventoController.selected.fechaFin}" title="#{bundle.ViewEventoTitle_fechaFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_fechaCreacion}"/>
+                        <h:outputText value="#{eventoController.selected.fechaCreacion}" title="#{bundle.ViewEventoTitle_fechaCreacion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_asignaturaIdasignatura}"/>
+                        <h:outputText value="#{eventoController.selected.asignaturaIdasignatura.descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_usuarioIdusuario}"/>
+                        <h:outputText value="#{eventoController.selected.usuarioIdusuario.descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_tipoEventoIdtipoEvento}"/>
+                        <h:outputText value="#{eventoController.selected.tipoEventoIdtipoEvento.idtipoEvento}"/>
+
+                        <h:outputText value="#{bundle.ViewEventoLabel_userEvenList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EventoViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

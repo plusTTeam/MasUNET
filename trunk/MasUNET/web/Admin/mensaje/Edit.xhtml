@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MensajeEditDlg" widgetVar="MensajeEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditMensajeTitle}">
+
+            <h:form id="MensajeEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{mensajeController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditMensajeLabel_idmensaje}" for="idmensaje" />
+                        <h:outputText id="idmensaje" value="#{mensajeController.selected.idmensaje}" />
+
+                        <h:outputLabel value="#{bundle.EditMensajeLabel_mensaje}" for="mensaje" />
+                        <p:inputText id="mensaje" value="#{mensajeController.selected.mensaje}" title="#{bundle.EditMensajeTitle_mensaje}" required="true" requiredMessage="#{bundle.EditMensajeRequiredMessage_mensaje}"/>
+
+                        <h:outputLabel value="#{bundle.EditMensajeLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{mensajeController.selected.fecha}" title="#{bundle.EditMensajeTitle_fecha}" required="true" requiredMessage="#{bundle.EditMensajeRequiredMessage_fecha}" showOn="button"/>
+
+                        <h:outputLabel value="#{bundle.EditMensajeLabel_asunto}" for="asunto" />
+                        <p:inputText id="asunto" value="#{mensajeController.selected.asunto}" title="#{bundle.EditMensajeTitle_asunto}" required="true" requiredMessage="#{bundle.EditMensajeRequiredMessage_asunto}"/>
+
+                        <h:outputLabel value="#{bundle.EditMensajeLabel_idusuario}" for="idusuario" />
+                        <p:selectOneMenu id="idusuario" value="#{mensajeController.selected.idusuario}" required="true" requiredMessage="#{bundle.EditMensajeRequiredMessage_idusuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="idusuarioItem"
+                                           itemValue="#{idusuarioItem}"
+                                           itemLabel="#{idusuarioItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{mensajeController.save}" value="#{bundle.Save}" update="display,:MensajeListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,MensajeEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MensajeEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

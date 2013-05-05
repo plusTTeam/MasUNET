@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="PermisologiaListForm">
+
+        <p:panel header="#{bundle.ListPermisologiaTitle}">
+
+            <p:dataTable id="datalist" value="#{permisologiaController.items}" var="item"
+                         selectionMode="single" selection="#{permisologiaController.selected}"
+                         rowKey="#{item.permisologiaPK}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.permisos}" filterBy="#{item.permisos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListPermisologiaTitle_permisos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.permisos}"/>
+                </p:column>
+                <p:column sortBy="#{item.pagina.idpagina}" filterBy="#{item.pagina.idpagina}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListPermisologiaTitle_pagina}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.pagina.idpagina}"/>
+                </p:column>
+                <p:column sortBy="#{item.rol.descripcion}" filterBy="#{item.rol.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListPermisologiaTitle_rol}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.rol.descripcion}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{permisologiaController.prepareCreate}" update=":PermisologiaCreateForm" oncomplete="PermisologiaCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PermisologiaViewForm" oncomplete="PermisologiaViewDialog.show()" disabled="#{empty permisologiaController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":PermisologiaEditForm" oncomplete="PermisologiaEditDialog.show()" disabled="#{empty permisologiaController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{permisologiaController.delete}" update=":growl,datalist" disabled="#{empty permisologiaController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

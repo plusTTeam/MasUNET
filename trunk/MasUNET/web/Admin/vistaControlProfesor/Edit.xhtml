@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaControlProfesorEditDlg" widgetVar="VistaControlProfesorEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditVistaControlProfesorTitle}">
+
+            <h:form id="VistaControlProfesorEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{vistaControlProfesorController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_idControlProfesor}" for="idControlProfesor" />
+                        <h:outputText id="idControlProfesor" value="#{vistaControlProfesorController.selected.idControlProfesor}" />
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{vistaControlProfesorController.selected.cedula}" title="#{bundle.EditVistaControlProfesorTitle_cedula}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_cedula}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{vistaControlProfesorController.selected.nombres}" title="#{bundle.EditVistaControlProfesorTitle_nombres}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_nombres}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{vistaControlProfesorController.selected.apellidos}" title="#{bundle.EditVistaControlProfesorTitle_apellidos}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_apellidos}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{vistaControlProfesorController.selected.correo}" title="#{bundle.EditVistaControlProfesorTitle_correo}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_correo}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_materia}" for="materia" />
+                        <p:inputText id="materia" value="#{vistaControlProfesorController.selected.materia}" title="#{bundle.EditVistaControlProfesorTitle_materia}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_materia}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_codMateria}" for="codMateria" />
+                        <p:inputText id="codMateria" value="#{vistaControlProfesorController.selected.codMateria}" title="#{bundle.EditVistaControlProfesorTitle_codMateria}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_codMateria}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_seccion}" for="seccion" />
+                        <p:inputText id="seccion" value="#{vistaControlProfesorController.selected.seccion}" title="#{bundle.EditVistaControlProfesorTitle_seccion}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_seccion}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlProfesorLabel_lapso}" for="lapso" />
+                        <p:inputText id="lapso" value="#{vistaControlProfesorController.selected.lapso}" title="#{bundle.EditVistaControlProfesorTitle_lapso}" required="true" requiredMessage="#{bundle.EditVistaControlProfesorRequiredMessage_lapso}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vistaControlProfesorController.save}" value="#{bundle.Save}" update="display,:VistaControlProfesorListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VistaControlProfesorEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VistaControlProfesorEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

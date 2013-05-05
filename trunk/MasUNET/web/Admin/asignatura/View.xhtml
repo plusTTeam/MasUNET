@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AsignaturaViewDlg" widgetVar="AsignaturaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewAsignaturaTitle}">
+
+            <h:form id="AsignaturaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{asignaturaController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_idasignatura}"/>
+                        <h:outputText value="#{asignaturaController.selected.idasignatura}" title="#{bundle.ViewAsignaturaTitle_idasignatura}"/>
+
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_codMateria}"/>
+                        <h:outputText value="#{asignaturaController.selected.codMateria}" title="#{bundle.ViewAsignaturaTitle_codMateria}"/>
+
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_seccion}"/>
+                        <h:outputText value="#{asignaturaController.selected.seccion}" title="#{bundle.ViewAsignaturaTitle_seccion}"/>
+
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_nombre}"/>
+                        <h:outputText value="#{asignaturaController.selected.nombre}" title="#{bundle.ViewAsignaturaTitle_nombre}"/>
+
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_descripcion}"/>
+                        <h:outputText value="#{asignaturaController.selected.descripcion}" title="#{bundle.ViewAsignaturaTitle_descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_profesor}"/>
+                        <h:outputText value="#{asignaturaController.selected.profesor}" title="#{bundle.ViewAsignaturaTitle_profesor}"/>
+
+                        <h:outputText value="#{bundle.ViewAsignaturaLabel_eventoList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="AsignaturaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

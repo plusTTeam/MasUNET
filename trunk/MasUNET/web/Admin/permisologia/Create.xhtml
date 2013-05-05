@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PermisologiaCreateDlg" widgetVar="PermisologiaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreatePermisologiaTitle}">
+
+            <h:form id="PermisologiaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{permisologiaController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreatePermisologiaLabel_permisos}" for="permisos" />
+                        <p:inputText id="permisos" value="#{permisologiaController.selected.permisos}" title="#{bundle.CreatePermisologiaTitle_permisos}" required="true" requiredMessage="#{bundle.CreatePermisologiaRequiredMessage_permisos}"/>
+
+                        <h:outputLabel value="#{bundle.CreatePermisologiaLabel_pagina}" for="pagina" />
+                        <p:selectOneMenu id="pagina" value="#{permisologiaController.selected.pagina}" required="true" requiredMessage="#{bundle.EditPermisologiaRequiredMessage_pagina}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{paginaController.items}"
+                                           var="paginaItem"
+                                           itemValue="#{paginaItem}"
+                                           itemLabel="#{paginaItem.idpagina.toString()}"
+                                           />
+                            <f:converter binding="#{paginaConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreatePermisologiaLabel_rol}" for="rol" />
+                        <p:selectOneMenu id="rol" value="#{permisologiaController.selected.rol}" required="true" requiredMessage="#{bundle.EditPermisologiaRequiredMessage_rol}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{rolController.items}"
+                                           var="rolItem"
+                                           itemValue="#{rolItem}"
+                                           itemLabel="#{rolItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{rolConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{permisologiaController.saveNew}" value="#{bundle.Save}" update="display,:PermisologiaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PermisologiaCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PermisologiaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

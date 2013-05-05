@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaCetiViewDlg" widgetVar="VistaCetiViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewVistaCetiTitle}">
+
+            <h:form id="VistaCetiViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vistaCetiController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewVistaCetiLabel_idCeti}"/>
+                        <h:outputText value="#{vistaCetiController.selected.idCeti}" title="#{bundle.ViewVistaCetiTitle_idCeti}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaCetiLabel_cedula}"/>
+                        <h:outputText value="#{vistaCetiController.selected.cedula}" title="#{bundle.ViewVistaCetiTitle_cedula}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaCetiLabel_usuario}"/>
+                        <h:outputText value="#{vistaCetiController.selected.usuario}" title="#{bundle.ViewVistaCetiTitle_usuario}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaCetiLabel_clave}"/>
+                        <h:outputText value="#{vistaCetiController.selected.clave}" title="#{bundle.ViewVistaCetiTitle_clave}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VistaCetiViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

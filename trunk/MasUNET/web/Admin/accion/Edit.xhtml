@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AccionEditDlg" widgetVar="AccionEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditAccionTitle}">
+
+            <h:form id="AccionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{accionController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditAccionLabel_idaccion}" for="idaccion" />
+                        <h:outputText id="idaccion" value="#{accionController.selected.idaccion}" />
+
+                        <h:outputLabel value="#{bundle.EditAccionLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{accionController.selected.nombre}" title="#{bundle.EditAccionTitle_nombre}" required="true" requiredMessage="#{bundle.EditAccionRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.EditAccionLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{accionController.selected.descripcion}" title="#{bundle.EditAccionTitle_descripcion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{accionController.save}" value="#{bundle.Save}" update="display,:AccionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AccionEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AccionEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

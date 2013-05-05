@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuMenCreateDlg" widgetVar="UsuMenCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateUsuMenTitle}">
+
+            <h:form id="UsuMenCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuMenController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateUsuMenLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{usuMenController.selected.estado}" title="#{bundle.CreateUsuMenTitle_estado}" required="true" requiredMessage="#{bundle.CreateUsuMenRequiredMessage_estado}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUsuMenLabel_mensaje}" for="mensaje" />
+                        <p:selectOneMenu id="mensaje" value="#{usuMenController.selected.mensaje}" required="true" requiredMessage="#{bundle.EditUsuMenRequiredMessage_mensaje}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{mensajeController.items}"
+                                           var="mensajeItem"
+                                           itemValue="#{mensajeItem}"
+                                           itemLabel="#{mensajeItem.idmensaje.toString()}"
+                                           />
+                            <f:converter binding="#{mensajeConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateUsuMenLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{usuMenController.selected.usuario}" required="true" requiredMessage="#{bundle.EditUsuMenRequiredMessage_usuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"
+                                           itemLabel="#{usuarioItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuMenController.saveNew}" value="#{bundle.Save}" update="display,:UsuMenListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,UsuMenCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuMenCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="RecursoListForm">
+
+        <p:panel header="#{bundle.ListRecursoTitle}">
+
+            <p:dataTable id="datalist" value="#{recursoController.items}" var="item"
+                         selectionMode="single" selection="#{recursoController.selected}"
+                         rowKey="#{item.idrecurso}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.idrecurso}" filterBy="#{item.idrecurso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_idrecurso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idrecurso}"/>
+                </p:column>
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+                <p:column sortBy="#{item.url}" filterBy="#{item.url}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_url}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.url}"/>
+                </p:column>
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+                <p:column sortBy="#{item.numeroDescargas}" filterBy="#{item.numeroDescargas}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_numeroDescargas}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.numeroDescargas}"/>
+                </p:column>
+                <p:column sortBy="#{item.idTiporecurso.idTiporecurso}" filterBy="#{item.idTiporecurso.idTiporecurso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_idTiporecurso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idTiporecurso.idTiporecurso}"/>
+                </p:column>
+                <p:column sortBy="#{item.usuarioIdusuario.descripcion}" filterBy="#{item.usuarioIdusuario.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_usuarioIdusuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarioIdusuario.descripcion}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{recursoController.prepareCreate}" update=":RecursoCreateForm" oncomplete="RecursoCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RecursoViewForm" oncomplete="RecursoViewDialog.show()" disabled="#{empty recursoController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":RecursoEditForm" oncomplete="RecursoEditDialog.show()" disabled="#{empty recursoController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{recursoController.delete}" update=":growl,datalist" disabled="#{empty recursoController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>
