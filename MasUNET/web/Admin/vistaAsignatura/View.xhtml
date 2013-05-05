@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaAsignaturaViewDlg" widgetVar="VistaAsignaturaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewVistaAsignaturaTitle}">
+
+            <h:form id="VistaAsignaturaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vistaAsignaturaController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewVistaAsignaturaLabel_idAsignaturas}"/>
+                        <h:outputText value="#{vistaAsignaturaController.selected.idAsignaturas}" title="#{bundle.ViewVistaAsignaturaTitle_idAsignaturas}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaAsignaturaLabel_codMateria}"/>
+                        <h:outputText value="#{vistaAsignaturaController.selected.codMateria}" title="#{bundle.ViewVistaAsignaturaTitle_codMateria}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaAsignaturaLabel_seccion}"/>
+                        <h:outputText value="#{vistaAsignaturaController.selected.seccion}" title="#{bundle.ViewVistaAsignaturaTitle_seccion}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaAsignaturaLabel_nombre}"/>
+                        <h:outputText value="#{vistaAsignaturaController.selected.nombre}" title="#{bundle.ViewVistaAsignaturaTitle_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VistaAsignaturaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

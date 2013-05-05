@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BitacoraCreateDlg" widgetVar="BitacoraCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateBitacoraTitle}">
+
+            <h:form id="BitacoraCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bitacoraController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateBitacoraLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{bitacoraController.selected.fecha}" title="#{bundle.EditBitacoraTitle_fecha}" required="true" requiredMessage="#{bundle.EditBitacoraRequiredMessage_fecha}" showOn="button"/>
+
+                        <h:outputLabel value="#{bundle.CreateBitacoraLabel_ip}" for="ip" />
+                        <p:inputText id="ip" value="#{bitacoraController.selected.ip}" title="#{bundle.CreateBitacoraTitle_ip}" required="true" requiredMessage="#{bundle.CreateBitacoraRequiredMessage_ip}"/>
+
+                        <h:outputLabel value="#{bundle.CreateBitacoraLabel_informacion}" for="informacion" />
+                        <p:inputText id="informacion" value="#{bitacoraController.selected.informacion}" title="#{bundle.CreateBitacoraTitle_informacion}" />
+
+                        <h:outputLabel value="#{bundle.CreateBitacoraLabel_accionIdaccion}" for="accionIdaccion" />
+                        <p:selectOneMenu id="accionIdaccion" value="#{bitacoraController.selected.accionIdaccion}" required="true" requiredMessage="#{bundle.EditBitacoraRequiredMessage_accionIdaccion}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{accionController.items}"
+                                           var="accionIdaccionItem"
+                                           itemValue="#{accionIdaccionItem}"
+                                           itemLabel="#{accionIdaccionItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{accionConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateBitacoraLabel_paginaIdpagina}" for="paginaIdpagina" />
+                        <p:selectOneMenu id="paginaIdpagina" value="#{bitacoraController.selected.paginaIdpagina}" required="true" requiredMessage="#{bundle.EditBitacoraRequiredMessage_paginaIdpagina}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{paginaController.items}"
+                                           var="paginaIdpaginaItem"
+                                           itemValue="#{paginaIdpaginaItem}"
+                                           itemLabel="#{paginaIdpaginaItem.idpagina.toString()}"
+                                           />
+                            <f:converter binding="#{paginaConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateBitacoraLabel_usuarioIdusuario}" for="usuarioIdusuario" />
+                        <p:selectOneMenu id="usuarioIdusuario" value="#{bitacoraController.selected.usuarioIdusuario}" required="true" requiredMessage="#{bundle.EditBitacoraRequiredMessage_usuarioIdusuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioIdusuarioItem"
+                                           itemValue="#{usuarioIdusuarioItem}"
+                                           itemLabel="#{usuarioIdusuarioItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{bitacoraController.saveNew}" value="#{bundle.Save}" update="display,:BitacoraListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,BitacoraCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="BitacoraCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

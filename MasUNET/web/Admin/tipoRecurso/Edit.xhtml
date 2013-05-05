@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoRecursoEditDlg" widgetVar="TipoRecursoEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditTipoRecursoTitle}">
+
+            <h:form id="TipoRecursoEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{tipoRecursoController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditTipoRecursoLabel_idTiporecurso}" for="idTiporecurso" />
+                        <h:outputText id="idTiporecurso" value="#{tipoRecursoController.selected.idTiporecurso}" />
+
+                        <h:outputLabel value="#{bundle.EditTipoRecursoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoRecursoController.selected.nombre}" title="#{bundle.EditTipoRecursoTitle_nombre}" required="true" requiredMessage="#{bundle.EditTipoRecursoRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.EditTipoRecursoLabel_extension}" for="extension" />
+                        <p:inputText id="extension" value="#{tipoRecursoController.selected.extension}" title="#{bundle.EditTipoRecursoTitle_extension}" required="true" requiredMessage="#{bundle.EditTipoRecursoRequiredMessage_extension}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoRecursoController.save}" value="#{bundle.Save}" update="display,:TipoRecursoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TipoRecursoEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoRecursoEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

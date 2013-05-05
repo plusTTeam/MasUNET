@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaAsignaturaEditDlg" widgetVar="VistaAsignaturaEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditVistaAsignaturaTitle}">
+
+            <h:form id="VistaAsignaturaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{vistaAsignaturaController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditVistaAsignaturaLabel_idAsignaturas}" for="idAsignaturas" />
+                        <h:outputText id="idAsignaturas" value="#{vistaAsignaturaController.selected.idAsignaturas}" />
+
+                        <h:outputLabel value="#{bundle.EditVistaAsignaturaLabel_codMateria}" for="codMateria" />
+                        <p:inputText id="codMateria" value="#{vistaAsignaturaController.selected.codMateria}" title="#{bundle.EditVistaAsignaturaTitle_codMateria}" required="true" requiredMessage="#{bundle.EditVistaAsignaturaRequiredMessage_codMateria}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaAsignaturaLabel_seccion}" for="seccion" />
+                        <p:inputText id="seccion" value="#{vistaAsignaturaController.selected.seccion}" title="#{bundle.EditVistaAsignaturaTitle_seccion}" required="true" requiredMessage="#{bundle.EditVistaAsignaturaRequiredMessage_seccion}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaAsignaturaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{vistaAsignaturaController.selected.nombre}" title="#{bundle.EditVistaAsignaturaTitle_nombre}" required="true" requiredMessage="#{bundle.EditVistaAsignaturaRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vistaAsignaturaController.save}" value="#{bundle.Save}" update="display,:VistaAsignaturaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VistaAsignaturaEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VistaAsignaturaEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

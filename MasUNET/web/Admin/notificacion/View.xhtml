@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NotificacionViewDlg" widgetVar="NotificacionViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewNotificacionTitle}">
+
+            <h:form id="NotificacionViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{notificacionController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewNotificacionLabel_idnotificacion}"/>
+                        <h:outputText value="#{notificacionController.selected.idnotificacion}" title="#{bundle.ViewNotificacionTitle_idnotificacion}"/>
+
+                        <h:outputText value="#{bundle.ViewNotificacionLabel_nombre}"/>
+                        <h:outputText value="#{notificacionController.selected.nombre}" title="#{bundle.ViewNotificacionTitle_nombre}"/>
+
+                        <h:outputText value="#{bundle.ViewNotificacionLabel_tiempo}"/>
+                        <h:outputText value="#{notificacionController.selected.tiempo}" title="#{bundle.ViewNotificacionTitle_tiempo}"/>
+
+                        <h:outputText value="#{bundle.ViewNotificacionLabel_usuarioList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="NotificacionViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

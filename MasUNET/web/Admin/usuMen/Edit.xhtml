@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuMenEditDlg" widgetVar="UsuMenEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditUsuMenTitle}">
+
+            <h:form id="UsuMenEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{usuMenController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditUsuMenLabel_estado}" for="estado" />
+                        <p:inputText id="estado" value="#{usuMenController.selected.estado}" title="#{bundle.EditUsuMenTitle_estado}" required="true" requiredMessage="#{bundle.EditUsuMenRequiredMessage_estado}"/>
+
+                        <h:outputLabel value="#{bundle.EditUsuMenLabel_mensaje}" for="mensaje" />
+                        <h:outputText id="mensaje" value="#{usuMenController.selected.mensaje.idmensaje}"/>
+
+                        <h:outputLabel value="#{bundle.EditUsuMenLabel_usuario}" for="usuario" />
+                        <h:outputText id="usuario" value="#{usuMenController.selected.usuario.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuMenController.save}" value="#{bundle.Save}" update="display,:UsuMenListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,UsuMenEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UsuMenEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

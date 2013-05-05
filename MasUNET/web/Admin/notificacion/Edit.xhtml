@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="NotificacionEditDlg" widgetVar="NotificacionEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditNotificacionTitle}">
+
+            <h:form id="NotificacionEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{notificacionController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditNotificacionLabel_idnotificacion}" for="idnotificacion" />
+                        <h:outputText id="idnotificacion" value="#{notificacionController.selected.idnotificacion}" />
+
+                        <h:outputLabel value="#{bundle.EditNotificacionLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{notificacionController.selected.nombre}" title="#{bundle.EditNotificacionTitle_nombre}" required="true" requiredMessage="#{bundle.EditNotificacionRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.EditNotificacionLabel_tiempo}" for="tiempo" />
+                        <p:inputText id="tiempo" value="#{notificacionController.selected.tiempo}" title="#{bundle.EditNotificacionTitle_tiempo}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{notificacionController.save}" value="#{bundle.Save}" update="display,:NotificacionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,NotificacionEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="NotificacionEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

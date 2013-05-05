@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="VistaControlEstudianteListForm">
+
+        <p:panel header="#{bundle.ListVistaControlEstudianteTitle}">
+
+            <p:dataTable id="datalist" value="#{vistaControlEstudianteController.items}" var="item"
+                         selectionMode="single" selection="#{vistaControlEstudianteController.selected}"
+                         rowKey="#{item.idControlEstudiante}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.idControlEstudiante}" filterBy="#{item.idControlEstudiante}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_idControlEstudiante}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idControlEstudiante}"/>
+                </p:column>
+                <p:column sortBy="#{item.cedula}" filterBy="#{item.cedula}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_cedula}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cedula}"/>
+                </p:column>
+                <p:column sortBy="#{item.nombres}" filterBy="#{item.nombres}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_nombres}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombres}"/>
+                </p:column>
+                <p:column sortBy="#{item.apellidos}" filterBy="#{item.apellidos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_apellidos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.apellidos}"/>
+                </p:column>
+                <p:column sortBy="#{item.correo}" filterBy="#{item.correo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_correo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.correo}"/>
+                </p:column>
+                <p:column sortBy="#{item.carrera}" filterBy="#{item.carrera}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_carrera}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.carrera}"/>
+                </p:column>
+                <p:column sortBy="#{item.materia}" filterBy="#{item.materia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_materia}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.materia}"/>
+                </p:column>
+                <p:column sortBy="#{item.codMateria}" filterBy="#{item.codMateria}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_codMateria}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codMateria}"/>
+                </p:column>
+                <p:column sortBy="#{item.seccion}" filterBy="#{item.seccion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_seccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.seccion}"/>
+                </p:column>
+                <p:column sortBy="#{item.lapso}" filterBy="#{item.lapso}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListVistaControlEstudianteTitle_lapso}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.lapso}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{vistaControlEstudianteController.prepareCreate}" update=":VistaControlEstudianteCreateForm" oncomplete="VistaControlEstudianteCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":VistaControlEstudianteViewForm" oncomplete="VistaControlEstudianteViewDialog.show()" disabled="#{empty vistaControlEstudianteController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":VistaControlEstudianteEditForm" oncomplete="VistaControlEstudianteEditDialog.show()" disabled="#{empty vistaControlEstudianteController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{vistaControlEstudianteController.delete}" update=":growl,datalist" disabled="#{empty vistaControlEstudianteController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

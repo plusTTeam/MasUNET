@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="BitacoraListForm">
+
+        <p:panel header="#{bundle.ListBitacoraTitle}">
+
+            <p:dataTable id="datalist" value="#{bitacoraController.items}" var="item"
+                         selectionMode="single" selection="#{bitacoraController.selected}"
+                         rowKey="#{item.idbitacora}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.idbitacora}" filterBy="#{item.idbitacora}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListBitacoraTitle_idbitacora}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idbitacora}"/>
+                </p:column>
+                <p:column sortBy="#{item.fecha}" filterBy="#{item.fecha}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListBitacoraTitle_fecha}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.ip}" filterBy="#{item.ip}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListBitacoraTitle_ip}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.ip}"/>
+                </p:column>
+                <p:column sortBy="#{item.informacion}" filterBy="#{item.informacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListBitacoraTitle_informacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.informacion}"/>
+                </p:column>
+                <p:column sortBy="#{item.accionIdaccion.descripcion}" filterBy="#{item.accionIdaccion.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListBitacoraTitle_accionIdaccion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.accionIdaccion.descripcion}"/>
+                </p:column>
+                <p:column sortBy="#{item.paginaIdpagina.idpagina}" filterBy="#{item.paginaIdpagina.idpagina}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListBitacoraTitle_paginaIdpagina}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.paginaIdpagina.idpagina}"/>
+                </p:column>
+                <p:column sortBy="#{item.usuarioIdusuario.descripcion}" filterBy="#{item.usuarioIdusuario.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListBitacoraTitle_usuarioIdusuario}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarioIdusuario.descripcion}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{bitacoraController.prepareCreate}" update=":BitacoraCreateForm" oncomplete="BitacoraCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":BitacoraViewForm" oncomplete="BitacoraViewDialog.show()" disabled="#{empty bitacoraController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":BitacoraEditForm" oncomplete="BitacoraEditDialog.show()" disabled="#{empty bitacoraController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{bitacoraController.delete}" update=":growl,datalist" disabled="#{empty bitacoraController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

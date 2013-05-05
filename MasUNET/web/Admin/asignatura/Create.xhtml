@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AsignaturaCreateDlg" widgetVar="AsignaturaCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateAsignaturaTitle}">
+
+            <h:form id="AsignaturaCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{asignaturaController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateAsignaturaLabel_codMateria}" for="codMateria" />
+                        <p:inputText id="codMateria" value="#{asignaturaController.selected.codMateria}" title="#{bundle.CreateAsignaturaTitle_codMateria}" required="true" requiredMessage="#{bundle.CreateAsignaturaRequiredMessage_codMateria}"/>
+
+                        <h:outputLabel value="#{bundle.CreateAsignaturaLabel_seccion}" for="seccion" />
+                        <p:inputText id="seccion" value="#{asignaturaController.selected.seccion}" title="#{bundle.CreateAsignaturaTitle_seccion}" required="true" requiredMessage="#{bundle.CreateAsignaturaRequiredMessage_seccion}"/>
+
+                        <h:outputLabel value="#{bundle.CreateAsignaturaLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{asignaturaController.selected.nombre}" title="#{bundle.CreateAsignaturaTitle_nombre}" required="true" requiredMessage="#{bundle.CreateAsignaturaRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.CreateAsignaturaLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{asignaturaController.selected.descripcion}" title="#{bundle.CreateAsignaturaTitle_descripcion}" />
+
+                        <h:outputLabel value="#{bundle.CreateAsignaturaLabel_profesor}" for="profesor" />
+                        <p:inputText id="profesor" value="#{asignaturaController.selected.profesor}" title="#{bundle.CreateAsignaturaTitle_profesor}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{asignaturaController.saveNew}" value="#{bundle.Save}" update="display,:AsignaturaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,AsignaturaCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AsignaturaCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

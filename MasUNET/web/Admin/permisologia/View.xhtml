@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PermisologiaViewDlg" widgetVar="PermisologiaViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewPermisologiaTitle}">
+
+            <h:form id="PermisologiaViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{permisologiaController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewPermisologiaLabel_permisos}"/>
+                        <h:outputText value="#{permisologiaController.selected.permisos}" title="#{bundle.ViewPermisologiaTitle_permisos}"/>
+
+                        <h:outputText value="#{bundle.ViewPermisologiaLabel_pagina}"/>
+                        <h:outputText value="#{permisologiaController.selected.pagina.idpagina}"/>
+
+                        <h:outputText value="#{bundle.ViewPermisologiaLabel_rol}"/>
+                        <h:outputText value="#{permisologiaController.selected.rol.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="PermisologiaViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

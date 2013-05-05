@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UserEvenCreateDlg" widgetVar="UserEvenCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateUserEvenTitle}">
+
+            <h:form id="UserEvenCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{userEvenController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateUserEvenLabel_cheked}" for="cheked" />
+                        <p:selectBooleanCheckbox id="cheked" value="#{userEvenController.selected.cheked}" title="#{bundle.EditUserEvenTitle_cheked}" required="true" requiredMessage="#{bundle.EditUserEvenRequiredMessage_cheked}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUserEvenLabel_notificado}" for="notificado" />
+                        <p:selectBooleanCheckbox id="notificado" value="#{userEvenController.selected.notificado}" title="#{bundle.EditUserEvenTitle_notificado}" required="true" requiredMessage="#{bundle.EditUserEvenRequiredMessage_notificado}"/>
+
+                        <h:outputLabel value="#{bundle.CreateUserEvenLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{userEvenController.selected.usuario}" required="true" requiredMessage="#{bundle.EditUserEvenRequiredMessage_usuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"
+                                           itemLabel="#{usuarioItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateUserEvenLabel_evento}" for="evento" />
+                        <p:selectOneMenu id="evento" value="#{userEvenController.selected.evento}" required="true" requiredMessage="#{bundle.EditUserEvenRequiredMessage_evento}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{eventoController.items}"
+                                           var="eventoItem"
+                                           itemValue="#{eventoItem}"
+                                           itemLabel="#{eventoItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{eventoConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userEvenController.saveNew}" value="#{bundle.Save}" update="display,:UserEvenListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,UserEvenCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="UserEvenCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="NotificacionListForm">
+
+        <p:panel header="#{bundle.ListNotificacionTitle}">
+
+            <p:dataTable id="datalist" value="#{notificacionController.items}" var="item"
+                         selectionMode="single" selection="#{notificacionController.selected}"
+                         rowKey="#{item.idnotificacion}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30"
+                         >
+
+                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+                <p:column sortBy="#{item.idnotificacion}" filterBy="#{item.idnotificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListNotificacionTitle_idnotificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idnotificacion}"/>
+                </p:column>
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListNotificacionTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+                <p:column sortBy="#{item.tiempo}" filterBy="#{item.tiempo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListNotificacionTitle_tiempo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tiempo}"/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{notificacionController.prepareCreate}" update=":NotificacionCreateForm" oncomplete="NotificacionCreateDialog.show()"/>
+                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":NotificacionViewForm" oncomplete="NotificacionViewDialog.show()" disabled="#{empty notificacionController.selected}"/>
+                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":NotificacionEditForm" oncomplete="NotificacionEditDialog.show()" disabled="#{empty notificacionController.selected}"/>
+                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{notificacionController.delete}" update=":growl,datalist" disabled="#{empty notificacionController.selected}"/>
+                </f:facet>
+
+            </p:dataTable>
+
+        </p:panel>
+
+    </h:form>
+
+</ui:composition>

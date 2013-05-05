@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoRecursoCreateDlg" widgetVar="TipoRecursoCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateTipoRecursoTitle}">
+
+            <h:form id="TipoRecursoCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoRecursoController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateTipoRecursoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoRecursoController.selected.nombre}" title="#{bundle.CreateTipoRecursoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateTipoRecursoRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.CreateTipoRecursoLabel_extension}" for="extension" />
+                        <p:inputText id="extension" value="#{tipoRecursoController.selected.extension}" title="#{bundle.CreateTipoRecursoTitle_extension}" required="true" requiredMessage="#{bundle.CreateTipoRecursoRequiredMessage_extension}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoRecursoController.saveNew}" value="#{bundle.Save}" update="display,:TipoRecursoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TipoRecursoCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoRecursoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

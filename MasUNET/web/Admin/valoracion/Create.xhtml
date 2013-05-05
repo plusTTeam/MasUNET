@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ValoracionCreateDlg" widgetVar="ValoracionCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateValoracionTitle}">
+
+            <h:form id="ValoracionCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{valoracionController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateValoracionLabel_calificacion}" for="calificacion" />
+                        <p:inputText id="calificacion" value="#{valoracionController.selected.calificacion}" title="#{bundle.CreateValoracionTitle_calificacion}" required="true" requiredMessage="#{bundle.CreateValoracionRequiredMessage_calificacion}"/>
+
+                        <h:outputLabel value="#{bundle.CreateValoracionLabel_comentario}" for="comentario" />
+                        <p:inputText id="comentario" value="#{valoracionController.selected.comentario}" title="#{bundle.CreateValoracionTitle_comentario}" />
+
+                        <h:outputLabel value="#{bundle.CreateValoracionLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{valoracionController.selected.fecha}" title="#{bundle.EditValoracionTitle_fecha}" required="true" requiredMessage="#{bundle.EditValoracionRequiredMessage_fecha}" showOn="button"/>
+
+                        <h:outputLabel value="#{bundle.CreateValoracionLabel_recurso}" for="recurso" />
+                        <p:selectOneMenu id="recurso" value="#{valoracionController.selected.recurso}" required="true" requiredMessage="#{bundle.EditValoracionRequiredMessage_recurso}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{recursoController.items}"
+                                           var="recursoItem"
+                                           itemValue="#{recursoItem}"
+                                           itemLabel="#{recursoItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{recursoConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateValoracionLabel_usuario}" for="usuario" />
+                        <p:selectOneMenu id="usuario" value="#{valoracionController.selected.usuario}" required="true" requiredMessage="#{bundle.EditValoracionRequiredMessage_usuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioItem"
+                                           itemValue="#{usuarioItem}"
+                                           itemLabel="#{usuarioItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{valoracionController.saveNew}" value="#{bundle.Save}" update="display,:ValoracionListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ValoracionCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ValoracionCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

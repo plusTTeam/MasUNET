@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MensajeViewDlg" widgetVar="MensajeViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewMensajeTitle}">
+
+            <h:form id="MensajeViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{mensajeController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewMensajeLabel_idmensaje}"/>
+                        <h:outputText value="#{mensajeController.selected.idmensaje}" title="#{bundle.ViewMensajeTitle_idmensaje}"/>
+
+                        <h:outputText value="#{bundle.ViewMensajeLabel_mensaje}"/>
+                        <h:outputText value="#{mensajeController.selected.mensaje}" title="#{bundle.ViewMensajeTitle_mensaje}"/>
+
+                        <h:outputText value="#{bundle.ViewMensajeLabel_fecha}"/>
+                        <h:outputText value="#{mensajeController.selected.fecha}" title="#{bundle.ViewMensajeTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{bundle.ViewMensajeLabel_asunto}"/>
+                        <h:outputText value="#{mensajeController.selected.asunto}" title="#{bundle.ViewMensajeTitle_asunto}"/>
+
+                        <h:outputText value="#{bundle.ViewMensajeLabel_idusuario}"/>
+                        <h:outputText value="#{mensajeController.selected.idusuario.descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewMensajeLabel_usuMenList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MensajeViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

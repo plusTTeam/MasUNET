@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="UsuarioViewDlg" widgetVar="UsuarioViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewUsuarioTitle}">
+
+            <h:form id="UsuarioViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{usuarioController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_idusuario}"/>
+                        <h:outputText value="#{usuarioController.selected.idusuario}" title="#{bundle.ViewUsuarioTitle_idusuario}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_alias}"/>
+                        <h:outputText value="#{usuarioController.selected.alias}" title="#{bundle.ViewUsuarioTitle_alias}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_email}"/>
+                        <h:outputText value="#{usuarioController.selected.email}" title="#{bundle.ViewUsuarioTitle_email}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_telefono}"/>
+                        <h:outputText value="#{usuarioController.selected.telefono}" title="#{bundle.ViewUsuarioTitle_telefono}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_fotoUrl}"/>
+                        <h:outputText value="#{usuarioController.selected.fotoUrl}" title="#{bundle.ViewUsuarioTitle_fotoUrl}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_descripcion}"/>
+                        <h:outputText value="#{usuarioController.selected.descripcion}" title="#{bundle.ViewUsuarioTitle_descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_ultimaConexion}"/>
+                        <h:outputText value="#{usuarioController.selected.ultimaConexion}" title="#{bundle.ViewUsuarioTitle_ultimaConexion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                        </h:outputText>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_online}"/>
+                        <h:selectBooleanCheckbox id="online" value="#{usuarioController.selected.online}" title="#{bundle.EditUsuarioTitle_online}" required="true" requiredMessage="#{bundle.EditUsuarioRequiredMessage_online}" disabled="true"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_usuario}"/>
+                        <h:outputText value="#{usuarioController.selected.usuario}" title="#{bundle.ViewUsuarioTitle_usuario}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_cedula}"/>
+                        <h:outputText value="#{usuarioController.selected.cedula}" title="#{bundle.ViewUsuarioTitle_cedula}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_nombre}"/>
+                        <h:outputText value="#{usuarioController.selected.nombre}" title="#{bundle.ViewUsuarioTitle_nombre}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_notificacionIdnotificacion}"/>
+                        <h:outputText value="#{usuarioController.selected.notificacionIdnotificacion.idnotificacion}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_rolIdrol}"/>
+                        <h:outputText value="#{usuarioController.selected.rolIdrol.descripcion}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_eventoList}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_mensajeList}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_bitacoraList}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_valoracionList}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_userEvenList}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_usuMenList}"/>
+
+                        <h:outputText value="#{bundle.ViewUsuarioLabel_recursoList}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="UsuarioViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

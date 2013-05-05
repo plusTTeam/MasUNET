@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaControlEstudianteViewDlg" widgetVar="VistaControlEstudianteViewDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.ViewVistaControlEstudianteTitle}">
+
+            <h:form id="VistaControlEstudianteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vistaControlEstudianteController.selected != null}">
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_idControlEstudiante}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.idControlEstudiante}" title="#{bundle.ViewVistaControlEstudianteTitle_idControlEstudiante}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_cedula}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.cedula}" title="#{bundle.ViewVistaControlEstudianteTitle_cedula}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_nombres}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.nombres}" title="#{bundle.ViewVistaControlEstudianteTitle_nombres}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_apellidos}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.apellidos}" title="#{bundle.ViewVistaControlEstudianteTitle_apellidos}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_correo}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.correo}" title="#{bundle.ViewVistaControlEstudianteTitle_correo}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_carrera}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.carrera}" title="#{bundle.ViewVistaControlEstudianteTitle_carrera}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_materia}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.materia}" title="#{bundle.ViewVistaControlEstudianteTitle_materia}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_codMateria}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.codMateria}" title="#{bundle.ViewVistaControlEstudianteTitle_codMateria}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_seccion}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.seccion}" title="#{bundle.ViewVistaControlEstudianteTitle_seccion}"/>
+
+                        <h:outputText value="#{bundle.ViewVistaControlEstudianteLabel_lapso}"/>
+                        <h:outputText value="#{vistaControlEstudianteController.selected.lapso}" title="#{bundle.ViewVistaControlEstudianteTitle_lapso}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VistaControlEstudianteViewDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

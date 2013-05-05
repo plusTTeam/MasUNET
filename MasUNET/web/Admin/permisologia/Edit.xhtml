@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PermisologiaEditDlg" widgetVar="PermisologiaEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditPermisologiaTitle}">
+
+            <h:form id="PermisologiaEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{permisologiaController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditPermisologiaLabel_permisos}" for="permisos" />
+                        <p:inputText id="permisos" value="#{permisologiaController.selected.permisos}" title="#{bundle.EditPermisologiaTitle_permisos}" required="true" requiredMessage="#{bundle.EditPermisologiaRequiredMessage_permisos}"/>
+
+                        <h:outputLabel value="#{bundle.EditPermisologiaLabel_pagina}" for="pagina" />
+                        <h:outputText id="pagina" value="#{permisologiaController.selected.pagina.idpagina}"/>
+
+                        <h:outputLabel value="#{bundle.EditPermisologiaLabel_rol}" for="rol" />
+                        <h:outputText id="rol" value="#{permisologiaController.selected.rol.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{permisologiaController.save}" value="#{bundle.Save}" update="display,:PermisologiaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PermisologiaEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PermisologiaEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

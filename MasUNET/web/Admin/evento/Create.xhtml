@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EventoCreateDlg" widgetVar="EventoCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateEventoTitle}">
+
+            <h:form id="EventoCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{eventoController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{eventoController.selected.nombre}" title="#{bundle.CreateEventoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateEventoRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{eventoController.selected.descripcion}" title="#{bundle.CreateEventoTitle_descripcion}" />
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_fechaIni}" for="fechaIni" />
+                        <p:calendar id="fechaIni" pattern="MM/dd/yyyy HH:mm:ss" value="#{eventoController.selected.fechaIni}" title="#{bundle.EditEventoTitle_fechaIni}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_fechaIni}" showOn="button"/>
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_fechaFin}" for="fechaFin" />
+                        <p:calendar id="fechaFin" pattern="MM/dd/yyyy HH:mm:ss" value="#{eventoController.selected.fechaFin}" title="#{bundle.EditEventoTitle_fechaFin}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_fechaFin}" showOn="button"/>
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_fechaCreacion}" for="fechaCreacion" />
+                        <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{eventoController.selected.fechaCreacion}" title="#{bundle.EditEventoTitle_fechaCreacion}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_fechaCreacion}" showOn="button"/>
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_asignaturaIdasignatura}" for="asignaturaIdasignatura" />
+                        <p:selectOneMenu id="asignaturaIdasignatura" value="#{eventoController.selected.asignaturaIdasignatura}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{asignaturaController.items}"
+                                           var="asignaturaIdasignaturaItem"
+                                           itemValue="#{asignaturaIdasignaturaItem}"
+                                           itemLabel="#{asignaturaIdasignaturaItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{asignaturaConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_usuarioIdusuario}" for="usuarioIdusuario" />
+                        <p:selectOneMenu id="usuarioIdusuario" value="#{eventoController.selected.usuarioIdusuario}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_usuarioIdusuario}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuarioController.items}"
+                                           var="usuarioIdusuarioItem"
+                                           itemValue="#{usuarioIdusuarioItem}"
+                                           itemLabel="#{usuarioIdusuarioItem.descripcion.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="#{bundle.CreateEventoLabel_tipoEventoIdtipoEvento}" for="tipoEventoIdtipoEvento" />
+                        <p:selectOneMenu id="tipoEventoIdtipoEvento" value="#{eventoController.selected.tipoEventoIdtipoEvento}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_tipoEventoIdtipoEvento}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tipoEventoController.items}"
+                                           var="tipoEventoIdtipoEventoItem"
+                                           itemValue="#{tipoEventoIdtipoEventoItem}"
+                                           itemLabel="#{tipoEventoIdtipoEventoItem.idtipoEvento.toString()}"
+                                           />
+                            <f:converter binding="#{tipoEventoConverter}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{eventoController.saveNew}" value="#{bundle.Save}" update="display,:EventoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,EventoCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EventoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

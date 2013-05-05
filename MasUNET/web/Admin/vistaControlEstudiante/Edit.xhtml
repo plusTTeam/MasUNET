@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaControlEstudianteEditDlg" widgetVar="VistaControlEstudianteEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditVistaControlEstudianteTitle}">
+
+            <h:form id="VistaControlEstudianteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{vistaControlEstudianteController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_idControlEstudiante}" for="idControlEstudiante" />
+                        <h:outputText id="idControlEstudiante" value="#{vistaControlEstudianteController.selected.idControlEstudiante}" />
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{vistaControlEstudianteController.selected.cedula}" title="#{bundle.EditVistaControlEstudianteTitle_cedula}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_cedula}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_nombres}" for="nombres" />
+                        <p:inputText id="nombres" value="#{vistaControlEstudianteController.selected.nombres}" title="#{bundle.EditVistaControlEstudianteTitle_nombres}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_nombres}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_apellidos}" for="apellidos" />
+                        <p:inputText id="apellidos" value="#{vistaControlEstudianteController.selected.apellidos}" title="#{bundle.EditVistaControlEstudianteTitle_apellidos}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_apellidos}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_correo}" for="correo" />
+                        <p:inputText id="correo" value="#{vistaControlEstudianteController.selected.correo}" title="#{bundle.EditVistaControlEstudianteTitle_correo}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_correo}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_carrera}" for="carrera" />
+                        <p:inputText id="carrera" value="#{vistaControlEstudianteController.selected.carrera}" title="#{bundle.EditVistaControlEstudianteTitle_carrera}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_carrera}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_materia}" for="materia" />
+                        <p:inputText id="materia" value="#{vistaControlEstudianteController.selected.materia}" title="#{bundle.EditVistaControlEstudianteTitle_materia}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_materia}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_codMateria}" for="codMateria" />
+                        <p:inputText id="codMateria" value="#{vistaControlEstudianteController.selected.codMateria}" title="#{bundle.EditVistaControlEstudianteTitle_codMateria}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_codMateria}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_seccion}" for="seccion" />
+                        <p:inputText id="seccion" value="#{vistaControlEstudianteController.selected.seccion}" title="#{bundle.EditVistaControlEstudianteTitle_seccion}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_seccion}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaControlEstudianteLabel_lapso}" for="lapso" />
+                        <p:inputText id="lapso" value="#{vistaControlEstudianteController.selected.lapso}" title="#{bundle.EditVistaControlEstudianteTitle_lapso}" required="true" requiredMessage="#{bundle.EditVistaControlEstudianteRequiredMessage_lapso}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vistaControlEstudianteController.save}" value="#{bundle.Save}" update="display,:VistaControlEstudianteListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VistaControlEstudianteEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VistaControlEstudianteEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

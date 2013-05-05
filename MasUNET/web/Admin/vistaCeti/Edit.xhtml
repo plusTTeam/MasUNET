@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaCetiEditDlg" widgetVar="VistaCetiEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditVistaCetiTitle}">
+
+            <h:form id="VistaCetiEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{vistaCetiController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditVistaCetiLabel_idCeti}" for="idCeti" />
+                        <h:outputText id="idCeti" value="#{vistaCetiController.selected.idCeti}" />
+
+                        <h:outputLabel value="#{bundle.EditVistaCetiLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{vistaCetiController.selected.cedula}" title="#{bundle.EditVistaCetiTitle_cedula}" required="true" requiredMessage="#{bundle.EditVistaCetiRequiredMessage_cedula}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaCetiLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{vistaCetiController.selected.usuario}" title="#{bundle.EditVistaCetiTitle_usuario}" required="true" requiredMessage="#{bundle.EditVistaCetiRequiredMessage_usuario}"/>
+
+                        <h:outputLabel value="#{bundle.EditVistaCetiLabel_clave}" for="clave" />
+                        <p:inputText id="clave" value="#{vistaCetiController.selected.clave}" title="#{bundle.EditVistaCetiTitle_clave}" required="true" requiredMessage="#{bundle.EditVistaCetiRequiredMessage_clave}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vistaCetiController.save}" value="#{bundle.Save}" update="display,:VistaCetiListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VistaCetiEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VistaCetiEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TipoEventoCreateDlg" widgetVar="TipoEventoCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateTipoEventoTitle}">
+
+            <h:form id="TipoEventoCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{tipoEventoController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateTipoEventoLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{tipoEventoController.selected.nombre}" title="#{bundle.CreateTipoEventoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateTipoEventoRequiredMessage_nombre}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{tipoEventoController.saveNew}" value="#{bundle.Save}" update="display,:TipoEventoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,TipoEventoCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="TipoEventoCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

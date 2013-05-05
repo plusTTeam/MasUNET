@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VistaCetiCreateDlg" widgetVar="VistaCetiCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateVistaCetiTitle}">
+
+            <h:form id="VistaCetiCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vistaCetiController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateVistaCetiLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{vistaCetiController.selected.cedula}" title="#{bundle.CreateVistaCetiTitle_cedula}" required="true" requiredMessage="#{bundle.CreateVistaCetiRequiredMessage_cedula}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaCetiLabel_usuario}" for="usuario" />
+                        <p:inputText id="usuario" value="#{vistaCetiController.selected.usuario}" title="#{bundle.CreateVistaCetiTitle_usuario}" required="true" requiredMessage="#{bundle.CreateVistaCetiRequiredMessage_usuario}"/>
+
+                        <h:outputLabel value="#{bundle.CreateVistaCetiLabel_clave}" for="clave" />
+                        <p:inputText id="clave" value="#{vistaCetiController.selected.clave}" title="#{bundle.CreateVistaCetiTitle_clave}" required="true" requiredMessage="#{bundle.CreateVistaCetiRequiredMessage_clave}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vistaCetiController.saveNew}" value="#{bundle.Save}" update="display,:VistaCetiListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VistaCetiCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VistaCetiCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
