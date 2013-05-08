@@ -39,6 +39,18 @@
                     </f:facet>
                     <h:outputText value="#{item.url}"/>
                 </p:column>
+                 <p:column sortBy="#{item.icono}" filterBy="#{item.icono}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListPaginaTitle_icono}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.icono}"/>
+                </p:column>
+                 <p:column sortBy="#{item.tipo}" filterBy="#{item.tipo}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListPaginaTitle_tipo}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.tipo}"/>
+                </p:column>
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{paginaController.prepareCreate}" update=":PaginaCreateForm" oncomplete="PaginaCreateDialog.show()"/>
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PaginaViewForm" oncomplete="PaginaViewDialog.show()" disabled="#{empty paginaController.selected}"/>

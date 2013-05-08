@@ -1,15 +1,15 @@
 package Converters;
 
+import Controllers.util.JsfUtil;
 import Entities.Usuario;
 import Facades.UsuarioFacade;
-import Controllers.util.JsfUtil;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Named;
-import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 @Named
 public class UsuarioConverter implements Converter {
