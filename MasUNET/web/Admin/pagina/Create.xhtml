@@ -20,6 +20,13 @@
 
                         <h:outputLabel value="#{bundle.CreatePaginaLabel_url}" for="url" />
                         <p:inputText id="url" value="#{paginaController.selected.url}" title="#{bundle.CreatePaginaTitle_url}" required="true" requiredMessage="#{bundle.CreatePaginaRequiredMessage_url}"/>
+
+                        <h:outputLabel value="#{bundle.CreatePaginaLabel_icono}" for="icono" />
+                        <p:inputText id="icono" value="#{paginaController.selected.icono}" title="#{bundle.CreatePaginaTitle_icono}" required="true" requiredMessage="#{bundle.CreatePaginaRequiredMessage_icono}"/>
+
+                        <h:outputLabel value="#{bundle.CreatePaginaLabel_tipo}" for="tipo" />
+                        <p:inputText id="tipo" value="#{paginaController.selected.tipo}" title="#{bundle.CreatePaginaTitle_tipo}" required="true" requiredMessage="#{bundle.CreatePaginaRequiredMessage_tipo}"/>
+                        
                     </p:panelGrid>
                     <p:commandButton actionListener="#{paginaController.saveNew}" value="#{bundle.Save}" update="display,:PaginaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaginaCreateDialog);"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PaginaCreateDialog.hide()"/>

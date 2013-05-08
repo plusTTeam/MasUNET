@@ -32,7 +32,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VistaControlProfesor.findByNombres", query = "SELECT v FROM VistaControlProfesor v WHERE v.nombres = :nombres"),
     @NamedQuery(name = "VistaControlProfesor.findByApellidos", query = "SELECT v FROM VistaControlProfesor v WHERE v.apellidos = :apellidos"),
     @NamedQuery(name = "VistaControlProfesor.findByCorreo", query = "SELECT v FROM VistaControlProfesor v WHERE v.correo = :correo"),
-    @NamedQuery(name = "VistaControlProfesor.findByMateria", query = "SELECT v FROM VistaControlProfesor v WHERE v.materia = :materia"),
     @NamedQuery(name = "VistaControlProfesor.findByCodMateria", query = "SELECT v FROM VistaControlProfesor v WHERE v.codMateria = :codMateria"),
     @NamedQuery(name = "VistaControlProfesor.findBySeccion", query = "SELECT v FROM VistaControlProfesor v WHERE v.seccion = :seccion"),
     @NamedQuery(name = "VistaControlProfesor.findByLapso", query = "SELECT v FROM VistaControlProfesor v WHERE v.lapso = :lapso")})
@@ -66,11 +65,6 @@ public class VistaControlProfesor implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "materia")
-    private String materia;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "cod_materia")
     private String codMateria;
     @Basic(optional = false)
@@ -90,13 +84,12 @@ public class VistaControlProfesor implements Serializable {
         this.idControlProfesor = idControlProfesor;
     }
 
-    public VistaControlProfesor(Integer idControlProfesor, String cedula, String nombres, String apellidos, String correo, String materia, String codMateria, int seccion, String lapso) {
+    public VistaControlProfesor(Integer idControlProfesor, String cedula, String nombres, String apellidos, String correo, String codMateria, int seccion, String lapso) {
         this.idControlProfesor = idControlProfesor;
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
-        this.materia = materia;
         this.codMateria = codMateria;
         this.seccion = seccion;
         this.lapso = lapso;
@@ -140,14 +133,6 @@ public class VistaControlProfesor implements Serializable {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public String getMateria() {
-        return materia;
-    }
-
-    public void setMateria(String materia) {
-        this.materia = materia;
     }
 
     public String getCodMateria() {

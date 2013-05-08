@@ -23,6 +23,10 @@
 
                         <h:outputLabel value="#{bundle.CreateVistaCetiLabel_clave}" for="clave" />
                         <p:inputText id="clave" value="#{vistaCetiController.selected.clave}" title="#{bundle.CreateVistaCetiTitle_clave}" required="true" requiredMessage="#{bundle.CreateVistaCetiRequiredMessage_clave}"/>
+                   
+                        <h:outputLabel value="#{bundle.CreateVistaCetiLabel_rol}" for="rol" />
+                        <p:inputText id="rol" value="#{vistaCetiController.selected.rol}" title="#{bundle.CreateVistaCetiTitle_rol}" required="true" requiredMessage="#{bundle.CreateVistaCetiRequiredMessage_rol}"/>
+                   
                     </p:panelGrid>
                     <p:commandButton actionListener="#{vistaCetiController.saveNew}" value="#{bundle.Save}" update="display,:VistaCetiListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,VistaCetiCreateDialog);"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="VistaCetiCreateDialog.hide()"/>

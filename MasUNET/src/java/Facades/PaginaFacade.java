@@ -5,9 +5,11 @@
 package Facades;
 
 import Entities.Pagina;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -15,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class PaginaFacade extends AbstractFacade<Pagina> {
+
     @PersistenceContext(unitName = "MasUNETPU")
     private EntityManager em;
 
@@ -26,5 +29,28 @@ public class PaginaFacade extends AbstractFacade<Pagina> {
     public PaginaFacade() {
         super(Pagina.class);
     }
-    
+
+    public List<Pagina> FindListByTipo(int tipo) {
+        try {
+            Query query = em.createNamedQuery("Pagina.findByTipo");
+            query.setParameter("tipo", tipo);      
+            List<Pagina> aux = (List<Pagina>) query.getResultList();
+            return aux;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    public Pagina FindByTipo(int tipo) {
+        try {
+            Query query = em.createNamedQuery("Pagina.findByTipo");
+            query.setParameter("tipo", tipo);
+            Pagina aux = (Pagina) query.getSingleResult();
+            return aux;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 }

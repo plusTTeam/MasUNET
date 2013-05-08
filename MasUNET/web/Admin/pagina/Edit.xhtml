@@ -23,6 +23,14 @@
 
                         <h:outputLabel value="#{bundle.EditPaginaLabel_url}" for="url" />
                         <p:inputText id="url" value="#{paginaController.selected.url}" title="#{bundle.EditPaginaTitle_url}" required="true" requiredMessage="#{bundle.EditPaginaRequiredMessage_url}"/>
+
+                        <h:outputLabel value="#{bundle.EditPaginaLabel_icono}" for="icono" />
+                        <p:inputText id="icono" value="#{paginaController.selected.icono}" title="#{bundle.EditPaginaTitle_icono}" required="true" requiredMessage="#{bundle.EditPaginaRequiredMessage_icono}"/>
+
+                        <h:outputLabel value="#{bundle.EditPaginaLabel_tipo}" for="tipo" />
+                        <p:inputText id="tipo" value="#{paginaController.selected.tipo}" title="#{bundle.EditPaginaTitle_tipo}" required="true" requiredMessage="#{bundle.EditPaginaRequiredMessage_tipo}"/>
+
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{paginaController.save}" value="#{bundle.Save}" update="display,:PaginaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaginaEditDialog);"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PaginaEditDialog.hide()"/>

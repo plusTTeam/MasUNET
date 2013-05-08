@@ -26,6 +26,10 @@
 
                         <h:outputText value="#{bundle.ViewVistaCetiLabel_clave}"/>
                         <h:outputText value="#{vistaCetiController.selected.clave}" title="#{bundle.ViewVistaCetiTitle_clave}"/>
+                    
+                        <h:outputText value="#{bundle.ViewVistaCetiLabel_rol}"/>
+                        <h:outputText value="#{vistaCetiController.selected.rol}" title="#{bundle.ViewVistaCetiTitle_rol}"/>
+                   
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="VistaCetiViewDialog.hide()"/>
                 </h:panelGroup>

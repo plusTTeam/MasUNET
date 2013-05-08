@@ -4,36 +4,23 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+ <!-- Menu: Calendario, Materia, Mensajes, Recursos, Configuracion, Administracion, Salir-->
     <ui:composition>
         <h:form id="menuForm">
-            <p:menubar>
-                <p:menuitem value="#{bundle.Home}" url="/faces/index.xhtml" icon="ui-icon-home"/>
-                <p:submenu label="#{bundle.Maintenance}">
-                    <p:menuitem value="Accion" url="/faces/Admin/accion/index.xhtml" />
-                    <p:menuitem value="Asignatura" url="/faces/Admin/asignatura/index.xhtml" />
-                    <p:menuitem value="Bitacora" url="/faces/Admin/bitacora/index.xhtml" />
-                    <p:menuitem value="Evento" url="/faces/Admin/evento/index.xhtml" />
-                    <p:menuitem value="Mensaje" url="/faces/Admin/mensaje/index.xhtml" />
-                    <p:menuitem value="Notificacion" url="/faces/Admin/notificacion/index.xhtml" />
-                    <p:menuitem value="Pagina" url="/faces/Admin/pagina/index.xhtml" />
-                    <p:menuitem value="Permisologia" url="/faces/Admin/permisologia/index.xhtml" />
-                    <p:menuitem value="Recurso" url="/faces/Admin/recurso/index.xhtml" />
-                    <p:menuitem value="Rol" url="/faces/Admin/rol/index.xhtml" />
-                    <p:menuitem value="TipoEvento" url="/faces/Admin/tipoEvento/index.xhtml" />
-                    <p:menuitem value="TipoRecurso" url="/faces/Admin/tipoRecurso/index.xhtml" />
-                    <p:menuitem value="UserEven" url="/faces/Admin/userEven/index.xhtml" />
-                    <p:menuitem value="UsuMen" url="/faces/Admin/usuMen/index.xhtml" />
-                    <p:menuitem value="Usuario" url="/faces/Admin/usuario/index.xhtml" />
-                    <p:menuitem value="Valoracion" url="/faces/Admin/valoracion/index.xhtml" />
-                    <p:menuitem value="VistaAsignatura" url="/faces/Admin/vistaAsignatura/index.xhtml" />
-                    <p:menuitem value="VistaCeti" url="/faces/Admin/vistaCeti/index.xhtml" />
-                    <p:menuitem value="VistaControlEstudiante" url="/faces/Admin/vistaControlEstudiante/index.xhtml" />
-                    <p:menuitem value="VistaControlProfesor" url="/faces/Admin/vistaControlProfesor/index.xhtml" />
-                </p:submenu>
+            <p:menubar rendered="#{loginBean.loggedIn}">
+                <c:forEach var="item_main_menu" items="#{menuBean.mainMenu}">
+                    <p:menuitem value="#{item_main_menu.titulo}" url="#{item_main_menu.url}" icon="#{item_main_menu.icono}"/>
+                </c:forEach>
+                <c:set var="admin_menu" value="#{menuBean.adminMenu}"/>
+                <p:submenu label="#{admin_menu.titulo}" icon="#{admin_menu.icono}" rendered="#{loginBean.isAdmin}">
+                    <c:forEach var="item_admin_menu" items="#{menuBean.adminSubMenu}" rendered="#{loginBean.isAdmin}">
+                        <p:menuitem value="#{item_admin_menu.titulo}" url="#{item_admin_menu.url}" icon="#{item_admin_menu.icono}" rendered="#{loginBean.isAdmin}"/>
+                    </c:forEach>
+                </p:submenu>               
+                <p:menuitem value="Logout" icon="ui-icon-power" action="#{loginBean.logout}" ajax="false"/>
             </p:menubar>
         </h:form>
     </ui:composition>
-
 </html>
