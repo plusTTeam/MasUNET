@@ -65,12 +65,15 @@ public class Recurso implements Serializable {
     private int numeroDescargas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recurso", fetch = FetchType.LAZY)
     private List<Valoracion> valoracionList;
-    @JoinColumn(name = "idTipo_recurso", referencedColumnName = "idTipo_recurso")
+    @JoinColumn(name = "asignatura_idasignatura", referencedColumnName = "idasignatura")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private TipoRecurso idTiporecurso;
+    private Asignatura asignaturaIdasignatura;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuarioIdusuario;
+    @JoinColumn(name = "idTipo_recurso", referencedColumnName = "idTipo_recurso")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private TipoRecurso idTiporecurso;
 
     public Recurso() {
     }
@@ -135,12 +138,12 @@ public class Recurso implements Serializable {
         this.valoracionList = valoracionList;
     }
 
-    public TipoRecurso getIdTiporecurso() {
-        return idTiporecurso;
+    public Asignatura getAsignaturaIdasignatura() {
+        return asignaturaIdasignatura;
     }
 
-    public void setIdTiporecurso(TipoRecurso idTiporecurso) {
-        this.idTiporecurso = idTiporecurso;
+    public void setAsignaturaIdasignatura(Asignatura asignaturaIdasignatura) {
+        this.asignaturaIdasignatura = asignaturaIdasignatura;
     }
 
     public Usuario getUsuarioIdusuario() {
@@ -149,6 +152,14 @@ public class Recurso implements Serializable {
 
     public void setUsuarioIdusuario(Usuario usuarioIdusuario) {
         this.usuarioIdusuario = usuarioIdusuario;
+    }
+
+    public TipoRecurso getIdTiporecurso() {
+        return idTiporecurso;
+    }
+
+    public void setIdTiporecurso(TipoRecurso idTiporecurso) {
+        this.idTiporecurso = idTiporecurso;
     }
 
     @Override

@@ -34,9 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pagina.findAll", query = "SELECT p FROM Pagina p"),
     @NamedQuery(name = "Pagina.findByIdpagina", query = "SELECT p FROM Pagina p WHERE p.idpagina = :idpagina"),
     @NamedQuery(name = "Pagina.findByTitulo", query = "SELECT p FROM Pagina p WHERE p.titulo = :titulo"),
+    @NamedQuery(name = "Pagina.findByUrl", query = "SELECT p FROM Pagina p WHERE p.url = :url"),
     @NamedQuery(name = "Pagina.findByIcono", query = "SELECT p FROM Pagina p WHERE p.icono = :icono"),
-    @NamedQuery(name = "Pagina.findByTipo", query = "SELECT p FROM Pagina p WHERE p.tipo = :tipo"),
-    @NamedQuery(name = "Pagina.findByUrl", query = "SELECT p FROM Pagina p WHERE p.url = :url")})
+    @NamedQuery(name = "Pagina.findByTipo", query = "SELECT p FROM Pagina p WHERE p.tipo = :tipo")})
 public class Pagina implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,13 +54,9 @@ public class Pagina implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "url")
     private String url;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 30)
+    @Size(max = 30)
     @Column(name = "icono")
     private String icono;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "tipo")
     private Integer tipo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pagina", fetch = FetchType.LAZY)
@@ -120,8 +116,7 @@ public class Pagina implements Serializable {
     public void setTipo(Integer tipo) {
         this.tipo = tipo;
     }
-    
-    
+
     @XmlTransient
     public List<Permisologia> getPermisologiaList() {
         return permisologiaList;

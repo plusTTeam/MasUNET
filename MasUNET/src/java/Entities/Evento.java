@@ -73,15 +73,15 @@ public class Evento implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
-    @JoinColumn(name = "asignatura_idasignatura", referencedColumnName = "idasignatura")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Asignatura asignaturaIdasignatura;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuarioIdusuario;
     @JoinColumn(name = "tipo_evento_idtipo_evento", referencedColumnName = "idtipo_evento")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoEvento tipoEventoIdtipoEvento;
+    @JoinColumn(name = "asignatura_idasignatura", referencedColumnName = "idasignatura")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Asignatura asignaturaIdasignatura;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY)
     private List<UserEven> userEvenList;
 
@@ -148,14 +148,6 @@ public class Evento implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Asignatura getAsignaturaIdasignatura() {
-        return asignaturaIdasignatura;
-    }
-
-    public void setAsignaturaIdasignatura(Asignatura asignaturaIdasignatura) {
-        this.asignaturaIdasignatura = asignaturaIdasignatura;
-    }
-
     public Usuario getUsuarioIdusuario() {
         return usuarioIdusuario;
     }
@@ -170,6 +162,14 @@ public class Evento implements Serializable {
 
     public void setTipoEventoIdtipoEvento(TipoEvento tipoEventoIdtipoEvento) {
         this.tipoEventoIdtipoEvento = tipoEventoIdtipoEvento;
+    }
+
+    public Asignatura getAsignaturaIdasignatura() {
+        return asignaturaIdasignatura;
+    }
+
+    public void setAsignaturaIdasignatura(Asignatura asignaturaIdasignatura) {
+        this.asignaturaIdasignatura = asignaturaIdasignatura;
     }
 
     @XmlTransient

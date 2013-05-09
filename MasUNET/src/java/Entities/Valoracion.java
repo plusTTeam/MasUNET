@@ -52,12 +52,12 @@ public class Valoracion implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @JoinColumn(name = "recurso_idrecurso", referencedColumnName = "idrecurso", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Recurso recurso;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuario;
+    @JoinColumn(name = "recurso_idrecurso", referencedColumnName = "idrecurso", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Recurso recurso;
 
     public Valoracion() {
     }
@@ -108,20 +108,20 @@ public class Valoracion implements Serializable {
         this.fecha = fecha;
     }
 
-    public Recurso getRecurso() {
-        return recurso;
-    }
-
-    public void setRecurso(Recurso recurso) {
-        this.recurso = recurso;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Recurso getRecurso() {
+        return recurso;
+    }
+
+    public void setRecurso(Recurso recurso) {
+        this.recurso = recurso;
     }
 
     @Override

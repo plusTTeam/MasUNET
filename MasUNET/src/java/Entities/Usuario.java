@@ -55,12 +55,11 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "idusuario")
     private Integer idusuario;
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "alias")
     private String alias;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-  
-    @Size(min = 1, max = 45)
+    @Size(max = 45)
     @Column(name = "email")
     private String email;
     @Size(max = 45)
@@ -96,12 +95,12 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "nombre")
     private String nombre;
-    @JoinColumn(name = "notificacion_idnotificacion", referencedColumnName = "idnotificacion")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Notificacion notificacionIdnotificacion;
     @JoinColumn(name = "rol_idrol", referencedColumnName = "idrol")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Rol rolIdrol;
+    @JoinColumn(name = "notificacion_idnotificacion", referencedColumnName = "idnotificacion")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Notificacion notificacionIdnotificacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioIdusuario", fetch = FetchType.LAZY)
     private List<Evento> eventoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
@@ -124,10 +123,8 @@ public class Usuario implements Serializable {
         this.idusuario = idusuario;
     }
 
-    public Usuario(Integer idusuario, String alias, String email, Date ultimaConexion, boolean online, String usuario, String cedula, String nombre) {
+    public Usuario(Integer idusuario, Date ultimaConexion, boolean online, String usuario, String cedula, String nombre) {
         this.idusuario = idusuario;
-        this.alias = alias;
-        this.email = email;
         this.ultimaConexion = ultimaConexion;
         this.online = online;
         this.usuario = usuario;
@@ -223,20 +220,20 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public Notificacion getNotificacionIdnotificacion() {
-        return notificacionIdnotificacion;
-    }
-
-    public void setNotificacionIdnotificacion(Notificacion notificacionIdnotificacion) {
-        this.notificacionIdnotificacion = notificacionIdnotificacion;
-    }
-
     public Rol getRolIdrol() {
         return rolIdrol;
     }
 
     public void setRolIdrol(Rol rolIdrol) {
         this.rolIdrol = rolIdrol;
+    }
+
+    public Notificacion getNotificacionIdnotificacion() {
+        return notificacionIdnotificacion;
+    }
+
+    public void setNotificacionIdnotificacion(Notificacion notificacionIdnotificacion) {
+        this.notificacionIdnotificacion = notificacionIdnotificacion;
     }
 
     @XmlTransient
@@ -324,7 +321,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Entities.Usuario[ idusuario=" + idusuario + " ]";
+        return nombre;
     }
     
 }

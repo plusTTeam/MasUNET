@@ -38,12 +38,12 @@ public class Permisologia implements Serializable {
     @NotNull
     @Column(name = "permisos")
     private int permisos;
-    @JoinColumn(name = "pagina_idpagina", referencedColumnName = "idpagina", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Pagina pagina;
     @JoinColumn(name = "rol_idrol", referencedColumnName = "idrol", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Rol rol;
+    @JoinColumn(name = "pagina_idpagina", referencedColumnName = "idpagina", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Pagina pagina;
 
     public Permisologia() {
     }
@@ -77,20 +77,20 @@ public class Permisologia implements Serializable {
         this.permisos = permisos;
     }
 
-    public Pagina getPagina() {
-        return pagina;
-    }
-
-    public void setPagina(Pagina pagina) {
-        this.pagina = pagina;
-    }
-
     public Rol getRol() {
         return rol;
     }
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public Pagina getPagina() {
+        return pagina;
+    }
+
+    public void setPagina(Pagina pagina) {
+        this.pagina = pagina;
     }
 
     @Override
