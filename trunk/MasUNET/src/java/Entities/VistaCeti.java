@@ -30,8 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VistaCeti.findByIdCeti", query = "SELECT v FROM VistaCeti v WHERE v.idCeti = :idCeti"),
     @NamedQuery(name = "VistaCeti.findByCedula", query = "SELECT v FROM VistaCeti v WHERE v.cedula = :cedula"),
     @NamedQuery(name = "VistaCeti.findByUsuario", query = "SELECT v FROM VistaCeti v WHERE v.usuario = :usuario"),
+    @NamedQuery(name = "VistaCeti.findByClave", query = "SELECT v FROM VistaCeti v WHERE v.clave = :clave"),
     @NamedQuery(name = "VistaCeti.findByUsuarioandPass", query = "SELECT v FROM VistaCeti v WHERE v.usuario = :usuario and v.clave = :clave"),
-    @NamedQuery(name = "VistaCeti.findByClave", query = "SELECT v FROM VistaCeti v WHERE v.clave = :clave")})
+    @NamedQuery(name = "VistaCeti.findByRol", query = "SELECT v FROM VistaCeti v WHERE v.rol = :rol")})
 public class VistaCeti implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,7 +58,8 @@ public class VistaCeti implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "rol")
-    private Integer rol;
+    private int rol;
+
     public VistaCeti() {
     }
 
@@ -65,11 +67,12 @@ public class VistaCeti implements Serializable {
         this.idCeti = idCeti;
     }
 
-    public VistaCeti(Integer idCeti, String cedula, String usuario, String clave) {
+    public VistaCeti(Integer idCeti, String cedula, String usuario, String clave, int rol) {
         this.idCeti = idCeti;
         this.cedula = cedula;
         this.usuario = usuario;
         this.clave = clave;
+        this.rol = rol;
     }
 
     public Integer getIdCeti() {
@@ -104,14 +107,13 @@ public class VistaCeti implements Serializable {
         this.clave = clave;
     }
 
-    public Integer getRol() {
+    public int getRol() {
         return rol;
     }
 
-    public void setRol(Integer rol) {
+    public void setRol(int rol) {
         this.rol = rol;
     }
-    
 
     @Override
     public int hashCode() {

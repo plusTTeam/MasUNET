@@ -38,12 +38,12 @@ public class UsuMen implements Serializable {
     @NotNull
     @Column(name = "estado")
     private char estado;
-    @JoinColumn(name = "mensaje_idmensaje", referencedColumnName = "idmensaje", insertable = false, updatable = false)
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Mensaje mensaje;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario", insertable = false, updatable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuario;
+    @JoinColumn(name = "mensaje_idmensaje", referencedColumnName = "idmensaje", insertable = false, updatable = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Mensaje mensaje;
 
     public UsuMen() {
     }
@@ -77,20 +77,20 @@ public class UsuMen implements Serializable {
         this.estado = estado;
     }
 
-    public Mensaje getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(Mensaje mensaje) {
-        this.mensaje = mensaje;
-    }
-
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public Mensaje getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(Mensaje mensaje) {
+        this.mensaje = mensaje;
     }
 
     @Override

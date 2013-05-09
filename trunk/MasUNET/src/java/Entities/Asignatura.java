@@ -7,6 +7,7 @@ package Entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -66,6 +67,8 @@ public class Asignatura implements Serializable {
     private String profesor;
     @OneToMany(mappedBy = "asignaturaIdasignatura", fetch = FetchType.LAZY)
     private List<Evento> eventoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignaturaIdasignatura", fetch = FetchType.LAZY)
+    private List<Recurso> recursoList;
 
     public Asignatura() {
     }
@@ -136,6 +139,15 @@ public class Asignatura implements Serializable {
 
     public void setEventoList(List<Evento> eventoList) {
         this.eventoList = eventoList;
+    }
+
+    @XmlTransient
+    public List<Recurso> getRecursoList() {
+        return recursoList;
+    }
+
+    public void setRecursoList(List<Recurso> recursoList) {
+        this.recursoList = recursoList;
     }
 
     @Override

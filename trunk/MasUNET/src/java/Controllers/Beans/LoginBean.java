@@ -70,7 +70,7 @@ public class LoginBean implements Serializable {
                 user = ejbFacade_usuario.FindbyUsuario(username);
                 if (user == null) {
                     user = new Usuario();
-                    if (user_ceti.getRol().equals(1)) {
+                    if (user_ceti.getRol()==1) {
                         VistaControlEstudiante aux = ejbFacade_control_estudiante.FindbyCedula(user_ceti.getCedula());
                         if (aux == null) {
                             FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("ErrorUserandPassword")));

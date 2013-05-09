@@ -148,7 +148,7 @@ public class VistaControlEstudiante implements Serializable {
 
     public void setCarrera(String carrera) {
         this.carrera = carrera;
-    }   
+    }
 
     public String getCodMateria() {
         return codMateria;

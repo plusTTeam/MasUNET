@@ -63,6 +63,12 @@
                     </f:facet>
                     <h:outputText value="#{item.usuarioIdusuario.descripcion}"/>
                 </p:column>
+                 <p:column sortBy="#{item.asignaturaIdasignatura.nombre}" filterBy="#{item.asignaturaIdasignatura.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_asignaturaIdasignatura}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.asignaturaIdasignatura.nombre}"/>
+                </p:column>
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{recursoController.prepareCreate}" update=":RecursoCreateForm" oncomplete="RecursoCreateDialog.show()"/>
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":RecursoViewForm" oncomplete="RecursoViewDialog.show()" disabled="#{empty recursoController.selected}"/>

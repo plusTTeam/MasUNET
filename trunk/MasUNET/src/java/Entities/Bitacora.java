@@ -57,15 +57,15 @@ public class Bitacora implements Serializable {
     @Size(max = 300)
     @Column(name = "informacion")
     private String informacion;
-    @JoinColumn(name = "accion_idaccion", referencedColumnName = "idaccion")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Accion accionIdaccion;
-    @JoinColumn(name = "pagina_idpagina", referencedColumnName = "idpagina")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Pagina paginaIdpagina;
     @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario usuarioIdusuario;
+    @JoinColumn(name = "pagina_idpagina", referencedColumnName = "idpagina")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Pagina paginaIdpagina;
+    @JoinColumn(name = "accion_idaccion", referencedColumnName = "idaccion")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Accion accionIdaccion;
 
     public Bitacora() {
     }
@@ -112,12 +112,12 @@ public class Bitacora implements Serializable {
         this.informacion = informacion;
     }
 
-    public Accion getAccionIdaccion() {
-        return accionIdaccion;
+    public Usuario getUsuarioIdusuario() {
+        return usuarioIdusuario;
     }
 
-    public void setAccionIdaccion(Accion accionIdaccion) {
-        this.accionIdaccion = accionIdaccion;
+    public void setUsuarioIdusuario(Usuario usuarioIdusuario) {
+        this.usuarioIdusuario = usuarioIdusuario;
     }
 
     public Pagina getPaginaIdpagina() {
@@ -128,12 +128,12 @@ public class Bitacora implements Serializable {
         this.paginaIdpagina = paginaIdpagina;
     }
 
-    public Usuario getUsuarioIdusuario() {
-        return usuarioIdusuario;
+    public Accion getAccionIdaccion() {
+        return accionIdaccion;
     }
 
-    public void setUsuarioIdusuario(Usuario usuarioIdusuario) {
-        this.usuarioIdusuario = usuarioIdusuario;
+    public void setAccionIdaccion(Accion accionIdaccion) {
+        this.accionIdaccion = accionIdaccion;
     }
 
     @Override

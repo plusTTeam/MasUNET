@@ -51,6 +51,17 @@
                                            />
                             <f:converter binding="#{usuarioConverter}"/>
                         </p:selectOneMenu>
+                        
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_asignaturaIdasignatura}" for="asignaturaIdasignatura" />
+                        <p:selectOneMenu id="asignaturaIdasignatura" value="#{recursoController.selected.asignaturaIdasignatura}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_asignaturaIdasignatura}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{asignaturaController.items}"
+                                           var="asignaturaIdasignaturaItem"
+                                           itemValue="#{asignaturaIdasignaturaItem}"
+                                           itemLabel="#{asignaturaIdasignaturaItem.nombre.toString()}"
+                                           />
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{recursoController.save}" value="#{bundle.Save}" update="display,:RecursoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RecursoEditDialog);"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="RecursoEditDialog.hide()"/>
