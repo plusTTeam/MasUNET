@@ -27,6 +27,9 @@
                         <h:outputLabel value="#{bundle.CreateRecursoLabel_numeroDescargas}" for="numeroDescargas" />
                         <p:inputText id="numeroDescargas" value="#{recursoController.selected.numeroDescargas}" title="#{bundle.CreateRecursoTitle_numeroDescargas}" required="true" requiredMessage="#{bundle.CreateRecursoRequiredMessage_numeroDescargas}"/>
 
+                        <h:outputLabel value="#{bundle.CreateRecursoLabel_fechaSubida}" for="fechaSubida" />
+                        <p:calendar id="fechaSubida" pattern="dd/MM/yyyy" value="#{recursoController.selected.fechaSubida}" title="#{bundle.CreateRecursoTitle_fechaSubida}" required="true" requiredMessage="#{bundle.CreateRecursoRequiredMessage_fechaSubida}" showOn="button"/>
+
                         <h:outputLabel value="#{bundle.CreateRecursoLabel_idTiporecurso}" for="idTiporecurso" />
                         <p:selectOneMenu id="idTiporecurso" value="#{recursoController.selected.idTiporecurso}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_idTiporecurso}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

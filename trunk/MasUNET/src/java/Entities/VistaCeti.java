@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "VistaCeti.findByCedula", query = "SELECT v FROM VistaCeti v WHERE v.cedula = :cedula"),
     @NamedQuery(name = "VistaCeti.findByUsuario", query = "SELECT v FROM VistaCeti v WHERE v.usuario = :usuario"),
     @NamedQuery(name = "VistaCeti.findByClave", query = "SELECT v FROM VistaCeti v WHERE v.clave = :clave"),
-    @NamedQuery(name = "VistaCeti.findByUsuarioandPass", query = "SELECT v FROM VistaCeti v WHERE v.usuario = :usuario and v.clave = :clave"),
     @NamedQuery(name = "VistaCeti.findByRol", query = "SELECT v FROM VistaCeti v WHERE v.rol = :rol")})
 public class VistaCeti implements Serializable {
     private static final long serialVersionUID = 1L;

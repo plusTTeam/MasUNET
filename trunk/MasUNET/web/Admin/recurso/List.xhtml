@@ -51,6 +51,12 @@
                     </f:facet>
                     <h:outputText value="#{item.numeroDescargas}"/>
                 </p:column>
+                <p:column sortBy="#{item.fechaSubida}" filterBy="#{item.fechaSubida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_fechaSubida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaSubida}"/>
+                </p:column>
                 <p:column sortBy="#{item.idTiporecurso.idTiporecurso}" filterBy="#{item.idTiporecurso.idTiporecurso}">
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListRecursoTitle_idTiporecurso}"/>
@@ -63,11 +69,17 @@
                     </f:facet>
                     <h:outputText value="#{item.usuarioIdusuario.descripcion}"/>
                 </p:column>
-                 <p:column sortBy="#{item.asignaturaIdasignatura.nombre}" filterBy="#{item.asignaturaIdasignatura.nombre}">
+                <p:column sortBy="#{item.asignaturaIdasignatura.nombre}" filterBy="#{item.asignaturaIdasignatura.nombre}">
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListRecursoTitle_asignaturaIdasignatura}"/>
                     </f:facet>
                     <h:outputText value="#{item.asignaturaIdasignatura.nombre}"/>
+                </p:column>
+                <p:column sortBy="#{item.fechaSubida}" filterBy="#{item.fechaSubida}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListRecursoTitle_fechaSubida}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaSubida}"/>
                 </p:column>
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{recursoController.prepareCreate}" update=":RecursoCreateForm" oncomplete="RecursoCreateDialog.show()"/>
