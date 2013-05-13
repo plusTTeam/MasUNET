@@ -5,6 +5,7 @@
 package Entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -32,12 +35,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "recurso")
 @XmlRootElement
-@NamedQueries({
+@NamedQueries({ 
     @NamedQuery(name = "Recurso.findAll", query = "SELECT r FROM Recurso r"),
     @NamedQuery(name = "Recurso.findByIdrecurso", query = "SELECT r FROM Recurso r WHERE r.idrecurso = :idrecurso"),
     @NamedQuery(name = "Recurso.findByNombre", query = "SELECT r FROM Recurso r WHERE r.nombre = :nombre"),
     @NamedQuery(name = "Recurso.findByUrl", query = "SELECT r FROM Recurso r WHERE r.url = :url"),
     @NamedQuery(name = "Recurso.findByDescripcion", query = "SELECT r FROM Recurso r WHERE r.descripcion = :descripcion"),
+    @NamedQuery(name = "Recurso.findByFechaSubida", query = "SELECT r FROM Recurso r WHERE r.fechaSubida = :fechaSubida"),
     @NamedQuery(name = "Recurso.findByNumeroDescargas", query = "SELECT r FROM Recurso r WHERE r.numeroDescargas = :numeroDescargas")})
 public class Recurso implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -61,6 +65,11 @@ public class Recurso implements Serializable {
     private String descripcion;
     @Basic(optional = false)
     @NotNull
+    @Column(name = "fecha_subida")
+    @Temporal(TemporalType.DATE)
+    private Date fechaSubida;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "numero_descargas")
     private int numeroDescargas;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recurso", fetch = FetchType.LAZY)
@@ -82,10 +91,11 @@ public class Recurso implements Serializable {
         this.idrecurso = idrecurso;
     }
 
-    public Recurso(Integer idrecurso, String nombre, String url, int numeroDescargas) {
+    public Recurso(Integer idrecurso, String nombre, String url, Date fechaSubida, int numeroDescargas) {
         this.idrecurso = idrecurso;
         this.nombre = nombre;
         this.url = url;
+        this.fechaSubida = fechaSubida;
         this.numeroDescargas = numeroDescargas;
     }
 
@@ -119,6 +129,14 @@ public class Recurso implements Serializable {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Date getFechaSubida() {
+        return fechaSubida;
+    }
+
+    public void setFechaSubida(Date fechaSubida) {
+        this.fechaSubida = fechaSubida;
     }
 
     public int getNumeroDescargas() {

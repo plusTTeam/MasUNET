@@ -29,6 +29,9 @@
 
                         <h:outputText value="#{bundle.ViewRecursoLabel_numeroDescargas}"/>
                         <h:outputText value="#{recursoController.selected.numeroDescargas}" title="#{bundle.ViewRecursoTitle_numeroDescargas}"/>
+                        
+                        <h:outputText value="#{bundle.ViewRecursoLabel_fechaSubida}"/>
+                        <h:outputText value="#{recursoController.selected.fechaSubida}" title="#{bundle.ViewRecursoTitle_fechaSubida}"/>
 
                         <h:outputText value="#{bundle.ViewRecursoLabel_valoracionList}"/>
 
@@ -40,6 +43,9 @@
                         
                         <h:outputText value="#{bundle.ViewRecursoLabel_asignaturaIdasignatura}"/>
                         <h:outputText value="#{recursoController.selected.asignaturaIdasignatura.nombre}"/>
+                        
+                        <h:outputText value="#{bundle.ViewRecursoLabel_fechaSubida}"/>
+                        <h:outputText value="#{recursoController.selected.fechaSubida}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="RecursoViewDialog.hide()"/>
                 </h:panelGroup>

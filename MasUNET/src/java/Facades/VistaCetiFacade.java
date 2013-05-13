@@ -33,7 +33,7 @@ public class VistaCetiFacade extends AbstractFacade<VistaCeti> {
         VistaCeti aux;
         if (!user.isEmpty() & !pass.isEmpty()) {
             try {
-                Query query = em.createNamedQuery("VistaCeti.findByUsuarioandPass");
+                Query query = em.createQuery("SELECT v FROM VistaCeti v WHERE v.usuario = :usuario and v.clave = :clave");
                 query.setParameter("usuario", user);
                 query.setParameter("clave", pass);
                 aux = (VistaCeti) query.getSingleResult();

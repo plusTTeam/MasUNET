@@ -29,6 +29,9 @@
 
                         <h:outputLabel value="#{bundle.EditRecursoLabel_numeroDescargas}" for="numeroDescargas" />
                         <p:inputText id="numeroDescargas" value="#{recursoController.selected.numeroDescargas}" title="#{bundle.EditRecursoTitle_numeroDescargas}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_numeroDescargas}"/>
+                        
+                        <h:outputLabel value="#{bundle.EditRecursoLabel_fechaSubida}" for="fechaSubida" />
+                        <p:calendar id="fechaSubida" pattern="dd/MM/yyyy" value="#{recursoController.selected.fechaSubida}" title="#{bundle.EditRecursoTitle_fechaSubida}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_fechaSubida}" showOn="button"/>
 
                         <h:outputLabel value="#{bundle.EditRecursoLabel_idTiporecurso}" for="idTiporecurso" />
                         <p:selectOneMenu id="idTiporecurso" value="#{recursoController.selected.idTiporecurso}" required="true" requiredMessage="#{bundle.EditRecursoRequiredMessage_idTiporecurso}">
@@ -60,7 +63,7 @@
                                            itemValue="#{asignaturaIdasignaturaItem}"
                                            itemLabel="#{asignaturaIdasignaturaItem.nombre.toString()}"
                                            />
-                            <f:converter binding="#{usuarioConverter}"/>
+                            <f:converter binding="#{asignaturaConverter}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
                     <p:commandButton actionListener="#{recursoController.save}" value="#{bundle.Save}" update="display,:RecursoListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,RecursoEditDialog);"/>
