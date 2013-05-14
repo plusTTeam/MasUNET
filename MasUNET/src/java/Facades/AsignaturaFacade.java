@@ -8,6 +8,7 @@ import Entities.Asignatura;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,5 +27,8 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> {
     public AsignaturaFacade() {
         super(Asignatura.class);
     }
+//    public getallsubjects(){
+//        Query q = em.createQuery("select a from asignatura a order by a.tipo");
+//    }
     
 }

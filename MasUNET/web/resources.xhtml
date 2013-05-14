@@ -5,17 +5,98 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
+    <!--    
+    RoyCalderon ^_^  
+    usar la clase de Java ResourcesBean para Controlar esta Vista
+    -->
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.AppName}"></h:outputText>
         </ui:define>
+
+
         <ui:define name="body">
-          
-             <!-- 
-                AQUI VA TODA LA PROGRAMACION usar la clase de Java ResourcesBean para Controlar esta Vista
-            -->
-            
+
+            <p:fieldset legend="Cargar un Recurso!" toggleable="true" toggleSpeed="500" style="text-align: center;" collapsed="true">
+                <h:panelGrid columns="3" cellpadding="3" style="text-align: center">  
+
+                    <h:outputLabel for="tittle" value="Titulo Del Recurso: *"  />  
+                    <p:inputText id="tittle" required="true"/>  
+                    <p:tooltip for="tittle" showEvent="focus" value="Ingrese El Titulo del recurso ;)" hideEvent="blur" />   
+
+                    <h:outputLabel for="description" value="Descripcion Del Recurso: *"  />  
+                    <p:inputTextarea id="description" required="true" rows="2" cols="15" autoResize="true" />  
+                    <p:tooltip for="description" showEvent="focus" value="Ingrese La Descripcion del recurso ;)" hideEvent="blur" />   
+
+                    <h:outputText value="Materia! " />  
+                    <h:selectOneMenu id="select1materia" value="enlace a bdd"  >  
+                        <f:selectItem itemLabel="Selecciona una materia" itemValue="" />   
+                        <f:selectItem itemLabel="mate1" itemValue="0" />  
+                        <f:selectItem itemLabel="mate2" itemValue="1" />  
+                        <f:selectItem itemLabel="Introduccion a Informatica xD" itemValue="4" />   
+                    </h:selectOneMenu>  
+                    <p:tooltip for="select1materia" showEvent="focus" value="Selecciona en donde cargaras el enlace!" hideEvent="blur" />  
+
+
+                    <h:form enctype="multipart/form-data">  
+
+                        <p:fileUpload fileUploadListener="#{resourcesBean.handleFileUpload}" showButtons="true" 
+                                      invalidSizeMessage="Se ha producido un error: El tamaño del archivo sobrepasa el maximo permitido!"
+                                      invalidFileMessage="Se ha producido un error: El tipo de archivo no es permitido!"
+                                      requiredMessage="Se ha producido un error: Debe seleccionar un archivo!"
+                                      label="Seleccionar" cancelLabel="CANCELAR" uploadLabel="CARGAR" 
+                                      dragDropSupport="true" 
+                                      mode="advanced"
+                                      update="messages"  
+                                      sizeLimit="100000"   
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png|jpg|pdf|doc|docx)$/"/> 
+
+                        <p:growl id="messages" showDetail="true"/>  </h:form>
+
+
+
+                </h:panelGrid>  
+            </p:fieldset> 
+
+
+            <p:fieldset legend="Ver Recursos Disponibles!" toggleSpeed="1000" toggleable="true" style="
+                        text-align: center" collapsed="false" >
+
+                <p:treeTable value="#{resourcesBean.treeRoot}" var="v_node">  
+                    <p:column>  
+                        <f:facet name="header">  
+                            ► Nombre  
+                        </f:facet>  
+                        <h:outputText value="#{v_node.nombre}" />  
+                    </p:column>
+
+                    <p:column>  
+                        <f:facet name="header">  
+                            ► Tamaño  
+                        </f:facet>  
+                        <h:outputText value="#{v_node.descripcion}" />  
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">  
+                            ► Tipo
+                        </f:facet>  
+                        <h:outputText value="#{v_node.tipo}" />  
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            Valoracion ♥
+                        </f:facet>
+                        <h:outputText value="#{v_node.valoracion}" />  
+                    </p:column>
+                </p:treeTable>  
+
+
+            </p:fieldset>
+
+
         </ui:define>
 
     </ui:composition>
