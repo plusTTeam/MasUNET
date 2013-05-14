@@ -24,9 +24,11 @@ import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -114,6 +116,7 @@ public class LoginBean implements Serializable {
                 } else {
                     isStudent = true;
                 }
+                setearAtributosUsuario(user);
                 isLoggedIn = true;
                 return "home.xhtml";
             } else {
@@ -126,7 +129,17 @@ public class LoginBean implements Serializable {
             return null;
         }
     }
+    public void setearAtributosUsuario(Usuario _usuario) {
 
+        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession sesion = (HttpSession) ex.getSession(true);
+        sesion.setAttribute("id", _usuario.getIdusuario());
+        sesion.setAttribute("cedula", _usuario.getCedula());
+        sesion.setAttribute("nombre", _usuario.getNombre());
+        sesion.setAttribute("foto", _usuario.getFotoUrl());
+        sesion.setAttribute("email", _usuario.getEmail());
+        sesion.setAttribute("alias", _usuario.getAlias());
+    }
     public void logout() {
         isLoggedIn = false;
         isAdmin = false;

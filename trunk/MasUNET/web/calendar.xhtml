@@ -12,7 +12,7 @@
         </ui:define>
         <ui:define name="body">
 
-            <h:form>
+            <h:form>                
                 <p:schedule value="#{calendarBean.eventModel}" editable="true" widgetVar="myschedule" style="width: 60%; margin: auto;">
                     <p:ajax event="dateSelect" listener="#{calendarBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />
                     <p:ajax event="eventSelect" listener="#{calendarBean.onEventSelect}"/>

@@ -5,8 +5,10 @@
 package Controllers.Beans;
 
 import Entities.Usuario;
+import Facades.UsuarioFacade;
 import java.util.Calendar;
 import java.util.Date;
+import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
@@ -29,7 +31,8 @@ import org.primefaces.model.ScheduleModel;
 @ApplicationScoped
 public class CalendarBean {
 
-    @ManagedProperty(value = "#{loginBean.user}")
+    @EJB
+    private UsuarioFacade ejbFacade_Usuario;
     private Usuario user;
     private ScheduleModel eventModel;
     private ScheduleEvent event = new DefaultScheduleEvent();
@@ -47,11 +50,8 @@ public class CalendarBean {
     }
 
     public Usuario getUser() {
+        user = ejbFacade_Usuario.find(ejbFacade_Usuario.getIdCurrentUser());
         return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
     }
 
     public Date getRandomDate(Date base) {
