@@ -3,6 +3,10 @@ package Converters;
 import Entities.Recurso;
 import Facades.RecursoFacade;
 import Controllers.util.JsfUtil;
+import Entities.Asignatura;
+import Entities.TipoRecurso;
+//1
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
@@ -10,10 +14,16 @@ import javax.inject.Inject;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
+//2^3
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+import javax.transaction.UserTransaction;
 
 @Named
 public class RecursoConverter implements Converter {
 
+ 
     @Inject
     private RecursoFacade ejbFacade;
 
@@ -51,4 +61,8 @@ public class RecursoConverter implements Converter {
             return null;
         }
     }
+    
+    
+    
+    
 }
