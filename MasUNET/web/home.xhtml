@@ -7,12 +7,12 @@
       xmlns:p="http://primefaces.org/ui">
     
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.AppName}"></h:outputText>
+        <ui:define name="title">    
+            <h:outputText value="#{bundle.AppName} "></h:outputText>
         </ui:define>
         <ui:define name="body">
             
-            <p:panel header="#{bundle.Welcome}">
+            <p:panel header="#{bundle.Welcome} #{loginBean.user.nombre} (#{loginBean.user.alias})">
                 
                 <p><h:outputText value="#{bundle.WelcomeMessage}"></h:outputText></p>
             </p:panel>

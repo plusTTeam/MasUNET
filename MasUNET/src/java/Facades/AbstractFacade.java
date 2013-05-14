@@ -4,15 +4,18 @@
  */
 package Facades;
 
+import Entities.Usuario;
 import java.util.List;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author jesus
  */
-public abstract class AbstractFacade<T> {
+public abstract class AbstractFacade<T> {    
     private Class<T> entityClass;   
     public AbstractFacade(Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -58,5 +61,40 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
+    public Integer getIdCurrentUser(){
+        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession sesion = (HttpSession) ex.getSession(true);
+        Integer id = (Integer) sesion.getAttribute("id");
+        return id;
+    }
+    public String getNombreCurrentUser(){
+        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession sesion = (HttpSession) ex.getSession(true);
+        String nombre = (String) sesion.getAttribute("nombre");
+        return nombre;
+    }
+    public String getCedulaCurrentUser(){
+        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession sesion = (HttpSession) ex.getSession(true);
+        String cedula = (String) sesion.getAttribute("cedula");
+        return cedula;
+    }
+     public String getAliasCurrentUser(){
+        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession sesion = (HttpSession) ex.getSession(true);
+        String alias = (String) sesion.getAttribute("alias");
+        return alias;
+    }
+     public String getEmailCurrentUser(){
+        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession sesion = (HttpSession) ex.getSession(true);
+        String email = (String) sesion.getAttribute("email");
+        return email;
+    }
+     public String getFotoURLCurrentUser(){
+        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+        HttpSession sesion = (HttpSession) ex.getSession(true);
+        String foto = (String) sesion.getAttribute("foto");
+        return foto;
+    }
 }
