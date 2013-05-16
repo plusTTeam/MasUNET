@@ -47,7 +47,7 @@ public class PaginaFacade extends AbstractFacade<Pagina> {
 
     public Pagina FindByTipo(int tipo) {
         try {
-            Query query = em.createNamedQuery("Pagina.findByTipo");
+            Query query = em.createQuery("SELECT p FROM Pagina p WHERE p.tipo = :tipo ORDER BY p.posicion");
             query.setParameter("tipo", tipo);
             Pagina aux = (Pagina) query.getSingleResult();
             return aux;
