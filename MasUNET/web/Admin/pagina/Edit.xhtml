@@ -30,6 +30,8 @@
                         <h:outputLabel value="#{bundle.EditPaginaLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{paginaController.selected.tipo}" title="#{bundle.EditPaginaTitle_tipo}" required="true" requiredMessage="#{bundle.EditPaginaRequiredMessage_tipo}"/>
 
+                        <h:outputLabel value="#{bundle.EditPaginaLabel_posicion}" for="posicion" />
+                        <p:inputText id="posicion" value="#{paginaController.selected.posicion}" title="#{bundle.EditPaginaTitle_posicion}" required="true" requiredMessage="#{bundle.EditPaginaRequiredMessage_posicion}"/>
 
                     </p:panelGrid>
                     <p:commandButton actionListener="#{paginaController.save}" value="#{bundle.Save}" update="display,:PaginaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaginaEditDialog);"/>

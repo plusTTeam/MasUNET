@@ -10,6 +10,7 @@ import Entities.VistaCeti;
 import Entities.VistaControlEstudiante;
 import Entities.VistaControlProfesor;
 import Facades.NotificacionFacade;
+import Facades.ParametroFacade;
 import Facades.RolFacade;
 import Facades.UsuarioFacade;
 import Facades.VistaCetiFacade;
@@ -46,6 +47,8 @@ public class LoginBean implements Serializable {
     private boolean isTeacher;
     private boolean isStudent;
     private VistaCeti user_ceti;
+    private ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+    private HttpSession sesion = (HttpSession) ex.getSession(true);
     private Usuario user;
     @EJB
     private VistaCetiFacade ejbFacade;
@@ -59,6 +62,8 @@ public class LoginBean implements Serializable {
     private RolFacade ejbFacade_rol;
     @EJB
     private NotificacionFacade ejbFacade_notificacion;
+    @EJB
+    private ParametroFacade ejbFacade_parametro;
     private FacesContext ctx = FacesContext.getCurrentInstance();
     private String path = ctx.getExternalContext().getRequestContextPath();
 
@@ -72,7 +77,7 @@ public class LoginBean implements Serializable {
                 user = ejbFacade_usuario.FindbyUsuario(username);
                 if (user == null) {
                     user = new Usuario();
-                    if (user_ceti.getRol()==1) {
+                    if (user_ceti.getRol() == 1) {
                         VistaControlEstudiante aux = ejbFacade_control_estudiante.FindbyCedula(user_ceti.getCedula());
                         if (aux == null) {
                             FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("ErrorUserandPassword")));
@@ -116,7 +121,18 @@ public class LoginBean implements Serializable {
                 } else {
                     isStudent = true;
                 }
-                setearAtributosUsuario(user);
+                String lapso = ejbFacade_parametro.findByNombre("Lapso");
+                if(lapso!=null) {
+                    sesion.setAttribute("lapso",lapso);
+                }
+                sesion.setAttribute("id", user.getIdusuario());
+                sesion.setAttribute("cedula", user.getCedula());
+                sesion.setAttribute("nombre", user.getNombre());
+                sesion.setAttribute("foto", user.getFotoUrl());
+                sesion.setAttribute("email", user.getEmail());
+                sesion.setAttribute("alias", user.getAlias());
+                sesion.setAttribute("rol", user.getRolIdrol().getNombre());
+                sesion.setAttribute("idrol", user.getRolIdrol().getIdrol());
                 isLoggedIn = true;
                 return "home.xhtml";
             } else {
@@ -128,17 +144,6 @@ public class LoginBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("TypeUserandPassword")));
             return null;
         }
-    }
-    public void setearAtributosUsuario(Usuario _usuario) {
-
-        ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
-        HttpSession sesion = (HttpSession) ex.getSession(true);
-        sesion.setAttribute("id", _usuario.getIdusuario());
-        sesion.setAttribute("cedula", _usuario.getCedula());
-        sesion.setAttribute("nombre", _usuario.getNombre());
-        sesion.setAttribute("foto", _usuario.getFotoUrl());
-        sesion.setAttribute("email", _usuario.getEmail());
-        sesion.setAttribute("alias", _usuario.getAlias());
     }
     public void logout() {
         isLoggedIn = false;

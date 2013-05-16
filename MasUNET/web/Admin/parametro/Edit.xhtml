@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParametroEditDlg" widgetVar="ParametroEditDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.EditParametroTitle}">
+
+            <h:form id="ParametroEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" rendered="#{parametroController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.EditParametroLabel_idparametro}" for="idparametro" />
+                        <h:outputText id="idparametro" value="#{parametroController.selected.idparametro}" />
+
+                        <h:outputLabel value="#{bundle.EditParametroLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{parametroController.selected.nombre}" title="#{bundle.EditParametroTitle_nombre}" required="true" requiredMessage="#{bundle.EditParametroRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.EditParametroLabel_valor}" for="valor" />
+                        <p:inputText id="valor" value="#{parametroController.selected.valor}" title="#{bundle.EditParametroTitle_valor}" required="true" requiredMessage="#{bundle.EditParametroRequiredMessage_valor}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{parametroController.save}" value="#{bundle.Save}" update="display,:ParametroListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ParametroEditDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ParametroEditDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

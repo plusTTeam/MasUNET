@@ -51,6 +51,12 @@
                     </f:facet>
                     <h:outputText value="#{item.tipo}"/>
                 </p:column>
+                 <p:column sortBy="#{item.posicion}" filterBy="#{item.posicion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListPaginaTitle_posicion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.posicion}"/>
+                </p:column>
                 <f:facet name="footer">
                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{paginaController.prepareCreate}" update=":PaginaCreateForm" oncomplete="PaginaCreateDialog.show()"/>
                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":PaginaViewForm" oncomplete="PaginaViewDialog.show()" disabled="#{empty paginaController.selected}"/>

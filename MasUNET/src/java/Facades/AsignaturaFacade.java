@@ -4,7 +4,10 @@
  */
 package Facades;
 
+import Controllers.util.JsfUtil;
 import Entities.Asignatura;
+import java.util.List;
+import java.util.ResourceBundle;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 public class AsignaturaFacade extends AbstractFacade<Asignatura> {
+
     @PersistenceContext(unitName = "MasUNETPU")
     private EntityManager em;
 
@@ -27,8 +31,36 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> {
     public AsignaturaFacade() {
         super(Asignatura.class);
     }
-//    public getallsubjects(){
-//        Query q = em.createQuery("select a from asignatura a order by a.tipo");
-//    }
-    
+
+    /**
+     * Obtiene todas las Asignaturas que esta viendo un Estudiante por su numero
+     * de cedula
+     */
+    public List<Asignatura> getAllSubjectsStudent(String Cedula, String Lapso) {
+        Query q = em.createQuery("SELECT a FROM Asignatura a,VistaControlEstudiante vce where a.codMateria=vce.codMateria and vce.cedula = :cedula and vce.lapso = :lapso ORDER BY a.nombre");
+        q.setParameter("cedula", Cedula);
+        q.setParameter("lapso", Lapso);
+        try {
+            return (List<Asignatura>) q.getResultList();
+        } catch (Exception ex) {
+            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    /**
+     * Obtiene todas las Asignaturas que esta dictando un Profesor por su numero
+     * de cedula
+     */
+    public List<Asignatura> getAllSubjectsTeacher(String Cedula, String Lapso) {
+        Query q = em.createQuery("SELECT a FROM Asignatura a,VistaControlProfesor vcp where a.codMateria=vcp.codMateria and vcp.cedula = :cedula and vcp.lapso = :lapso ORDER BY a.nombre");
+        q.setParameter("cedula", Cedula);
+        q.setParameter("lapso", Lapso);
+        try {
+            return (List<Asignatura>) q.getResultList();
+        } catch (Exception ex) {
+            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
 }

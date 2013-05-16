@@ -47,7 +47,7 @@ public class Asignatura implements Serializable {
     private Integer idasignatura;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 7)
+    @Size(min = 1, max = 10)
     @Column(name = "cod_materia")
     private String codMateria;
     @Basic(optional = false)
