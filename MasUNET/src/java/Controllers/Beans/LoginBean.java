@@ -145,7 +145,7 @@ public class LoginBean implements Serializable {
             return null;
         }
     }
-    public void logout() {
+    public String logout() {
         isLoggedIn = false;
         isAdmin = false;
         isStudent = false;
@@ -155,8 +155,10 @@ public class LoginBean implements Serializable {
         try {
             context.getExternalContext().redirect(path);
         } catch (IOException ex) {
+            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(ex.getMessage()));                          
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return "/faces/index.xhtml";
 
     }
 
