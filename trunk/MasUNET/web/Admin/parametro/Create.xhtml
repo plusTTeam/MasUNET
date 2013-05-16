@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ParametroCreateDlg" widgetVar="ParametroCreateDialog" modal="true" resizable="false" appendToBody="true" header="#{bundle.CreateParametroTitle}">
+
+            <h:form id="ParametroCreateForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{parametroController.selected != null}">
+
+                        <h:outputLabel value="#{bundle.CreateParametroLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{parametroController.selected.nombre}" title="#{bundle.CreateParametroTitle_nombre}" required="true" requiredMessage="#{bundle.CreateParametroRequiredMessage_nombre}"/>
+
+                        <h:outputLabel value="#{bundle.CreateParametroLabel_valor}" for="valor" />
+                        <p:inputText id="valor" value="#{parametroController.selected.valor}" title="#{bundle.CreateParametroTitle_valor}" required="true" requiredMessage="#{bundle.CreateParametroRequiredMessage_valor}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{parametroController.saveNew}" value="#{bundle.Save}" update="display,:ParametroListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,ParametroCreateDialog);"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ParametroCreateDialog.hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

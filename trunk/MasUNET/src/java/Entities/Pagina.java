@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pagina.findByTitulo", query = "SELECT p FROM Pagina p WHERE p.titulo = :titulo"),
     @NamedQuery(name = "Pagina.findByUrl", query = "SELECT p FROM Pagina p WHERE p.url = :url"),
     @NamedQuery(name = "Pagina.findByIcono", query = "SELECT p FROM Pagina p WHERE p.icono = :icono"),
-    @NamedQuery(name = "Pagina.findByTipo", query = "SELECT p FROM Pagina p WHERE p.tipo = :tipo")})
+    @NamedQuery(name = "Pagina.findByTipo", query = "SELECT p FROM Pagina p WHERE p.tipo = :tipo ORDER BY p.posicion")})
 public class Pagina implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,6 +59,8 @@ public class Pagina implements Serializable {
     private String icono;
     @Column(name = "tipo")
     private Integer tipo;
+    @Column(name = "posicion")
+    private Integer posicion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pagina", fetch = FetchType.LAZY)
     private List<Permisologia> permisologiaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paginaIdpagina", fetch = FetchType.LAZY)
@@ -117,6 +119,14 @@ public class Pagina implements Serializable {
         this.tipo = tipo;
     }
 
+    public Integer getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(Integer posicion) {
+        this.posicion = posicion;
+    }
+    
     @XmlTransient
     public List<Permisologia> getPermisologiaList() {
         return permisologiaList;

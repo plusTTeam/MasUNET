@@ -29,9 +29,11 @@
 
                         <h:outputText value="#{bundle.ViewPaginaLabel_tipo}"/>
                         <h:outputText value="#{paginaController.selected.tipo}" title="#{bundle.ViewPaginaTitle_tipo}"/>
-
+                        
+                        <h:outputText value="#{bundle.ViewPaginaLabel_posicion}"/>
+                        <h:outputText value="#{paginaController.selected.posicion}" title="#{bundle.ViewPaginaTitle_posicion}"/>
+                        
                         <h:outputText value="#{bundle.ViewPaginaLabel_permisologiaList}"/>
-
                         <h:outputText value="#{bundle.ViewPaginaLabel_bitacoraList}"/>
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="PaginaViewDialog.hide()"/>

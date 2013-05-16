@@ -26,7 +26,11 @@
 
                         <h:outputLabel value="#{bundle.CreatePaginaLabel_tipo}" for="tipo" />
                         <p:inputText id="tipo" value="#{paginaController.selected.tipo}" title="#{bundle.CreatePaginaTitle_tipo}" required="true" requiredMessage="#{bundle.CreatePaginaRequiredMessage_tipo}"/>
-                        
+
+                        <h:outputLabel value="#{bundle.CreatePaginaLabel_posicion}" for="posicion" />
+                        <p:inputText id="posicion" value="#{paginaController.selected.posicion}" title="#{bundle.CreatePaginaTitle_posicion}" required="true" requiredMessage="#{bundle.CreatePaginaRequiredMessage_posicion}"/>
+
+
                     </p:panelGrid>
                     <p:commandButton actionListener="#{paginaController.saveNew}" value="#{bundle.Save}" update="display,:PaginaListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PaginaCreateDialog);"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="PaginaCreateDialog.hide()"/>

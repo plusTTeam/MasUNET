@@ -2,18 +2,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html" 
-    xmlns:p="http://primefaces.org/ui"
-    xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui">
     <ui:composition>
+        <h:form>
             <p:idleMonitor onactive="sessionTimeOutDialog.show();" timeout="#{session.maxInactiveInterval * 1000}" />
-            <p:dialog header="#{msg['error.sessionTimeOut.header']}" widgetVar="sessionTimeOutDialog"
-             modal="true" fixedCenter="true" closable="false" width="400" visible="false">
-                 <h:outputText value="#{msg['error.sessionTimeOut.text']}" />
-                 <input id="confirmBackToLogin" type="button" value="#{msg['error.sessionTimeOut.button']}"
-                    onclick="window.location='#{facesContext.externalContext.requestContextPath}/index.xhtml';" />
+            <p:dialog header="#{bundle.DialogTimeOutHeader}" widgetVar="sessionTimeOutDialog"
+                      closable="false" width="400" visible="false" resizable="false">
+                <h:outputText value="#{bundle.DialogTimeOutMessage}" />
+                <p:commandButton action="#{loginBean.logout()}" ajax="false"  value="#{bundle.DialogTimeOutButton}" />               
             </p:dialog>
-     
+        </h:form>
     </ui:composition>
 </html>
 
