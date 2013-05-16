@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <!--    
     RoyCalderon ^_^  
@@ -18,47 +19,46 @@
 
         <ui:define name="body">
 
-            <p:fieldset legend="Cargar un Recurso!" toggleable="true" toggleSpeed="500" style="text-align: center;" collapsed="true">
-                <h:panelGrid columns="3" cellpadding="3" style="text-align: center">  
+            <p:fieldset legend="Cargar un Recurso!" toggleable="true" toggleSpeed="500" style="text-align: center;" collapsed="false">
+                <h:form>  
+                    <h:panelGrid columns="3" cellpadding="4" style="text-align: center"  >  
 
-                    <h:outputLabel for="tittle" value="Titulo Del Recurso: *"  />  
-                    <p:inputText id="tittle" required="true"/>  
-                    <p:tooltip for="tittle" showEvent="focus" value="Ingrese El Titulo del recurso ;)" hideEvent="blur" />   
+                        <h:outputLabel for="tittle" value="Nombre Del Recurso: *"  />  
+                        <p:inputText id="tittle" required="true" value="#{resourcesBean.e_Recurso.nombre}"/>  
+                        <p:tooltip for="tittle" showEvent="focus" value="Ingrese el nombre del recurso ;)" hideEvent="blur" />   
 
-                    <h:outputLabel for="description" value="Descripcion Del Recurso: *"  />  
-                    <p:inputTextarea id="description" required="true" rows="2" cols="15" autoResize="true" />  
-                    <p:tooltip for="description" showEvent="focus" value="Ingrese La Descripcion del recurso ;)" hideEvent="blur" />   
-
-                    <h:outputText value="Materia! " />  
-                    <h:selectOneMenu id="select1materia" value="enlace a bdd"  >  
-                        <f:selectItem itemLabel="Selecciona una materia" itemValue="" />   
-                        <f:selectItem itemLabel="mate1" itemValue="0" />  
-                        <f:selectItem itemLabel="mate2" itemValue="1" />  
-                        <f:selectItem itemLabel="Introduccion a Informatica xD" itemValue="4" />   
-                    </h:selectOneMenu>  
-                    <p:tooltip for="select1materia" showEvent="focus" value="Selecciona en donde cargaras el enlace!" hideEvent="blur" />  
+                        <h:outputLabel for="description" value="Descripcion Del Recurso: *"  />  
+                        <p:inputTextarea id="description" required="true" rows="2" cols="15" autoResize="true" value="#{resourcesBean.e_Recurso.descripcion}"/>  
+                        <p:tooltip for="description" showEvent="focus" value="Ingrese La Descripcion del recurso ;)" hideEvent="blur" />   
 
 
-                    <h:form enctype="multipart/form-data">  
+                        <h:outputText value="Asignatura: * " />  
 
-                        <p:fileUpload fileUploadListener="#{resourcesBean.handleFileUpload}" showButtons="true" 
-                                      invalidSizeMessage="Se ha producido un error: El tamaño del archivo sobrepasa el maximo permitido!"
-                                      invalidFileMessage="Se ha producido un error: El tipo de archivo no es permitido!"
-                                      requiredMessage="Se ha producido un error: Debe seleccionar un archivo!"
-                                      label="Seleccionar" cancelLabel="CANCELAR" uploadLabel="CARGAR" 
-                                      dragDropSupport="true" 
-                                      mode="advanced"
-                                      update="messages"  
-                                      sizeLimit="100000"   
-                                      allowTypes="/(\.|\/)(gif|jpe?g|png|jpg|pdf|doc|docx)$/"/> 
-
-                        <p:growl id="messages" showDetail="true"/>  </h:form>
+                        <h:selectOneMenu id="select1materia" value="#{resourcesBean.asignaturaSeleccionada}" var="v_Asignatura">
+                            <f:selectItem itemLabel="Seleccione 1 Materia ;)" itemValue=""></f:selectItem>
+                            <f:selectItems value="#{resourcesBean.select1Item()}" var="v_Asig" itemLabel="#{v_Asig.nombre}" itemValue="#{v_Asig}"></f:selectItems>
+                        </h:selectOneMenu>  
+                        <p:tooltip for="select1materia" showEvent="focus" value="Selecciona la asignatura en donde cargaras el recurso!" hideEvent="blur" />  
 
 
+                        <h:outputText value="Archivo: * " />  
+                        <h:form enctype="multipart/form-data">  
+                            <p:fileUpload fileUploadListener="#{resourcesBean.handleFileUpload}" showButtons="true" 
+                                          invalidSizeMessage="Se ha producido un error: El tamaño del archivo sobrepasa el maximo permitido!"
+                                          invalidFileMessage="Se ha producido un error: El tipo de archivo no es permitido!"
+                                          requiredMessage="Se ha producido un error: Debe seleccionar un archivo!"
+                                          label="Seleccionar" cancelLabel="CANCELAR" uploadLabel="CARGAR" 
+                                          dragDropSupport="true" 
+                                          mode="advanced"
+                                          update="messages"  
+                                          sizeLimit="100000"   
+                                          allowTypes="/(\.|\/)(gif|jpe?g|png|jpg|pdf|doc|docx)$/"/> 
 
-                </h:panelGrid>  
+                            <p:growl id="messages" showDetail="true"/></h:form>
+                    </h:panelGrid>  
+
+                </h:form>
             </p:fieldset> 
-
 
             <p:fieldset legend="Ver Recursos Disponibles!" toggleSpeed="1000" toggleable="true" style="
                         text-align: center" collapsed="false" >
