@@ -7,19 +7,23 @@ package Controllers.Beans.Resources;
 import Controllers.AsignaturaController;
 import Controllers.RecursoController;
 import Controllers.TipoRecursoController;
+import Converters.AsignaturaConverter;
 import Entities.Asignatura;
 import Entities.Recurso;
 import Entities.TipoRecurso;
 import Entities.Valoracion;
+import Entities.VistaControlEstudiante;
 import Facades.AsignaturaFacade;
 import Facades.RecursoFacade;
 import Facades.TipoRecursoFacade;
+import Facades.VistaControlEstudianteFacade;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.List;
+import javax.ejb.EJB;
 
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
@@ -47,22 +51,32 @@ public class ResourcesBean {
      */
     //Objetos de componentes...
     private TreeNode treeRoot;
-    //Entidades...
+    //Objetos  de Entidades...
     private Recurso e_Recurso;
-    //Controladores...
+    
+    //Objetos de Controladores...
     private RecursoController c_Recurso;
     //
     private AsignaturaController c_Asig;
     //
     private TipoRecursoController c_TipoRecurso;
+    
     //Nodo seleccionado que retornare para montar en el dialog... 
     private Node selectedNode;
+    //Asignatura seleccionada...
+    private Asignatura asignaturaSeleccionada;
+    
+    
     @Inject
     private RecursoFacade ejbFacade;
     @Inject
     private TipoRecursoFacade ejbFacade_TipoRecurso;
     @Inject
     private AsignaturaFacade ejbFacade_Asignatura;
+    @EJB
+    private VistaControlEstudianteFacade ejbFacade_VistaControlEstudiante;
+    
+    
 
     //Constructor!
     public ResourcesBean() {
@@ -73,6 +87,17 @@ public class ResourcesBean {
         return c_Recurso;
     }
 
+    public Recurso getE_Recurso() {
+        return e_Recurso;
+    }
+
+    public void setE_Recurso(Recurso e_Recurso) {
+        this.e_Recurso = e_Recurso;
+    }
+
+    
+    
+    
     public void setC_Recurso(RecursoController c_Recurso) {
         this.c_Recurso = c_Recurso;
     }
@@ -86,6 +111,11 @@ public class ResourcesBean {
         return c_TipoRecurso;
     }
 
+    /**
+     * TREENODE ;)
+     *
+     * @author RoyCalderon 
+     */
     public TreeNode getTreeRoot() {
         if (treeRoot == null) {
             treeRoot = new DefaultTreeNode("root", null);
@@ -118,13 +148,29 @@ public class ResourcesBean {
         this.selectedNode = selectedNode;
     }
 
-    //FileUpload sTUFF
+    //Set^Getters of Asignatura
+    public Asignatura getAsignaturaSeleccionada() {
+        return asignaturaSeleccionada;
+    }
+
+    public void setAsignaturaSeleccionada(Asignatura asignaturaSeleccionada) {
+        this.asignaturaSeleccionada = asignaturaSeleccionada;
+    }
+    
+    
+    
+
+    /**
+     * FILE UPLOADING ;)
+     *
+     * @author RoyCalderon 
+     */
     public void handleFileUpload(FileUploadEvent event) {
 
         ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
         File result = new File(extContext.getRealPath("//WEB-INF//Resources//" + event.getFile().getFileName()));
         System.out.println(extContext.getRealPath("//WEB-INF//Resources//" + event.getFile().getFileName()));
-
+        
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(result);
 
@@ -148,14 +194,26 @@ public class ResourcesBean {
                     "\nNombre: " + event.getFile().getFileName()
                     + "\nTamaño: " + event.getFile().getSize() / 1024
                     + "Kb\nTipo De Archivo: " + event.getFile().getContentType()
-                    + "\nEl archivo se subío exitosamente!");
+                    + "\nEl archivo se subío exitosamente!"
+                    + "\nA la asignatura: " + e_Recurso.getNombre());
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
         } catch (IOException e) {
             e.printStackTrace();
 
-            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Se ha producido un error internod del sistema en el intento de carga de archivo. Hemos registrado este error. Intentelo nuevamente.", "");
+            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Se ha producido un error interno del sistema en el intento de carga de archivo. Hemos registrado este error. Intentelo nuevamente.", "");
             FacesContext.getCurrentInstance().addMessage(null, error);
         }
     }
+
+    /**
+     * SELECT 1 MENU ;)
+     *
+     * @author RoyCalderon 
+     */
+    public List<Asignatura> select1Item()
+    { 
+        return ejbFacade_VistaControlEstudiante.findAsignaturas4user("V19235763", ejbFacade.getCurrentLapso());
+    }
+    
 }
