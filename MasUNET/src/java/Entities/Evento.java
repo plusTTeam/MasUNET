@@ -42,7 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evento.findByDescripcion", query = "SELECT e FROM Evento e WHERE e.descripcion = :descripcion"),
     @NamedQuery(name = "Evento.findByFechaIni", query = "SELECT e FROM Evento e WHERE e.fechaIni = :fechaIni"),
     @NamedQuery(name = "Evento.findByFechaFin", query = "SELECT e FROM Evento e WHERE e.fechaFin = :fechaFin"),
-    @NamedQuery(name = "Evento.findByFechaCreacion", query = "SELECT e FROM Evento e WHERE e.fechaCreacion = :fechaCreacion")})
+    @NamedQuery(name = "Evento.findByFechaCreacion", query = "SELECT e FROM Evento e WHERE e.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "Evento.findByTododia", query = "SELECT e FROM Evento e WHERE e.tododia = :tododia")})
 public class Evento implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -73,15 +74,19 @@ public class Evento implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
-    @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Usuario usuarioIdusuario;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "tododia")
+    private boolean tododia;
     @JoinColumn(name = "tipo_evento_idtipo_evento", referencedColumnName = "idtipo_evento")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private TipoEvento tipoEventoIdtipoEvento;
     @JoinColumn(name = "asignatura_idasignatura", referencedColumnName = "idasignatura")
     @ManyToOne(fetch = FetchType.LAZY)
     private Asignatura asignaturaIdasignatura;
+    @JoinColumn(name = "usuario_idusuario", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Usuario usuarioIdusuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "evento", fetch = FetchType.LAZY)
     private List<UserEven> userEvenList;
 
@@ -92,12 +97,13 @@ public class Evento implements Serializable {
         this.idevento = idevento;
     }
 
-    public Evento(Integer idevento, String nombre, Date fechaIni, Date fechaFin, Date fechaCreacion) {
+    public Evento(Integer idevento, String nombre, Date fechaIni, Date fechaFin, Date fechaCreacion, boolean tododia) {
         this.idevento = idevento;
         this.nombre = nombre;
         this.fechaIni = fechaIni;
         this.fechaFin = fechaFin;
         this.fechaCreacion = fechaCreacion;
+        this.tododia = tododia;
     }
 
     public Integer getIdevento() {
@@ -148,14 +154,14 @@ public class Evento implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Usuario getUsuarioIdusuario() {
-        return usuarioIdusuario;
+    public boolean getTododia() {
+        return tododia;
     }
 
-    public void setUsuarioIdusuario(Usuario usuarioIdusuario) {
-        this.usuarioIdusuario = usuarioIdusuario;
+    public void setTododia(boolean tododia) {
+        this.tododia = tododia;
     }
-
+    
     public TipoEvento getTipoEventoIdtipoEvento() {
         return tipoEventoIdtipoEvento;
     }
@@ -170,6 +176,14 @@ public class Evento implements Serializable {
 
     public void setAsignaturaIdasignatura(Asignatura asignaturaIdasignatura) {
         this.asignaturaIdasignatura = asignaturaIdasignatura;
+    }
+
+    public Usuario getUsuarioIdusuario() {
+        return usuarioIdusuario;
+    }
+
+    public void setUsuarioIdusuario(Usuario usuarioIdusuario) {
+        this.usuarioIdusuario = usuarioIdusuario;
     }
 
     @XmlTransient

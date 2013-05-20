@@ -17,10 +17,8 @@
         <Node id="Admin/evento/index.xhtml" x="3650" y="150" zoom="true"/>
         <Node id="Admin/userEven/List.xhtml" x="2900" y="600" zoom="true"/>
         <Node id="Admin/vistaAsignatura/List.xhtml" x="150" y="600" zoom="true"/>
-        <Node id="Admin/vistaCeti/Create.xhtml" x="1400" y="1200" zoom="true"/>
-        <Node id="home.xhtml" x="900" y="1200" zoom="true"/>
-        <Node id="Admin/vistaAsignatura/Edit.xhtml" x="2400" y="900" zoom="true"/>
         <Node id="Admin/permisologia/Edit.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="Admin/vistaAsignatura/Edit.xhtml" x="2400" y="900" zoom="true"/>
         <Node id="Admin/asignatura/Edit.xhtml" x="650" y="300" zoom="true"/>
         <Node id="Admin/tipoEvento/List.xhtml" x="1650" y="300" zoom="true"/>
         <Node id="Admin/vistaControlProfesor/Create.xhtml" x="650" y="900" zoom="true"/>
@@ -83,9 +81,9 @@
         <Node id="Admin/permisologia/List.xhtml" x="400" y="150" zoom="true"/>
         <Node id="Admin/valoracion/List.xhtml" x="2150" y="900" zoom="true"/>
         <Node id="Admin/notificacion/View.xhtml" x="1900" y="750" zoom="true"/>
-        <Node id="Admin/vistaControlProfesor/Edit.xhtml" x="1650" y="600" zoom="true"/>
-        <Node id="Admin/permisologia/View.xhtml" x="1650" y="150" zoom="true"/>
         <Node id="Admin/evento/Create.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="sessionTimeOut.xhtml" x="2400" y="450" zoom="true"/>
+        <Node id="Admin/permisologia/View.xhtml" x="1650" y="150" zoom="true"/>
         <Node id="sessionTimeOut.xhtml" x="2400" y="450" zoom="true"/>
         <Node id="Admin/permisologia/Create.xhtml" x="2150" y="150" zoom="true"/>
         <Node id="Admin/tipoEvento/index.xhtml" x="2650" y="300" zoom="true"/>
@@ -97,8 +95,8 @@
         <Node id="Admin/pagina/index.xhtml" x="2900" y="450" zoom="true"/>
         <Node id="Admin/pagina/List.xhtml" x="650" y="600" zoom="true"/>
         <Node id="Admin/rol/index.xhtml" x="1150" y="750" zoom="true"/>
-        <Node id="Admin/usuMen/Create.xhtml" x="900" y="150" zoom="true"/>
         <Node id="Admin/recurso/index.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="Admin/usuMen/Create.xhtml" x="900" y="150" zoom="true"/>
         <Node id="Admin/asignatura/View.xhtml" x="150" y="1950" zoom="true"/>
         <Node id="Admin/usuario/Create.xhtml" x="650" y="150" zoom="true"/>
         <Node id="Admin/mensaje/Edit.xhtml" x="1150" y="300" zoom="true"/>

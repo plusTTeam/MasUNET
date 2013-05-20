@@ -5,17 +5,73 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
             <h:outputText value="#{bundle.AppName}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-          
-            <!-- 
-                AQUI VA TODA LA PROGRAMACION usar la clase de Java SettingBean para Controlar esta Vista
-            -->
-            
+            <h:form id="AccionListForm">              
+
+                <p:panel header="Setting">
+
+                    <p:fieldset legend="Personal" style="margin: auto; width: 80%;">  
+                        <h:panelGrid columns="2" cellpadding="30">  
+                            <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" />  
+                            <h:panelGrid columns="2" cellpadding="10">  
+
+                                <h:outputLabel value="#{bundle.CreateUsuarioLabel_nombre}" for="nombre" styleClass="ui-label"/>                                 
+                                <h:outputText id="nombre" value="#{settingBean.selected.nombre}" />
+
+                                <h:outputLabel value="#{bundle.CreateUsuarioLabel_cedula}" for="cedula" styleClass="ui-label"/>                                 
+                                <h:outputText id="cedula" value="#{settingBean.selected.cedula}" />
+
+                                <h:outputLabel value="#{bundle.ViewUsuarioLabel_descripcion}" styleClass="ui-label"/> 
+                                <p:inputTextarea value="#{settingBean.selected.descripcion}" maxlength="300" />
+
+                                <h:outputLabel value="#{bundle.ViewUsuarioLabel_alias}" styleClass="ui-label"/> 
+                                <p:inputText value="#{settingBean.selected.alias}" maxlength="45"/>
+
+                                <h:outputLabel value="#{bundle.ViewUsuarioLabel_email}" styleClass="ui-label"/> 
+                                <p:inputText  value="#{settingBean.selected.email}" maxlength="45" />
+
+                                <h:outputLabel value="#{bundle.ViewUsuarioLabel_telefono}" styleClass="ui-label"/> 
+                                <p:inputText value="#{settingBean.selected.telefono}" maxlength="45"/>
+                            </h:panelGrid>                          
+                        </h:panelGrid>  
+                    </p:fieldset>  
+                    <p:fieldset legend="System" style="margin: auto; width: 80%;">  
+                        <h:panelGrid columns="3" cellpadding="20">  
+                            <h:outputLabel value="#{bundle.ViewUsuarioLabel_notificacionIdnotificacion}" styleClass="ui-label"/>
+                            <p:selectOneMenu id="notificacionIdnotificacion" value="#{settingBean.selected.notificacionIdnotificacion}">
+                                <f:selectItems value="#{notificacionController.items}"
+                                               var="notificacionIdnotificacionItem"
+                                               itemValue="#{notificacionIdnotificacionItem}"
+                                               itemLabel="#{notificacionIdnotificacionItem.nombre}"/>
+                                <f:converter binding="#{notificacionConverter}"/>
+                            </p:selectOneMenu>    
+                            <h:outputText value="Este Campo indica como te llegaran las notificaciones de los eventos y acciones que ocurran dentro de la red social a tu correo electronico"/>
+
+                            <h:outputLabel value="#{bundle.ViewUsuarioLabel_notificacionIdnotificacion}" styleClass="ui-label"/>
+                            <p:commandButton value="Read and Write All Subject from Control de Estudios" onclick="confirmation.show();" type="button" />
+
+                        </h:panelGrid>  
+                    </p:fieldset>  
+                    <p:panel style="margin: auto; width: 80.999%; text-align: right">
+                        <p:commandButton actionListener="#{settingBean.save}" value="#{bundle.Save}" update=":growl"/>
+
+                    </p:panel>
+
+                </p:panel>
+                <p:dialog id="confirmDialog" header="Initiating destroy process" widgetVar="confirmation"  resizable="false">
+                    
+                        <h:outputLabel value="Esta Seguro de Realizar esta accion?"/>
+                    <h:panelGrid columns="2" cellspacing="5">
+                        <p:commandButton id="confirm" value="Yes" update=":growl" oncomplete="confirmation.hide()" actionListener="#{settingBean.readAndWriteAllSubjects}" />  
+                        <p:commandButton id="decline" value="No" onclick="confirmation.hide()" type="button" />
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
         </ui:define>
 
     </ui:composition>

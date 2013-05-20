@@ -33,6 +33,10 @@
                         <h:outputLabel value="#{bundle.EditEventoLabel_fechaCreacion}" for="fechaCreacion" />
                         <p:calendar id="fechaCreacion" pattern="MM/dd/yyyy HH:mm:ss" value="#{eventoController.selected.fechaCreacion}" title="#{bundle.EditEventoTitle_fechaCreacion}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_fechaCreacion}" showOn="button"/>
 
+                        <h:outputLabel value="#{bundle.EditEventoLabel_tododia}" for="tododia" />
+                        <p:selectBooleanCheckbox id="tododia" value="#{eventoController.selected.tododia}" title="#{bundle.EditEventoTitle_tododia}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_tododia}"/>
+
+                        
                         <h:outputLabel value="#{bundle.EditEventoLabel_asignaturaIdasignatura}" for="asignaturaIdasignatura" />
                         <p:selectOneMenu id="asignaturaIdasignatura" value="#{eventoController.selected.asignaturaIdasignatura}" >
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

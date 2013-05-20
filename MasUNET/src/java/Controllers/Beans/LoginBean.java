@@ -4,7 +4,6 @@
  */
 package Controllers.Beans;
 
-import Entities.Notificacion;
 import Entities.Usuario;
 import Entities.VistaCeti;
 import Entities.VistaControlEstudiante;
@@ -91,6 +90,7 @@ public class LoginBean implements Serializable {
                             user.setAlias(aux.getNombres() + " " + aux.getApellidos());
                             user.setOnline(true);
                             user.setUltimaConexion(new Date());
+                            user.setFotoUrl("default.png");
                             ejbFacade_usuario.create(user);
                         }
                     } else {
@@ -154,11 +154,11 @@ public class LoginBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         try {
             context.getExternalContext().redirect(path);
-        } catch (IOException ex) {
-            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(ex.getMessage()));                          
-            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(e.getMessage()));                          
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, e);
         }
-        return "/faces/index.xhtml";
+        return path;
 
     }
 
@@ -170,7 +170,7 @@ public class LoginBean implements Serializable {
      */
     public void verifyUseLogin(ComponentSystemEvent event) {
         if (!isLoggedIn) {
-            doRedirect(path);
+            doRedirect();
         }
     }
 
@@ -179,12 +179,13 @@ public class LoginBean implements Serializable {
      *
      * @param url
      */
-    private void doRedirect(String url) {
+    private void doRedirect() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().redirect(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(e.getMessage()));                          
+            Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
