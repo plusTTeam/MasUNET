@@ -5,9 +5,7 @@
 package Facades;
 
 import Controllers.util.JsfUtil;
-import Entities.Usuario;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;

@@ -6,6 +6,8 @@ package Facades;
 
 import Controllers.util.JsfUtil;
 import Entities.Asignatura;
+import Entities.VistaAsignatura;
+import Entities.VistaControlProfesor;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.Stateless;
@@ -58,6 +60,23 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> {
         q.setParameter("lapso", Lapso);
         try {
             return (List<Asignatura>) q.getResultList();
+        } catch (Exception ex) {
+            JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String findNameTeacherSubject(String codMateria, String Lapso) {
+        Query q = em.createQuery("SELECT DISTINCT vcp FROM VistaControlProfesor vcp where vcp.codMateria = :codMateria and vcp.lapso = :lapso ORDER BY vcp.codMateria");
+        q.setParameter("codMateria", codMateria);
+        q.setParameter("lapso", Lapso);
+        try {
+            q.setMaxResults(1);
+            VistaControlProfesor aux = (VistaControlProfesor) q.getSingleResult();
+            if (aux != null) {
+                return aux.getNombres() + " " + aux.getApellidos();
+            }
+            return null;
         } catch (Exception ex) {
             JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;

@@ -12,55 +12,76 @@
             <h:outputText value="#{bundle.AppName}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form prependId="false">
-                <p:layout fullPage="false" style="width: 99.9%;height: 99.9%;min-height: 800px">
-                    <p:layoutUnit position="west" size="180" style="height: 300px" >
 
-                        <h:panelGrid  columns="1" style="text-align: center; " >
-                            <p:menu >
-                                <p:submenu label="Calendars" >  
-                                    <p:menuitem value="All Events" action="#{calendarBean.getAllEventsUser()}" ajax="false" icon="ui-icon-home"/>  
-                                    <p:menuitem value="Personal Events" action="#{calendarBean.getEventsPersonal()}" ajax="false" icon="ui-icon-star"/>  
+            <p:layout fullPage="false" style="width: 99.9%;height: 99.9%;min-height: 600px; ">
+                <p:layoutUnit position="west" size="252" style="height: 300px" >
+
+                    <h:panelGrid  columns="1" style="text-align: center; " >
+                        <h:form id="form_menu">
+                            <p:menu style="width: 230px">
+                                <p:submenu label="#{bundle.CalendarMenuCalendar}" >  
+                                    <p:menuitem value="#{bundle.CalendarMenuItemAll}" action="#{calendarBean.getAllEventsUser()}" ajax="false" icon="ui-icon-home"/>  
+                                    <p:menuitem value="#{bundle.CalendarMenuItemPersonal}" action="#{calendarBean.getEventsPersonal()}" ajax="false" icon="ui-icon-star"/>  
                                 </p:submenu> 
-                                <p:submenu label="Subjects Events">  
+                                <p:submenu label="#{bundle.CalendarMenuSubject}">  
                                     <c:forEach var="subject" items="#{calendarBean.getAllSubjectsCurrentUser()}" >
                                         <p:menuitem value="#{subject.nombre}" action="#{calendarBean.getEventsSubject(subject)}" ajax="false" icon="ui-icon-note"/>  
                                     </c:forEach> 
                                 </p:submenu>  
-                            </p:menu>   
-                        </h:panelGrid>
-                    </p:layoutUnit>
-                    <p:layoutUnit position="center" size="300" style="height: 300px">
-
-                        <p:schedule value="#{calendarBean.eventModel}" widgetVar="myschedule" style="width: 85%;  margin: auto;" >
-                            <p:ajax event="dateSelect" listener="#{calendarBean.onDateSelect}" update="eventDetails" oncomplete="eventDialog.show()" />
-                            <p:ajax event="eventSelect" listener="#{calendarBean.onEventSelect}"/>
+                            </p:menu> 
+                        </h:form>
+                    </h:panelGrid>
+                </p:layoutUnit>
+                <p:layoutUnit position="center" size="300" style="height: 300px; background: transparent;">
+                    <h:form prependId="false">
+                       <p:schedule value="#{calendarBean.eventModel}"  widgetVar="myschedule" style="width: 70%;  margin: auto;" id="schedule" >
+                            <p:ajax event="dateSelect" listener="#{calendarBean.onDateSelect}" update="eventDetails,:growl" oncomplete="eventDialog.show()" />
+                            <p:ajax event="eventSelect" listener="#{calendarBean.onEventSelect}" update="eventDetails,:growl,@this" oncomplete="eventDialog.show()"/>
+                            <p:ajax event="eventResize" listener="#{calendarBean.onEventResize}" update=":growl,@this" />
+                            <p:ajax event="eventMove" listener="#{calendarBean.onEventMove}" update=":growl,@this"  />
                         </p:schedule>
-                            <p:dialog widgetVar="eventDialog" header="Event Details" resizable="false" >
-                                <h:panelGrid id="eventDetails" columns="2">
-                                    <h:outputLabel for="titulo" value="Title:" />
-                                    <h:inputText id="titulo" value="#{calendarBean.event.title}" />
 
-                                    <h:outputLabel for="from" value="From:" />
-                                    <p:inputMask id="from" value="#{calendarBean.event.startDate}" mask="99/99/9999">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </p:inputMask>
+                        <p:dialog widgetVar="eventDialog" header="Event" resizable="false" closable="true">
+                            <h:panelGrid id="eventDetails" columns="2">
+                                <h:outputLabel for="titulo" value="#{bundle.CalendarDialogNombre}" />
+                                <p:inputText id="titulo" value="#{calendarBean.selected.nombre}" required="true" rendered="#{calendarBean.isMyEvent()}" requiredMessage="#{bundle.CalendarDialogNombreRequeridMessage}"/>
+                                <h:outputLabel id="titulo2" value="#{calendarBean.selected.nombre}" rendered="#{!calendarBean.isMyEvent()}"/>
+                                
+                                <h:outputLabel for="description" value="#{bundle.CalendarDialogDescripcion}" />
+                                <p:inputTextarea id="description" value="#{calendarBean.selected.descripcion}" rendered="#{calendarBean.isMyEvent()}"  />
+                                <h:outputLabel id="description2" value="#{calendarBean.selected.descripcion}" rendered="#{!calendarBean.isMyEvent()}" />
+                                
+                                <h:outputLabel for="type" value="#{bundle.CalendarDialogTipo}" />
+                                <p:selectOneMenu id="type" value="#{calendarBean.selected.tipoEventoIdtipoEvento}" required="true" rendered="#{calendarBean.isMyEvent()}"  requiredMessage="#{bundle.CalendarDialogTipoRequeridMessage}">
+                                    <f:selectItems value="#{tipoEventoController.items}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"/>
+                                    <f:converter binding="#{tipoEventoConverter}"/>
+                                </p:selectOneMenu>
+                                <h:outputLabel id="type2" value="#{calendarBean.selected.tipoEventoIdtipoEvento}" rendered="#{!calendarBean.isMyEvent()}" />
 
-                                    <h:outputLabel for="to" value="To:" />
-                                    <p:inputMask id="to" value="#{calendarBean.event.endDate}" mask="99/99/9999">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" />
-                                    </p:inputMask>
+                                <h:outputLabel for="from" value="#{bundle.CalendarDialogFechaIni}" />
+                                <p:calendar id="from" value="#{calendarBean.selected.fechaIni}" pattern="dd/MM/yyyy HH:mm" required="true" rendered="#{calendarBean.isMyEvent()}" requiredMessage="#{bundle.CalendarDialogFechaIniRequeridMessage}"/>
+                                <h:outputLabel id="from2" value="#{calendarBean.selected.fechaIni}" rendered="#{!calendarBean.isMyEvent()}" />
+                                
+                                <h:outputLabel for="to" value="#{bundle.CalendarDialogFechaFin}" />
+                                <p:calendar id="to" value="#{calendarBean.selected.fechaFin}" pattern="dd/MM/yyyy HH:mm" required="true" rendered="#{calendarBean.isMyEvent()}" requiredMessage="#{bundle.CalendarDialogFechaFinRequeridMessage}"/>
+                                <h:outputLabel id="to2" value="#{calendarBean.selected.fechaFin}" rendered="#{!calendarBean.isMyEvent()}" />
+                                
+                                <h:outputLabel for="allDay" value="#{bundle.CalendarDialogTodoDia}" />
+                                <h:selectBooleanCheckbox id="allDay" value="#{calendarBean.selected.tododia}" rendered="#{calendarBean.isMyEvent()}"  />
+                                <h:selectBooleanCheckbox id="allDay2" value="#{calendarBean.selected.tododia}"  disabled="true" rendered="#{!calendarBean.isMyEvent()}" />
 
-                                    <h:outputLabel for="allDay" value="All Day:" />
-                                    <h:selectBooleanCheckbox id="allDay" value="#{calendarBean.event.allDay}"  />
+                                <p:commandButton type="reset" value="#{bundle.Reset}" rendered="#{calendarBean.isMyEvent()}"/>  
+                                <h:panelGrid columns="2" rendered="#{calendarBean.isMyEvent()}" >
+                                    <p:commandButton value="#{bundle.Create}" actionListener="#{calendarBean.addEvent()}"  update=":growl,schedule" oncomplete="eventDialog.hide();"/>
+                                    <p:commandButton value="#{bundle.Delete}" actionListener="#{calendarBean.removeEvent()}" update=":growl,schedule" oncomplete="eventDialog.hide();" rendered="#{calendarBean.selected.idevento!=null}"/>
 
-                                    <p:commandButton type="reset" value="Reset" />
-                                    <p:commandButton value="Save" actionListener="#{calendarBean.addEvent}" oncomplete="myschedule.update();eventDialog.hide();"/>
                                 </h:panelGrid>
-                            </p:dialog>
-                    </p:layoutUnit>
-                </p:layout>
-            </h:form>
+                            </h:panelGrid>
+                        </p:dialog>                        
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+
         </ui:define>
 
     </ui:composition>

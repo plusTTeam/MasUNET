@@ -4,6 +4,7 @@
  */
 package Controllers.Beans;
 
+import Controllers.AbstractController;
 import Entities.Asignatura;
 import Entities.Evento;
 import Entities.Usuario;
@@ -11,18 +12,21 @@ import Facades.AsignaturaFacade;
 import Facades.EventoFacade;
 import Facades.UsuarioFacade;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
+import org.primefaces.event.DateSelectEvent;
 import org.primefaces.event.ScheduleEntryMoveEvent;
 import org.primefaces.event.ScheduleEntryResizeEvent;
-import org.primefaces.event.SelectEvent;
+import org.primefaces.event.ScheduleEntrySelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
 import org.primefaces.model.ScheduleEvent;
@@ -34,7 +38,7 @@ import org.primefaces.model.ScheduleModel;
  */
 @Named(value = "calendarBean")
 @SessionScoped
-public class CalendarBean implements Serializable {
+public class CalendarBean extends AbstractController<Evento> implements Serializable {
 
     @EJB
     private UsuarioFacade ejbFacade_Usuario;
@@ -43,19 +47,27 @@ public class CalendarBean implements Serializable {
     @EJB
     private AsignaturaFacade ejbFacade_Asignatura;
     private Usuario user;
-    private ScheduleModel eventModel;
+    private static ScheduleModel eventModel;
     private ScheduleEvent event;
+    private int _case;
+    private Asignatura currentsubject;
 
     /**
      * Creates a new instance of CalendarBean
      */
     public CalendarBean() {
+        super(Evento.class);
+        super.setSelected(new Evento());
         eventModel = new DefaultScheduleModel();
+        eventModel.clear();
         event = new DefaultScheduleEvent();
-        eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
-        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
-        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));
+    }
+
+    @PostConstruct
+    public void init() {
+        super.setFacade(ejbFacade_Evento);
+        super.setSelected(new Evento());
+        getAllEventsUser();
     }
 
     public Usuario getUser() {
@@ -64,135 +76,58 @@ public class CalendarBean implements Serializable {
     }
 
     public List<Asignatura> getAllSubjectsCurrentUser() {
-        return ejbFacade_Asignatura.getAllSubjectsStudent(ejbFacade_Asignatura.getCedulaCurrentUser(), ejbFacade_Asignatura.getCurrentLapso());
+        if (ejbFacade_Asignatura.getRolIdCurrentUser() == 2) {
+            return ejbFacade_Asignatura.getAllSubjectsStudent(ejbFacade_Asignatura.getCedulaCurrentUser(), ejbFacade_Asignatura.getCurrentLapso());
+        } else {
+            return ejbFacade_Asignatura.getAllSubjectsTeacher(ejbFacade_Asignatura.getCedulaCurrentUser(), ejbFacade_Asignatura.getCurrentLapso());
+        }
     }
 
     public String getAllEventsUser() {
+        _case = 0;
         eventModel.clear();
         List<Evento> items = ejbFacade_Evento.getAllEventsStudent(getUser(), ejbFacade_Evento.getCedulaCurrentUser());
         if (items != null && items.size() > 0) {
             for (Evento item : items) {
-                eventModel.addEvent(new DefaultScheduleEvent(item.getNombre(), item.getFechaIni(), item.getFechaFin(), item));
+                DefaultScheduleEvent eve = new DefaultScheduleEvent(item.getNombre(), item.getFechaIni(), item.getFechaFin(), item.getTododia());
+                eve.setData(item);
+                eventModel.addEvent(eve);
             }
         }
         return null;
     }
 
     public String getEventsPersonal() {
-        getUser();
+        _case = 1;
         eventModel.clear();
-        if (user.getEventoList().size() > 0) {
-            for (Evento item : user.getEventoList()) {
-                eventModel.addEvent(new DefaultScheduleEvent(item.getNombre(), item.getFechaIni(), item.getFechaFin(), item));
+        List<Evento> aux = ejbFacade_Evento.getAllEventsPersonal(ejbFacade_Usuario.getIdCurrentUser());
+        if (aux != null && aux.size() > 0) {
+            for (Evento item : aux) {
+                DefaultScheduleEvent eve = new DefaultScheduleEvent(item.getNombre(), item.getFechaIni(), item.getFechaFin(), item);
+                eve.setAllDay(item.getTododia());
+                eventModel.addEvent(eve);
             }
         }
         return null;
     }
 
     public String getEventsSubject(Asignatura subject) {
+        _case = 3;
+        currentsubject = subject;
         eventModel.clear();
-        //eventModel.addEvent(new DefaultScheduleEvent(subject.getNombre(),new Date(),new Date()));
-        if (subject.getEventoList().size() > 0) {
-            for (Evento item : subject.getEventoList()) {
-                eventModel.addEvent(new DefaultScheduleEvent(item.getNombre(), item.getFechaIni(), item.getFechaFin(), item));
+        List<Evento> aux = ejbFacade_Evento.getAllEventsSubject(subject.getIdasignatura());
+        if (aux != null && aux.size() > 0) {
+            for (Evento item : aux) {
+                DefaultScheduleEvent eve = new DefaultScheduleEvent(item.getNombre(), item.getFechaIni(), item.getFechaFin(), item.getTododia());
+                eve.setData(item);
+                eventModel.addEvent(eve);
             }
         }
         return null;
     }
 
-    public Date getRandomDate(Date base) {
-        Calendar date = Calendar.getInstance();
-        date.setTime(base);
-        date.add(Calendar.DATE, ((int) (Math.random() * 30)) + 1);	//set random day of month
-        return date.getTime();
-    }
-
-    public Date getInitialDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR), Calendar.FEBRUARY, calendar.get(Calendar.DATE), 0, 0, 0);
-
-        return calendar.getTime();
-    }
-
     public ScheduleModel getEventModel() {
         return eventModel;
-    }
-
-    private Calendar today() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DATE), 0, 0, 0);
-
-        return calendar;
-    }
-
-    private Date previousDay8Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 8);
-
-        return t.getTime();
-    }
-
-    private Date previousDay11Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) - 1);
-        t.set(Calendar.HOUR, 11);
-
-        return t.getTime();
-    }
-
-    private Date today1Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 1);
-
-        return t.getTime();
-    }
-
-    private Date theDayAfter3Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 2);
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 3);
-
-        return t.getTime();
-    }
-
-    private Date today6Pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.HOUR, 6);
-
-        return t.getTime();
-    }
-
-    private Date nextDay9Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 9);
-
-        return t.getTime();
-    }
-
-    private Date nextDay11Am() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.AM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 1);
-        t.set(Calendar.HOUR, 11);
-
-        return t.getTime();
-    }
-
-    private Date fourDaysLater3pm() {
-        Calendar t = (Calendar) today().clone();
-        t.set(Calendar.AM_PM, Calendar.PM);
-        t.set(Calendar.DATE, t.get(Calendar.DATE) + 4);
-        t.set(Calendar.HOUR, 3);
-
-        return t.getTime();
     }
 
     public ScheduleEvent getEvent() {
@@ -203,37 +138,128 @@ public class CalendarBean implements Serializable {
         this.event = event;
     }
 
-    public void addEvent(ActionEvent actionEvent) {
-        if (event.getId() == null) {
-            eventModel.addEvent(event);
+    public void addEvent() {
+
+        if (super.getSelected().getIdevento() == null) {
+            super.getSelected().setFechaCreacion(new Date());
+            super.getSelected().setUsuarioIdusuario(getUser());
+            try {
+                if (currentsubject != null && ejbFacade_Usuario.getRolIdCurrentUser().equals(3)) {
+                    super.getSelected().setAsignaturaIdasignatura(currentsubject);
+                }
+                ejbFacade_Evento.create(super.getSelected());
+                reloadCalendar();
+
+                addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("EventoCreated")));
+            } catch (Exception e) {
+                addMessage(new FacesMessage(e.getMessage()));
+                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, e);
+            }
+
+        } else if (validateEvent()) {
+            try {
+                ejbFacade_Evento.edit(super.getSelected());
+                reloadCalendar();
+                addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("EventoUpdated")));
+                //addMessage(new FacesMessage("Update Event " + super.getSelected().getNombre()));
+            } catch (Exception e) {
+                 addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured")));
+                Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, e);
+            }
         } else {
-            eventModel.updateEvent(event);
+             addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured")));
         }
-
-        event = new DefaultScheduleEvent();
+        super.setSelected(new Evento());
     }
 
-    public void onEventSelect(SelectEvent selectEvent) {
-        event = (ScheduleEvent) selectEvent.getObject();
+    public void removeEvent() {
+        if (super.getSelected().getIdevento() != null && validateEvent()) {
+            ejbFacade_Evento.remove(super.getSelected());
+            reloadCalendar();
+            addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("EventoUpdated")));
+        } else {
+            addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("CalendarDialogRemoveEventoPermitMessage")));
+
+        }
     }
 
-    public void onDateSelect(SelectEvent selectEvent) {
-        event = new DefaultScheduleEvent("", (Date) selectEvent.getObject(), (Date) selectEvent.getObject());
+    public void reloadCalendar() {
+        super.setSelected(new Evento());
+        if (eventModel != null) {
+            eventModel.clear();
+            if (_case == 0) {
+                getAllEventsUser();
+                currentsubject = null;
+            } else if (_case == 1) {
+                getEventsPersonal();
+                currentsubject = null;
+            } else {
+                if (currentsubject != null) {
+                    getEventsSubject(currentsubject);
+                }
+            }
+        }
+    }
+
+    public void onEventSelect(ScheduleEntrySelectEvent selectEvent) {
+        event = selectEvent.getScheduleEvent();
+        super.setSelected((Evento) event.getData());
+    }
+
+    public void onDateSelect(DateSelectEvent selectEvent) {
+        super.setSelected(new Evento());
+        super.getSelected().setFechaFin(selectEvent.getDate());
+        super.getSelected().setFechaIni(selectEvent.getDate());
     }
 
     public void onEventMove(ScheduleEntryMoveEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event moved", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-
-        addMessage(message);
+        super.setSelected((Evento) event.getScheduleEvent().getData());
+        if (validateEvent()) {
+            super.getSelected().setFechaIni(event.getScheduleEvent().getStartDate());
+            super.getSelected().setFechaFin(event.getScheduleEvent().getEndDate());
+            ejbFacade_Evento.edit(super.getSelected());
+            addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("EventoUpdated")));
+        } else {
+            addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("CalendarDialogMovedEventoPermitMessage")));
+        }
+        reloadCalendar();
     }
 
     public void onEventResize(ScheduleEntryResizeEvent event) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Event resized", "Day delta:" + event.getDayDelta() + ", Minute delta:" + event.getMinuteDelta());
-
-        addMessage(message);
+        super.setSelected((Evento) event.getScheduleEvent().getData());
+        if (validateEvent()) {
+            super.getSelected().setFechaIni(event.getScheduleEvent().getStartDate());
+            super.getSelected().setFechaFin(event.getScheduleEvent().getEndDate());
+            ejbFacade_Evento.edit(super.getSelected());
+            addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("EventoUpdated")));
+        } else {
+            addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("CalendarDialogResizeEventoPermitMessage")));
+        }
+        reloadCalendar();
     }
 
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(ejbFacade_Usuario.getIdCurrentUser().toString(), message);
+    }
+
+    private boolean validateEvent() {
+        if (ejbFacade_Usuario.getRolIdCurrentUser() == 1) {
+            return true;
+        } else if (super.getSelected().getUsuarioIdusuario().getIdusuario() == ejbFacade_Usuario.getIdCurrentUser()) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isMyEvent() {
+        if (super.getSelected() != null) {
+            if (super.getSelected().getUsuarioIdusuario() != null && currentsubject != null && super.getSelected().getUsuarioIdusuario().getRolIdrol().equals(2)) {
+                return false;
+            } else if (super.getSelected().getUsuarioIdusuario() == null || super.getSelected().getUsuarioIdusuario().getIdusuario() == ejbFacade_Usuario.getIdCurrentUser()) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 }

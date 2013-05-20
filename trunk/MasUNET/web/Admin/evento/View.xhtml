@@ -38,6 +38,10 @@
                         <h:outputText value="#{eventoController.selected.fechaCreacion}" title="#{bundle.ViewEventoTitle_fechaCreacion}">
                             <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                         </h:outputText>
+                        
+                        <h:outputText value="#{bundle.ViewEventoLabel_tododia}"/>
+                        <h:selectBooleanCheckbox id="online" value="#{eventoController.selected.online}" title="#{bundle.EditEventoTitle_tododia}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_tododia}" disabled="true"/>
+
 
                         <h:outputText value="#{bundle.ViewEventoLabel_asignaturaIdasignatura}"/>
                         <h:outputText value="#{eventoController.selected.asignaturaIdasignatura.descripcion}"/>

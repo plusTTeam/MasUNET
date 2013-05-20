@@ -55,6 +55,12 @@
                         <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
                     </h:outputText>
                 </p:column>
+                <p:column sortBy="#{item.tododia}" filterBy="#{item.tododia}">
+                    <f:facet name="header">
+                        <h:outputText value="#{bundle.ListEventoTitle_tododia}"/>
+                    </f:facet>
+                    <h:selectBooleanCheckbox id="tododia" value="#{item.tododia}" title="#{bundle.EditEventoTitle_tododia}" required="true" requiredMessage="#{bundle.EditEventoRequiredMessage_tododia}" disabled="true"/>
+                </p:column>
                 <p:column sortBy="#{item.fechaCreacion}" filterBy="#{item.fechaCreacion}">
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListEventoTitle_fechaCreacion}"/>

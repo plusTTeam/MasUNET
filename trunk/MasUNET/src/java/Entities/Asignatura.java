@@ -65,7 +65,7 @@ public class Asignatura implements Serializable {
     @Size(max = 45)
     @Column(name = "profesor")
     private String profesor;
-    @OneToMany(mappedBy = "asignaturaIdasignatura", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "asignaturaIdasignatura", fetch = FetchType.LAZY,cascade= CascadeType.PERSIST)
     private List<Evento> eventoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignaturaIdasignatura", fetch = FetchType.LAZY)
     private List<Recurso> recursoList;

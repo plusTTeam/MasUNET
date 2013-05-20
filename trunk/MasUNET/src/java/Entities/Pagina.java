@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Pagina.findByTitulo", query = "SELECT p FROM Pagina p WHERE p.titulo = :titulo"),
     @NamedQuery(name = "Pagina.findByUrl", query = "SELECT p FROM Pagina p WHERE p.url = :url"),
     @NamedQuery(name = "Pagina.findByIcono", query = "SELECT p FROM Pagina p WHERE p.icono = :icono"),
-    @NamedQuery(name = "Pagina.findByTipo", query = "SELECT p FROM Pagina p WHERE p.tipo = :tipo ORDER BY p.posicion")})
+    @NamedQuery(name = "Pagina.findByTipo", query = "SELECT p FROM Pagina p WHERE p.tipo = :tipo"),
+    @NamedQuery(name = "Pagina.findByPosicion", query = "SELECT p FROM Pagina p WHERE p.posicion = :posicion")})
 public class Pagina implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -59,8 +60,10 @@ public class Pagina implements Serializable {
     private String icono;
     @Column(name = "tipo")
     private Integer tipo;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "posicion")
-    private Integer posicion;
+    private int posicion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pagina", fetch = FetchType.LAZY)
     private List<Permisologia> permisologiaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paginaIdpagina", fetch = FetchType.LAZY)
@@ -73,10 +76,11 @@ public class Pagina implements Serializable {
         this.idpagina = idpagina;
     }
 
-    public Pagina(Integer idpagina, String titulo, String url) {
+    public Pagina(Integer idpagina, String titulo, String url, int posicion) {
         this.idpagina = idpagina;
         this.titulo = titulo;
         this.url = url;
+        this.posicion = posicion;
     }
 
     public Integer getIdpagina() {
@@ -119,14 +123,14 @@ public class Pagina implements Serializable {
         this.tipo = tipo;
     }
 
-    public Integer getPosicion() {
+    public int getPosicion() {
         return posicion;
     }
 
-    public void setPosicion(Integer posicion) {
+    public void setPosicion(int posicion) {
         this.posicion = posicion;
     }
-    
+
     @XmlTransient
     public List<Permisologia> getPermisologiaList() {
         return permisologiaList;
