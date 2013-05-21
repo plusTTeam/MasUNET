@@ -13,11 +13,15 @@
         <ui:define name="body">
             <h:form id="AccionListForm">              
 
-                <p:panel header="Setting">
+                <p:panel header="#{bundle.Setting}">
 
-                    <p:fieldset legend="Personal" style="margin: auto; width: 80%;">  
+                    <p:fieldset legend="#{bundle.SettingPersonal}" style="margin: auto; width: 80%;">  
+
                         <h:panelGrid columns="2" cellpadding="30">  
-                            <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" />  
+                            <h:panelGrid columns="1">
+                                <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" />  
+                                <p:fileUpload mode="simple" sizeLimit="10000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                            </h:panelGrid>
                             <h:panelGrid columns="2" cellpadding="10">  
 
                                 <h:outputLabel value="#{bundle.CreateUsuarioLabel_nombre}" for="nombre" styleClass="ui-label"/>                                 
@@ -40,7 +44,7 @@
                             </h:panelGrid>                          
                         </h:panelGrid>  
                     </p:fieldset>  
-                    <p:fieldset legend="System" style="margin: auto; width: 80%;">  
+                    <p:fieldset legend="#{bundle.SettingSystem}" style="margin: auto; width: 80%;">  
                         <h:panelGrid columns="3" cellpadding="20">  
                             <h:outputLabel value="#{bundle.ViewUsuarioLabel_notificacionIdnotificacion}" styleClass="ui-label"/>
                             <p:selectOneMenu id="notificacionIdnotificacion" value="#{settingBean.selected.notificacionIdnotificacion}">
@@ -50,10 +54,11 @@
                                                itemLabel="#{notificacionIdnotificacionItem.nombre}"/>
                                 <f:converter binding="#{notificacionConverter}"/>
                             </p:selectOneMenu>    
-                            <h:outputText value="Este Campo indica como te llegaran las notificaciones de los eventos y acciones que ocurran dentro de la red social a tu correo electronico"/>
+                            <h:outputText value="#{bundle.SettingMessageNotification}"/>
 
-                            <h:outputLabel value="#{bundle.ViewUsuarioLabel_notificacionIdnotificacion}" styleClass="ui-label"/>
-                            <p:commandButton value="Read and Write All Subject from Control de Estudios" onclick="confirmation.show();" type="button" />
+                            <h:outputLabel value="#{bundle.SettingLabelWriteSubjects}" styleClass="ui-label"/>
+                            <p:commandButton value="#{bundle.SettingButtonWriteSubjects}" onclick="confirmation.show();" type="button" />
+                            <h:outputText value="#{bundle.SettingMessageWriteSubjects}"/>
 
                         </h:panelGrid>  
                     </p:fieldset>  
@@ -64,11 +69,11 @@
 
                 </p:panel>
                 <p:dialog id="confirmDialog" header="Initiating destroy process" widgetVar="confirmation"  resizable="false">
-                    
-                        <h:outputLabel value="Esta Seguro de Realizar esta accion?"/>
+
+                    <h:outputLabel value="#{bundle.DialogConfirmAction}"/>
                     <h:panelGrid columns="2" cellspacing="5">
-                        <p:commandButton id="confirm" value="Yes" update=":growl" oncomplete="confirmation.hide()" actionListener="#{settingBean.readAndWriteAllSubjects}" />  
-                        <p:commandButton id="decline" value="No" onclick="confirmation.hide()" type="button" />
+                        <p:commandButton id="confirm" value="#{bundle.Yes}" update=":growl" oncomplete="confirmation.hide()" actionListener="#{settingBean.readAndWriteAllSubjects}" />  
+                        <p:commandButton id="decline" value="#{bundle.No}" onclick="confirmation.hide()" type="button" />
                     </h:panelGrid>
                 </p:dialog>
             </h:form>
