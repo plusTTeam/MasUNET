@@ -122,9 +122,12 @@ public class LoginBean implements Serializable {
                     isStudent = true;
                 }
                 String lapso = ejbFacade_parametro.findByNombre("Lapso");
-                if(lapso!=null) {
-                    sesion.setAttribute("lapso",lapso);
+                if (lapso != null) {
+                    sesion.setAttribute("lapso", lapso);
                 }
+                user.setOnline(true);
+                user.setUltimaConexion(new Date());
+                ejbFacade_usuario.edit(user);
                 sesion.setAttribute("id", user.getIdusuario());
                 sesion.setAttribute("cedula", user.getCedula());
                 sesion.setAttribute("nombre", user.getNombre());
@@ -145,7 +148,12 @@ public class LoginBean implements Serializable {
             return null;
         }
     }
+
     public String logout() {
+        if(user!=null){
+            user.setOnline(false);
+            ejbFacade_usuario.edit(user);
+        }
         isLoggedIn = false;
         isAdmin = false;
         isStudent = false;
@@ -155,7 +163,7 @@ public class LoginBean implements Serializable {
         try {
             context.getExternalContext().redirect(path);
         } catch (IOException e) {
-            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(e.getMessage()));                          
+            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(e.getMessage()));
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, e);
         }
         return path;
@@ -184,7 +192,7 @@ public class LoginBean implements Serializable {
             FacesContext context = FacesContext.getCurrentInstance();
             context.getExternalContext().redirect(path);
         } catch (IOException e) {
-            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(e.getMessage()));                          
+            FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(e.getMessage()));
             Logger.getLogger(LoginBean.class.getName()).log(Level.SEVERE, null, e);
         }
     }

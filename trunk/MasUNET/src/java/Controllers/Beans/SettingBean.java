@@ -23,7 +23,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author jesus
+ * @author Jesus Lugo ;)
  */
 @Named(value = "settingBean")
 @RequestScoped
@@ -71,9 +71,9 @@ public class SettingBean extends AbstractController<Usuario> implements Serializ
                 }
                 addMessage(new FacesMessage("Proceso Realizado con Exito! ;)"));
             }
-            
+
         } catch (Exception e) {
-             addMessage(new FacesMessage("Error en el Proceso! :(",e.getMessage()));
+            addMessage(new FacesMessage("Error en el Proceso! :(", e.getMessage()));
         }
     }
 }
