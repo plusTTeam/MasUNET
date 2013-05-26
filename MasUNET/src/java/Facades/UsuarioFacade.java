@@ -5,6 +5,7 @@
 package Facades;
 
 import Entities.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -59,5 +60,26 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }catch(Exception e){
             return null;
         }
+    }
+    public Usuario findTheacherSubject(String codmateria,String lapso){
+        Query q = em.createQuery("SELECT u from Usuario u,VistaControlProfesor vcp where vcp.cedula=u.cedula and vcp.codMateria = :codmateria and vcp.lapso= :lapso ORDER BY u.nombre");
+        q.setParameter("codmateria", codmateria);
+        q.setParameter("lapso",lapso);
+        try {
+            return (Usuario) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public List<Usuario> findAllStudentsSubject(String codmateria,String lapso){
+        Query q = em.createQuery("SELECT u from Usuario u,VistaControlEstudiante vce where vce.cedula=u.cedula and vce.codMateria = :codmateria and vce.lapso= :lapso ORDER BY u.nombre");
+        q.setParameter("codmateria", codmateria);
+        q.setParameter("lapso",lapso);
+        try {
+            return (List<Usuario>) q.getResultList();
+        } catch (Exception e) {
+            return null;
+        }
+        
     }
 }

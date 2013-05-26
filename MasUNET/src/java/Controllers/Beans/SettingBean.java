@@ -54,7 +54,7 @@ public class SettingBean extends AbstractController<Usuario> implements Serializ
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(ejbFacade.getIdCurrentUser().toString(), message);
     }
-
+    
     public void readAndWriteAllSubjects(ActionEvent event) {
         try {
             if (ejbFacade.getRolIdCurrentUser() == 1) {

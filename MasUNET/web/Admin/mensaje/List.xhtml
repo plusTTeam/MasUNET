@@ -41,13 +41,7 @@
                         <f:convertDateTime pattern="MM/dd/yyyy" />
                     </h:outputText>
                 </p:column>
-                <p:column sortBy="#{item.asunto}" filterBy="#{item.asunto}">
-                    <f:facet name="header">
-                        <h:outputText value="#{bundle.ListMensajeTitle_asunto}"/>
-                    </f:facet>
-                    <h:outputText value="#{item.asunto}"/>
-                </p:column>
-                <p:column sortBy="#{item.idusuario.descripcion}" filterBy="#{item.idusuario.descripcion}">
+                 <p:column sortBy="#{item.idusuario.descripcion}" filterBy="#{item.idusuario.descripcion}">
                     <f:facet name="header">
                         <h:outputText value="#{bundle.ListMensajeTitle_idusuario}"/>
                     </f:facet>
