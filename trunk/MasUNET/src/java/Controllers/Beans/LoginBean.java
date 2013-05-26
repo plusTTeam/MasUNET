@@ -63,9 +63,7 @@ public class LoginBean implements Serializable {
     private NotificacionFacade ejbFacade_notificacion;
     @EJB
     private ParametroFacade ejbFacade_parametro;
-    private FacesContext ctx = FacesContext.getCurrentInstance();
-    private String path = ctx.getExternalContext().getRequestContextPath();
-
+    private String path = "/MasUNET/";
     public LoginBean() {
     }
 
@@ -190,6 +188,7 @@ public class LoginBean implements Serializable {
     private void doRedirect() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
+            
             context.getExternalContext().redirect(path);
         } catch (IOException e) {
             FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage(e.getMessage()));

@@ -39,8 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Mensaje.findAll", query = "SELECT m FROM Mensaje m"),
     @NamedQuery(name = "Mensaje.findByIdmensaje", query = "SELECT m FROM Mensaje m WHERE m.idmensaje = :idmensaje"),
     @NamedQuery(name = "Mensaje.findByMensaje", query = "SELECT m FROM Mensaje m WHERE m.mensaje = :mensaje"),
-    @NamedQuery(name = "Mensaje.findByFecha", query = "SELECT m FROM Mensaje m WHERE m.fecha = :fecha"),
-    @NamedQuery(name = "Mensaje.findByAsunto", query = "SELECT m FROM Mensaje m WHERE m.asunto = :asunto")})
+    @NamedQuery(name = "Mensaje.findByFecha", query = "SELECT m FROM Mensaje m WHERE m.fecha = :fecha")})
 public class Mensaje implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,11 +57,6 @@ public class Mensaje implements Serializable {
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "asunto")
-    private String asunto;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario idusuario;
@@ -76,11 +70,10 @@ public class Mensaje implements Serializable {
         this.idmensaje = idmensaje;
     }
 
-    public Mensaje(Integer idmensaje, String mensaje, Date fecha, String asunto) {
+    public Mensaje(Integer idmensaje, String mensaje, Date fecha) {
         this.idmensaje = idmensaje;
         this.mensaje = mensaje;
         this.fecha = fecha;
-        this.asunto = asunto;
     }
 
     public Integer getIdmensaje() {
@@ -104,15 +97,7 @@ public class Mensaje implements Serializable {
     }
 
     public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
-
-    public String getAsunto() {
-        return asunto;
-    }
-
-    public void setAsunto(String asunto) {
-        this.asunto = asunto;
+        this.fecha = fecha;        
     }
 
     public Usuario getIdusuario() {

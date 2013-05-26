@@ -21,9 +21,6 @@
                         <h:outputLabel value="#{bundle.CreateMensajeLabel_fecha}" for="fecha" />
                         <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{mensajeController.selected.fecha}" title="#{bundle.EditMensajeTitle_fecha}" required="true" requiredMessage="#{bundle.EditMensajeRequiredMessage_fecha}" showOn="button"/>
 
-                        <h:outputLabel value="#{bundle.CreateMensajeLabel_asunto}" for="asunto" />
-                        <p:inputText id="asunto" value="#{mensajeController.selected.asunto}" title="#{bundle.CreateMensajeTitle_asunto}" required="true" requiredMessage="#{bundle.CreateMensajeRequiredMessage_asunto}"/>
-
                         <h:outputLabel value="#{bundle.CreateMensajeLabel_idusuario}" for="idusuario" />
                         <p:selectOneMenu id="idusuario" value="#{mensajeController.selected.idusuario}" required="true" requiredMessage="#{bundle.EditMensajeRequiredMessage_idusuario}">
                             <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>

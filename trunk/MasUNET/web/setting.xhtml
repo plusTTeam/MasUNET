@@ -56,9 +56,9 @@
                             </p:selectOneMenu>    
                             <h:outputText value="#{bundle.SettingMessageNotification}"/>
 
-                            <h:outputLabel value="#{bundle.SettingLabelWriteSubjects}" styleClass="ui-label"/>
-                            <p:commandButton value="#{bundle.SettingButtonWriteSubjects}" onclick="confirmation.show();" type="button" />
-                            <h:outputText value="#{bundle.SettingMessageWriteSubjects}"/>
+                            <h:outputLabel value="#{bundle.SettingLabelWriteSubjects}" styleClass="ui-label" rendered="#{loginBean.isAdmin}"/>
+                            <p:commandButton value="#{bundle.SettingButtonWriteSubjects}" onclick="confirmation.show();" type="button" rendered="#{loginBean.isAdmin}"/>
+                            <h:outputText value="#{bundle.SettingMessageWriteSubjects}" rendered="#{loginBean.isAdmin}"/>
 
                         </h:panelGrid>  
                     </p:fieldset>  
@@ -68,7 +68,7 @@
                     </p:panel>
 
                 </p:panel>
-                <p:dialog id="confirmDialog" header="Initiating destroy process" widgetVar="confirmation"  resizable="false">
+                <p:dialog id="confirmDialog" header="Initiating destroy process" widgetVar="confirmation"  resizable="false" rendered="#{loginBean.isAdmin}">
 
                     <h:outputLabel value="#{bundle.DialogConfirmAction}"/>
                     <h:panelGrid columns="2" cellspacing="5">
@@ -80,5 +80,4 @@
         </ui:define>
 
     </ui:composition>
-
 </html>
