@@ -25,17 +25,17 @@
 
                         <h:outputLabel for="tittle" value="Nombre Del Recurso: *"  />  
                         <p:inputText id="tittle" required="true" value="#{resourcesBean.e_Recurso.nombre}"/>  
-                        <p:tooltip for="tittle" showEvent="focus" value="Ingrese el nombre del recurso ;)" hideEvent="blur" />   
+                        <p:tooltip for="tittle" showEvent="focus" value="Ingrese el nombre del recurso" hideEvent="blur" />   
 
                         <h:outputLabel for="description" value="Descripcion Del Recurso: *"  />  
                         <p:inputTextarea id="description" required="true" rows="2" cols="15" autoResize="true" value="#{resourcesBean.e_Recurso.descripcion}"/>  
-                        <p:tooltip for="description" showEvent="focus" value="Ingrese La Descripcion del recurso ;)" hideEvent="blur" />   
+                        <p:tooltip for="description" showEvent="focus" value="Ingrese La Descripcion del recurso" hideEvent="blur" />   
 
 
                         <h:outputText value="Asignatura: * " />  
 
                         <h:selectOneMenu id="select1materia" value="#{resourcesBean.asignaturaSeleccionada}" var="v_Asignatura">
-                            <f:selectItem itemLabel="Seleccione 1 Materia ;)" itemValue=""></f:selectItem>
+                            <f:selectItem itemLabel="Seleccione una Materia" itemValue=""></f:selectItem>
                             <f:selectItems value="#{resourcesBean.select1Item()}" var="v_Asig" itemLabel="#{v_Asig.nombre}" itemValue="#{v_Asig}"></f:selectItems>
                         </h:selectOneMenu>  
                         <p:tooltip for="select1materia" showEvent="focus" value="Selecciona la asignatura en donde cargaras el recurso!" hideEvent="blur" />  

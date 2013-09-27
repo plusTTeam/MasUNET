@@ -8,7 +8,7 @@
     <h:head>
         <title><h:outputText value="#{bundle.AppName}"></h:outputText></title>
         <p:growl widgetVar="growl" life="3000" />
-
+        <link type="image/x-icon" rel="shortcut icon" href="resources/images/favicon.ico"></link>
     </h:head>
     <h:body>
         <h:form> 
@@ -21,7 +21,7 @@
                         <h:outputLabel for="input_password" value="Contraseña"/>
                         <p:password id="input_password" value="#{loginBean.password}" maxlength="45" />
                         <h:outputLabel value=" "/>
-                        <p:commandButton value="Iniciar Session" action="#{loginBean.login()}"  ajax="false" update="growl"/>
+                        <p:commandButton value="Iniciar Sesión" action="#{loginBean.login()}"  ajax="false" update="growl"/>
                     </p:panelGrid>
                 </h:panelGroup>
             </p:dialog>
