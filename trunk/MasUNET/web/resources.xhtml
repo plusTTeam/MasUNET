@@ -34,10 +34,11 @@
 
                         <h:outputText value="Asignatura: * " />  
 
-                        <h:selectOneMenu id="select1materia" value="#{resourcesBean.asignaturaSeleccionada}" var="v_Asignatura">
+                        <p:selectOneMenu id="select1materia" value="#{resourcesBean.asignaturaSeleccionada}" >
                             <f:selectItem itemLabel="Seleccione una Materia" itemValue=""></f:selectItem>
                             <f:selectItems value="#{resourcesBean.select1Item()}" var="v_Asig" itemLabel="#{v_Asig.nombre}" itemValue="#{v_Asig}"></f:selectItems>
-                        </h:selectOneMenu>  
+                            
+                        </p:selectOneMenu>  
                         <p:tooltip for="select1materia" showEvent="focus" value="Selecciona la asignatura en donde cargaras el recurso!" hideEvent="blur" />  
 
 
