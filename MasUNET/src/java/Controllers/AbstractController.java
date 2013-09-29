@@ -2,13 +2,18 @@ package Controllers;
 
 import Facades.AbstractFacade;
 import Controllers.util.JsfUtil;
+import Entities.Usuario;
+import Facades.UsuarioFacade;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
 
 import java.util.ResourceBundle;
+import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 
 /**
  * Represents an abstract shell of to be used as JSF Controller to be used in
@@ -18,6 +23,8 @@ import javax.ejb.EJBException;
 public abstract class AbstractController<T> {
 
     private AbstractFacade<T> ejbFacade;
+    @EJB
+    private UsuarioFacade ejbFacade_user;
     private Class<T> itemClass;
     private T selected;
     private List<T> items;
@@ -148,4 +155,30 @@ public abstract class AbstractController<T> {
     public boolean isValidationFailed() {
         return JsfUtil.isValidationFailed();
     }
+    /**
+     * Methods from internal use +UNET
+     */
+    public void addMessage(FacesMessage message) {
+        FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), message);
+    }
+    public void addMessageError(String title,String message){
+        FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, title, message));
+    }
+    public void addMessageInfo(String title,String message){
+        FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, title, message));
+    }
+    public void addMessageWarning(String title,String message){
+        FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_WARN, title, message));
+    }
+    public void addMessageFatalError(String title,String message){
+        FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, title, message));
+    }
+    public Usuario getLoggedUser(){
+        try {
+            return (Usuario)ejbFacade_user.FindbyCedula(getFacade().getCedulaCurrentUser());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
 }
