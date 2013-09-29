@@ -14,7 +14,7 @@ public class AsignaturaController extends AbstractController<Asignatura> impleme
 
     @Inject
     private AsignaturaFacade ejbFacade;
-
+    
     public AsignaturaController() {
         super(Asignatura.class);
     }

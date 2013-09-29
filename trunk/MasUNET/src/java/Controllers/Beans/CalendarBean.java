@@ -142,14 +142,13 @@ public class CalendarBean extends AbstractController<Evento> implements Serializ
 
         if (super.getSelected().getIdevento() == null) {
             super.getSelected().setFechaCreacion(new Date());
-            super.getSelected().setUsuarioIdusuario(getUser());
+            super.getSelected().setUsuarioIdusuario(getLoggedUser());
             try {
                 if (currentsubject != null && ejbFacade_Usuario.getRolIdCurrentUser().equals(3)) {
                     super.getSelected().setAsignaturaIdasignatura(currentsubject);
                 }
-                ejbFacade_Evento.create(super.getSelected());
+                super.saveNew(null);
                 reloadCalendar();
-
                 addMessage(new FacesMessage(ResourceBundle.getBundle("/Bundle").getString("EventoCreated")));
             } catch (Exception e) {
                 addMessage(new FacesMessage(e.getMessage()));
@@ -238,9 +237,7 @@ public class CalendarBean extends AbstractController<Evento> implements Serializ
         reloadCalendar();
     }
 
-    private void addMessage(FacesMessage message) {
-        FacesContext.getCurrentInstance().addMessage(ejbFacade_Usuario.getIdCurrentUser().toString(), message);
-    }
+    
 
     private boolean validateEvent() {
         if (ejbFacade_Usuario.getRolIdCurrentUser() == 1) {

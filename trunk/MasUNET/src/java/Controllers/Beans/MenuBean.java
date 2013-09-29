@@ -8,8 +8,8 @@ import Entities.Pagina;
 import Facades.PaginaFacade;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Named;
 
 /**
  *

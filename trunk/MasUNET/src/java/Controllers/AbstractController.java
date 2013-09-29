@@ -1,19 +1,18 @@
 package Controllers;
 
-import Facades.AbstractFacade;
 import Controllers.util.JsfUtil;
 import Entities.Usuario;
+import Facades.AbstractFacade;
 import Facades.UsuarioFacade;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.faces.event.ActionEvent;
-
-import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 
 /**
  * Represents an abstract shell of to be used as JSF Controller to be used in

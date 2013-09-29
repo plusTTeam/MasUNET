@@ -50,10 +50,6 @@ public class SettingBean extends AbstractController<Usuario> implements Serializ
         super.setFacade(ejbFacade);
         super.setSelected(ejbFacade.find(ejbFacade.getIdCurrentUser()));
     }
-
-    private void addMessage(FacesMessage message) {
-        FacesContext.getCurrentInstance().addMessage(ejbFacade.getIdCurrentUser().toString(), message);
-    }
     
     public void readAndWriteAllSubjects(ActionEvent event) {
         try {

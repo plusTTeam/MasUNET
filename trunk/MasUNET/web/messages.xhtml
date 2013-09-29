@@ -4,7 +4,8 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -12,34 +13,49 @@
         </ui:define>
         <ui:define name="body">
 
-            <h:panelGrid columns="2" cellpadding="5" style="margin: auto;">
-                <p:panel header="Personas" style="width: 300px">
-                    <h:panelGrid columns="2">
-                        <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" width="100" height="100"/>  
-                        <h:outputText value="Nombre: Perdro "/>
-                        <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" width="100" height="100"/>  
-                        <h:outputText value="Nombre: Perdro "/>
-                        <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" width="100" height="100"/>  
-                        <h:outputText value="Nombre: Perdro "/>
+            <p:panel header="#{bundle.MessageTitlePanelLeft}" style="width: 20%;float: left; " >
+                <h:form>
+                    <h:panelGrid columns="1" style="width: 100%">
+                        <h:outputLabel value="#{bundle.Subject}" for="subjectList"/>
+                        <p:selectOneListbox id="subjectList" value="#{messagesBean.subjectSelected}" style="width: 100%" immediate="true"> 
+                            <f:selectItems value="#{messagesBean.subjectsUser}" var="subject" itemValue="#{subject}" itemLabel="#{subject.nombre} - Sec.#{subject.seccion} "/>                   
+                            <f:converter binding="#{asignaturaConverter}"/>
+                            <p:ajax update="studentsList"/>
+                        </p:selectOneListbox>
+                        <h:outputLabel value="#{bundle.Search}"/>
+                        <p:autoComplete value="#{messagesBean.userSelected}" id="autoUsers" completeMethod="#{messagesBean.completeUser}" var="user" itemLabel="#{user.nombre}" itemValue="#{user}" converter="#{usuarioConverter}" forceSelection="true"  style="width: 100%">  
+                            <p:column>  
+                                <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" width="40" height="40"/>  
+                            </p:column>
+                            <p:column >  
+                                #{user.nombre}
+                            </p:column>  
+                        </p:autoComplete>
+                        <h:outputLabel value="#{bundle.MessageTitleListUsers}"/>
+                        <p:selectOneListbox  id="studentsList" widgetVar="studentsList" value="#{messagesBean.userSelected}" style="width: 100%; height:300px" converter="#{usuarioConverter}"> 
+                            <f:selectItems value="#{messagesBean.usersSubject}" var="user" itemValue="#{user}" itemLabel="#{user.nombre}"/>                  
+                            <f:converter binding="#{usuarioConverter}"/>
+                        </p:selectOneListbox>
                     </h:panelGrid>
-                </p:panel>
-
-                <p:panel header="Mensajes de PEPE">
-                    <h:form>
-                        <p:panel>
-                            <h:outputText value="Usuario dice: " style="font-weight: bold;"/>
-                            <h:outputText  value="Hola" escape="false"/>
-                        </p:panel>
-                        <p:panel  styleClass="ui-state-hover">
-                            <h:outputText value="Usuario dice: " style="font-weight: bold;"/>
-                            <h:outputText id="mensaje" value="#{messagesBean.mensaje}" escape="false"/>
-                        </p:panel>
-                        <p/>
-                        <p:inputTextarea value="#{messagesBean.mensaje}"/>
-                        <p:commandButton update="mensaje" value="Enviar"/>
-                    </h:form>
-                </p:panel>
-            </h:panelGrid>
+                </h:form>
+            </p:panel>
+             <h:form>
+            <p:panel id="chatPanel" header="#{bundle.MessageTitleChatPanel} #{messagesBean.userSelected.nombre}" style="width: 78%;float: left">
+                
+                    <p:panel>
+                        <h:outputText value="Usuario dice: " style="font-weight: bold;"/>
+                        <h:outputText  value="Hola" escape="false"/>
+                    </p:panel>
+                    <p:panel  styleClass="ui-state-hover" style="text-align: right;">
+                        <h:outputText value="Usuario dice: " style="font-weight: bold;"/>
+                        <h:outputText id="mensaje" value="#{messagesBean.mensaje}" escape="false"/>
+                    </p:panel>                
+                
+            </p:panel>
+           
+                <p:inputTextarea value="#{messagesBean.mensaje}" style="width: 88%;float: left" maxlength="100"/>
+                <p:commandButton update="chatPanel" actionListener="#{messagesBean.sendMessage}" value="#{bundle.MessageTitleButtonSend}" style="width:10%; height: 50px; float: right"/>
+            </h:form>
 
         </ui:define>
 

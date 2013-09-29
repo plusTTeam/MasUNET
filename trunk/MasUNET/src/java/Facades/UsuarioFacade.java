@@ -82,4 +82,38 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
         
     }
+    public List<Usuario> findAllStudentsSubjectForMessage(String codmateria,String lapso,String cedula,int seccion){
+        Query q = em.createQuery("SELECT u from Usuario u,VistaControlEstudiante vce "
+                + "where vce.cedula=u.cedula "
+                + "and vce.codMateria = :codmateria "
+                + "and vce.lapso = :lapso "
+                + "and u.cedula != :cedula "
+                + "and vce.seccion = :seccion "
+                + "ORDER BY u.nombre");
+        q.setParameter("codmateria", codmateria);
+        q.setParameter("lapso",lapso);
+        q.setParameter("cedula",cedula);
+        q.setParameter("seccion",seccion);
+        List<Usuario> users = (List<Usuario>) q.getResultList();
+        try {
+            Query q2 = em.createQuery("SELECT u from Usuario u, VistaControlProfesor vcp "
+                + "where vcp.cedula=u.cedula "
+                + "and vcp.codMateria = :codmateria "
+                + "and vcp.lapso = :lapso "
+                + "and vcp.seccion = :seccion "
+                + "ORDER BY u.nombre");
+                q.setParameter("codmateria", codmateria);
+                q.setParameter("lapso",lapso);
+                q.setParameter("seccion",seccion);
+                try {
+                    users.add((Usuario)q2.getSingleResult());
+                    return users;
+            } catch (Exception e) {
+                return users;
+            }            
+        } catch (Exception e) {
+            return null;
+        }
+        
+    }
 }
