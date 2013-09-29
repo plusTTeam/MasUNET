@@ -18,7 +18,7 @@
 
     <h:body>
 
-        <p:growl id="growl" life="3000" showDetail="true"/>            
+        <p:growl id="growl" life="5000" showDetail="true"/>            
         <p:layout fullPage="true" rendered="#{loginBean.loggedIn}">
             <p:layoutUnit position="north" size="60" header="#{bundle.AppName}" rendered="#{loginBean.loggedIn}">
                 <!-- Menu here. Also a layout and a way to log a user out -->                
@@ -28,9 +28,6 @@
 
             <!--            <p:layoutUnit position="west" size="50"/>
                         <p:layoutUnit position="east" size="50"/>-->
-
-
-
             <p:layoutUnit position="center" rendered="#{loginBean.loggedIn}" size="300" style="height: 300px">
                 <ui:insert name="body" rendered="#{loginBean.loggedIn}" />
             </p:layoutUnit>

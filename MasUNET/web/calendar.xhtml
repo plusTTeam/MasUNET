@@ -14,11 +14,11 @@
         <ui:define name="body">
 
             <p:layout fullPage="false" style="width: 99.9%;height: 99.9%;min-height: 600px; ">
-                <p:layoutUnit position="west" size="252" style="height: 300px" >
+                <p:layoutUnit position="west" size="252" style="height: 300px; " >
 
                     <h:panelGrid  columns="1" style="text-align: center; " >
                         <h:form id="form_menu">
-                            <p:menu style="width: 230px">
+                            <p:menu style="width: 230px; border-color: transparent">
                                 <p:submenu label="#{bundle.CalendarMenuCalendar}" >  
                                     <p:menuitem value="#{bundle.CalendarMenuItemAll}" action="#{calendarBean.getAllEventsUser()}" ajax="false" icon="ui-icon-home"/>  
                                     <p:menuitem value="#{bundle.CalendarMenuItemPersonal}" action="#{calendarBean.getEventsPersonal()}" ajax="false" icon="ui-icon-star"/>  

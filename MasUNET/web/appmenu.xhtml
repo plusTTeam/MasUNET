@@ -8,7 +8,8 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
  <!-- Menu: Calendario, Materia, Mensajes, Recursos, Configuracion, Administracion, Salir-->
     <ui:composition>
-        <h:form id="menuForm">
+        <h:form id="menuForm" rendered="#{loginBean.loggedIn}">
+            
             <p:menubar rendered="#{loginBean.loggedIn}">
                 <c:forEach var="item_main_menu" items="#{menuBean.mainMenu}">
                     <p:menuitem value="#{item_main_menu.titulo}" url="#{item_main_menu.url}" icon="#{item_main_menu.icono}"/>
