@@ -7,20 +7,21 @@ package Controllers.Beans;
 import Controllers.AbstractController;
 import Entities.Asignatura;
 import Entities.Mensaje;
+import Entities.UsuMen;
+import Entities.UsuMenPK;
 import Entities.Usuario;
 import Facades.AsignaturaFacade;
+import Facades.MensajeFacade;
+import Facades.UsuMenFacade;
 import Facades.UsuarioFacade;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ManagedBean;
-import javax.inject.Inject;
+import javax.faces.event.ActionEvent;
 import javax.inject.Named;
-import javax.xml.registry.infomodel.User;
-import org.primefaces.model.DefaultTreeNode;
-import org.primefaces.model.TreeNode;
 
 /**
  *
@@ -31,34 +32,75 @@ import org.primefaces.model.TreeNode;
 public class MessagesBean extends AbstractController<Mensaje> implements Serializable {
 
     @EJB
+    private MensajeFacade ejbFacade;
+    @EJB
     private AsignaturaFacade ejbFacade_subject;
     @EJB
     private UsuarioFacade ejbFacade_student;
+    @EJB
+    private UsuMenFacade ejbFacade_usumen;
     private List<Asignatura> subjectsUser;
     private List<Usuario> usersSubject;
     private Asignatura subjectSelected;
     private Usuario userSelected;
-    private String mensaje;
+    private List<Usuario> usersAutoComplete;
+    private UsuMen usermessage;
 
     public MessagesBean() {
         super(Mensaje.class);
-        super.setSelected(new Mensaje());
+        prepareCreate(null);
+        usermessage = new UsuMen();
+    }
 
-    }
-    public void sendMessage(){
-        
-    }
-    public List<Usuario> completeUser(String query) {
-        if (subjectSelected != null) {
-            List<Usuario> users = new ArrayList<Usuario>();
-            for (Usuario u : ejbFacade_student.findAllStudentsSubjectForMessage(subjectSelected.getCodMateria(), ejbFacade_student.getCurrentLapso(),ejbFacade_student.getCedulaCurrentUser(),getSubjectSelected().getSeccion())) {
-                if (u.getNombre().startsWith(query)) {
-                    users.add(u);
-                }
-            }
-            return users;
+    public List<UsuMen> getAllMessageUSer() {
+        if (userSelected != null) {
+            return ejbFacade_usumen.getMessageUser(ejbFacade.getIdCurrentUser(), userSelected.getIdusuario());
         } else {
             return null;
+        }
+    }
+    public boolean validateMessage(int userId){
+        if(userId==ejbFacade.getIdCurrentUser()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    public void send(ActionEvent event){
+        if (userSelected != null) {
+            if (!getSelected().getMensaje().isEmpty()) {
+                getSelected().setFecha(new Date());
+                getSelected().setIdusuario(ejbFacade_student.find(ejbFacade.getIdCurrentUser()));
+                saveNew(null);                
+                usermessage.setUsuMenPK(new UsuMenPK(userSelected.getIdusuario(), ejbFacade.getIdLastMessage()));
+                usermessage.setEstado('S');
+                ejbFacade_usumen.create(usermessage);
+                prepareCreate(null);
+                usermessage = new UsuMen();
+                addMessageInfo("Mensaje Enviado", "Tu mensaje a sido enviado correctamente");
+            } else {
+                addMessageInfo("Mensaje Vacio", "Tu mensaje debe tener texto");
+            }
+        } else {
+            addMessageInfo("Selecciona un Usuario", "Es necesario seleccionar un usuario para poder enviar un mensaje");
+        }
+    }
+
+    public List<Usuario> completeUser(String query) {
+            usersAutoComplete = new ArrayList<Usuario>();
+            for (Usuario u : ejbFacade_student.findAll()) {
+                if (u.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                    usersAutoComplete.add(u);
+                }
+            }
+            return usersAutoComplete;
+    }
+
+    public void loadUsers() {
+        if (subjectSelected != null) {
+            usersSubject = ejbFacade_student.findAllStudentsSubjectForMessage(subjectSelected.getCodMateria(), ejbFacade_student.getCurrentLapso(), ejbFacade_student.getCedulaCurrentUser(), getSubjectSelected().getSeccion());
+
         }
     }
 
@@ -67,11 +109,8 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
     }
 
     public List<Usuario> getUsersSubject() {
-        if (subjectSelected != null) {
-            return ejbFacade_student.findAllStudentsSubjectForMessage(subjectSelected.getCodMateria(), ejbFacade_student.getCurrentLapso(),ejbFacade_student.getCedulaCurrentUser(),getSubjectSelected().getSeccion());
-        } else {
-            return null;
-        }
+        loadUsers();
+        return usersSubject;
     }
 
     public Usuario getUserSelected() {
@@ -88,13 +127,5 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
 
     public void setSubjectSelected(Asignatura subjectSelected) {
         this.subjectSelected = subjectSelected;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 }

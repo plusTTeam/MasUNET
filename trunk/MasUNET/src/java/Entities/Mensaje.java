@@ -139,7 +139,7 @@ public class Mensaje implements Serializable {
 
     @Override
     public String toString() {
-        return "Entities.Mensaje[ idmensaje=" + idmensaje + " ]";
+        return idusuario.getNombre()+": "+mensaje;
     }
     
 }
