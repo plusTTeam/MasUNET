@@ -17,7 +17,7 @@
                 <c:set var="admin_menu" value="#{menuBean.adminMenu}"/>
                 <p:submenu label="#{admin_menu.titulo}" icon="#{admin_menu.icono}" rendered="#{loginBean.isAdmin}">
                     <c:forEach var="item_admin_menu" items="#{menuBean.adminSubMenu}" rendered="#{loginBean.isAdmin}">
-                        <p:menuitem value="#{item_admin_menu.titulo}" url="#{item_admin_menu.url}" icon="#{item_admin_menu.icono}" rendered="#{loginBean.isAdmin}"/>
+                        <p:menuitem value="#{item_admin_menu.titulo}" url="#{item_admin_menu.url}" icon="#{item_admin_menu.icono}" rendered="#{loginBean.isAdmin}"  style="width: 180px;"/>
                     </c:forEach>
                 </p:submenu>               
                 <p:menuitem value="Logout" icon="ui-icon-power" action="#{loginBean.logout}" ajax="false"/>

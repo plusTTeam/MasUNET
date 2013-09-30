@@ -43,7 +43,7 @@ public class SubjectBean implements Serializable {
 
     public List<Usuario> getStudentsfromSubject() {
         try {
-            return ejbfacade_usuario.findAllStudentsSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso());
+            return ejbfacade_usuario.findAllStudentsSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso(),currentSubject.getSeccion());
         } catch (Exception e) {
             return null;
         }
@@ -61,7 +61,7 @@ public class SubjectBean implements Serializable {
     public void selectSubject(Asignatura subject) {
         currentSubject = subject;
         if (currentSubject != null) {
-            currentSubjectTeacher = ejbfacade_usuario.findTheacherSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso());
+            currentSubjectTeacher = ejbfacade_usuario.findTheacherSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso(),currentSubject.getSeccion());
         }
 
     }

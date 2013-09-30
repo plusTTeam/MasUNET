@@ -61,20 +61,22 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             return null;
         }
     }
-    public Usuario findTheacherSubject(String codmateria,String lapso){
-        Query q = em.createQuery("SELECT u from Usuario u,VistaControlProfesor vcp where vcp.cedula=u.cedula and vcp.codMateria = :codmateria and vcp.lapso= :lapso ORDER BY u.nombre");
+    public Usuario findTheacherSubject(String codmateria,String lapso,int seccion){
+        Query q = em.createQuery("SELECT u from Usuario u,VistaControlProfesor vcp where vcp.cedula=u.cedula and vcp.codMateria = :codmateria and vcp.lapso= :lapso and vcp.seccion = :seccion BY u.nombre");
         q.setParameter("codmateria", codmateria);
         q.setParameter("lapso",lapso);
+        q.setParameter("seccion",seccion);
         try {
             return (Usuario) q.getSingleResult();
         } catch (Exception e) {
             return null;
         }
     }
-    public List<Usuario> findAllStudentsSubject(String codmateria,String lapso){
-        Query q = em.createQuery("SELECT u from Usuario u,VistaControlEstudiante vce where vce.cedula=u.cedula and vce.codMateria = :codmateria and vce.lapso= :lapso ORDER BY u.nombre");
+    public List<Usuario> findAllStudentsSubject(String codmateria,String lapso,int seccion){
+        Query q = em.createQuery("SELECT u from Usuario u,VistaControlEstudiante vce where vce.cedula=u.cedula and vce.codMateria = :codmateria and vce.lapso= :lapso and vce.seccion=:seccion ORDER BY u.nombre");
         q.setParameter("codmateria", codmateria);
         q.setParameter("lapso",lapso);
+         q.setParameter("seccion",seccion);
         try {
             return (List<Usuario>) q.getResultList();
         } catch (Exception e) {
@@ -83,34 +85,31 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         
     }
     public List<Usuario> findAllStudentsSubjectForMessage(String codmateria,String lapso,String cedula,int seccion){
-        Query q = em.createQuery("SELECT u from Usuario u,VistaControlEstudiante vce "
-                + "where vce.cedula=u.cedula "
+        Query q = em.createQuery("SELECT DISTINCT u from Usuario u,VistaControlEstudiante vce,VistaControlProfesor vcp "
+                + "where (vce.cedula=u.cedula "
                 + "and vce.codMateria = :codmateria "
                 + "and vce.lapso = :lapso "
                 + "and u.cedula != :cedula "
-                + "and vce.seccion = :seccion "
+                + "and vce.seccion = :seccion) or (vcp.cedula=u.cedula "
+                + "and vcp.codMateria = :codmateria "
+                + "and vcp.lapso = :lapso "
+                + "and vcp.seccion = :seccion) "
                 + "ORDER BY u.nombre");
         q.setParameter("codmateria", codmateria);
         q.setParameter("lapso",lapso);
         q.setParameter("cedula",cedula);
         q.setParameter("seccion",seccion);
-        List<Usuario> users = (List<Usuario>) q.getResultList();
         try {
-            Query q2 = em.createQuery("SELECT u from Usuario u, VistaControlProfesor vcp "
-                + "where vcp.cedula=u.cedula "
-                + "and vcp.codMateria = :codmateria "
-                + "and vcp.lapso = :lapso "
-                + "and vcp.seccion = :seccion "
-                + "ORDER BY u.nombre");
-                q.setParameter("codmateria", codmateria);
-                q.setParameter("lapso",lapso);
-                q.setParameter("seccion",seccion);
-                try {
-                    users.add((Usuario)q2.getSingleResult());
-                    return users;
-            } catch (Exception e) {
-                return users;
-            }            
+            return (List<Usuario>) q.getResultList();      
+        } catch (Exception e) {
+            return null;
+        }
+        
+    }
+    public List<Usuario> findAllUsers(){
+        Query q = em.createQuery("SELECT u from Usuario u");
+        try {
+            return (List<Usuario>) q.getResultList();      
         } catch (Exception e) {
             return null;
         }
