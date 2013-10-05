@@ -5,17 +5,34 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <ui:composition template="/template.xhtml">
         <ui:define name="title">    
             <h:outputText value="#{bundle.AppName} "></h:outputText>
         </ui:define>
         <ui:define name="body">
-            
+
             <p:panel header="#{bundle.Welcome} #{loginBean.user.nombre} (#{loginBean.user.alias})">
-                
+
                 <p><h:outputText value="#{bundle.WelcomeMessage}"></h:outputText></p>
-                
+
+
+
+<p:layout fullPage="true">  
+  
+    <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">  
+        <p><h:outputText value="#{bundle.WelcomeMessage}"></h:outputText></p>
+    </p:layoutUnit>  
+  
+    <p:layoutUnit position="south" size="100"  resizable="true" closable="true" collapsible="true">  
+         <p><h:outputText value="#{bundle.WelcomeMessage}"></h:outputText></p>
+    </p:layoutUnit>  
+  
+  
+</p:layout>  
+
+
+
             </p:panel>
 
         </ui:define>
