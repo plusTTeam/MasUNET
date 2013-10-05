@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
  *
  * @author jhonangel mireles
  */
-public class AsignaturaControllerTest {
+public class AccionControllerTest {
     
-    public AsignaturaControllerTest() {
+    public AccionControllerTest() {
     }
     
     @BeforeClass
@@ -37,13 +37,16 @@ public class AsignaturaControllerTest {
     }
 
     /**
-     * Test of init method, of class AsignaturaController.
-     * Tiempo 0,015s
+   public void init() {
+        super.setFacade(ejbFacade);
+    }
+    * Tiempo 0,017s
      */
+    
     @Test(expected=ClassFormatError.class)
     public void testInit() {
         System.out.println("init");
-        AsignaturaController instance = new AsignaturaController();
+        AccionController instance = new AccionController();
         instance.init();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");

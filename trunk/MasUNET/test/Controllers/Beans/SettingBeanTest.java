@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controllers;
+package Controllers.Beans;
 
+import javax.faces.event.ActionEvent;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,9 +16,9 @@ import static org.junit.Assert.*;
  *
  * @author jhonangel mireles
  */
-public class AsignaturaControllerTest {
+public class SettingBeanTest {
     
-    public AsignaturaControllerTest() {
+    public SettingBeanTest() {
     }
     
     @BeforeClass
@@ -37,14 +38,26 @@ public class AsignaturaControllerTest {
     }
 
     /**
-     * Test of init method, of class AsignaturaController.
-     * Tiempo 0,015s
+     * Test of init method, of class SettingBean.
      */
     @Test(expected=ClassFormatError.class)
     public void testInit() {
         System.out.println("init");
-        AsignaturaController instance = new AsignaturaController();
+        SettingBean instance = new SettingBean();
         instance.init();
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of readAndWriteAllSubjects method, of class SettingBean.
+     */
+    @Test(expected=ClassFormatError.class)
+    public void testReadAndWriteAllSubjects() {
+        System.out.println("readAndWriteAllSubjects");
+        ActionEvent event = null;
+        SettingBean instance = new SettingBean();
+        instance.readAndWriteAllSubjects(event);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
