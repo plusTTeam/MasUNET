@@ -20,7 +20,7 @@
                         <p:menuitem value="#{item_admin_menu.titulo}" url="#{item_admin_menu.url}" icon="#{item_admin_menu.icono}" rendered="#{loginBean.isAdmin}"  style="width: 180px;"/>
                     </c:forEach>
                 </p:submenu>               
-                <p:menuitem value="Logout" icon="ui-icon-power" action="#{loginBean.logout}" ajax="false"/>
+                <p:menuitem value="Cerrar Sesión" icon="ui-icon-power" action="#{loginBean.logout}" ajax="false"/>
             </p:menubar>
         </h:form>
     </ui:composition>
