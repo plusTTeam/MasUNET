@@ -1,13 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://java.sun.com/jsp/jstl/core">
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
 
+   
     <ui:composition template="/template.xhtml">
+        <script type="text/javascript" src="resources/scripts/primeface_locales.js"></script>
         <ui:define name="title">
             <h:outputText value="#{bundle.AppName}"></h:outputText>
         </ui:define>
@@ -34,7 +37,7 @@
                 </p:layoutUnit>
                 <p:layoutUnit position="center" size="300" style="height: 300px; background: transparent;">
                     <h:form prependId="false">
-                       <p:schedule value="#{calendarBean.eventModel}"  widgetVar="myschedule" style="width: 70%;  margin: auto;" id="schedule" >
+                        <p:schedule value="#{calendarBean.eventModel}"  widgetVar="myschedule"  style="width: 70%;  margin: auto;" id="schedule"  locale="es" >
                             <p:ajax event="dateSelect" listener="#{calendarBean.onDateSelect}" update="eventDetails,:growl" oncomplete="eventDialog.show()" />
                             <p:ajax event="eventSelect" listener="#{calendarBean.onEventSelect}" update="eventDetails,:growl,@this" oncomplete="eventDialog.show()"/>
                             <p:ajax event="eventResize" listener="#{calendarBean.onEventResize}" update=":growl,@this" />
@@ -63,7 +66,7 @@
                                 <h:outputLabel id="from2" value="#{calendarBean.selected.fechaIni}" rendered="#{!calendarBean.isMyEvent()}" />
                                 
                                 <h:outputLabel for="to" value="#{bundle.CalendarDialogFechaFin}" />
-                                <p:calendar id="to" value="#{calendarBean.selected.fechaFin}" pattern="dd/MM/yyyy HH:mm" required="true" rendered="#{calendarBean.isMyEvent()}" requiredMessage="#{bundle.CalendarDialogFechaFinRequeridMessage}"/>
+                                <p:calendar id="to" value="#{calendarBean.selected.fechaFin}" pattern="dd/MM/yyyy HH:mm" required="true" rendered="#{calendarBean.isMyEvent()}" requiredMessage="#{bundle.CalendarDialogFechaFinRequeridMessage}"  />
                                 <h:outputLabel id="to2" value="#{calendarBean.selected.fechaFin}" rendered="#{!calendarBean.isMyEvent()}" />
                                 
                                 <h:outputLabel for="allDay" value="#{bundle.CalendarDialogTodoDia}" />
