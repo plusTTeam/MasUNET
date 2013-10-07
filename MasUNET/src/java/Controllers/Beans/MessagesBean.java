@@ -20,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 
@@ -48,13 +50,15 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
 
     public MessagesBean() {
         super(Mensaje.class);
-        prepareCreate(null);
+        if(getSelected()==null) {
+            prepareCreate(null);
+        }
         usermessage = new UsuMen();
     }
 
-    public List<UsuMen> getAllMessageUSer() {
+    public List<Mensaje> getAllMessageUSer() {
         if (userSelected != null) {
-            return ejbFacade_usumen.getMessageUser(ejbFacade.getIdCurrentUser(), userSelected.getIdusuario());
+            return ejbFacade.getMessageUser(ejbFacade.getIdCurrentUser(), userSelected.getIdusuario());
         } else {
             return null;
         }
@@ -72,15 +76,17 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
             if (!getSelected().getMensaje().isEmpty()) {
                 getSelected().setFecha(new Date());
                 getSelected().setIdusuario(ejbFacade_student.find(ejbFacade.getIdCurrentUser()));
-                saveNew(null);                
+                ejbFacade.create(super.getSelected());
                 usermessage.setUsuMenPK(new UsuMenPK(userSelected.getIdusuario(), ejbFacade.getIdLastMessage()));
-                usermessage.setEstado('S');
+                usermessage.setEstado('E');
                 ejbFacade_usumen.create(usermessage);
-                prepareCreate(null);
+                prepareCreate(null);                
                 usermessage = new UsuMen();
-                addMessageInfo("Mensaje Enviado", "Tu mensaje a sido enviado correctamente");
+                //FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje Enviado", "Tu mensaje a sido enviado correctamente"));
+                
             } else {
-                addMessageInfo("Mensaje Vacio", "Tu mensaje debe tener texto");
+                FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje Vacio", "Tu mensaje debe tener texto"));
+                
             }
         } else {
             addMessageInfo("Selecciona un Usuario", "Es necesario seleccionar un usuario para poder enviar un mensaje");
@@ -96,7 +102,6 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
             }
             return usersAutoComplete;
     }
-
     public void loadUsers() {
         if (subjectSelected != null) {
             usersSubject = ejbFacade_student.findAllStudentsSubjectForMessage(subjectSelected.getCodMateria(), ejbFacade_student.getCurrentLapso(), ejbFacade_student.getCedulaCurrentUser(), getSubjectSelected().getSeccion());
@@ -118,7 +123,9 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
     }
 
     public void setUserSelected(Usuario userSelected) {
-        this.userSelected = userSelected;
+        if(userSelected!=null) {
+            this.userSelected = userSelected;
+        }
     }
 
     public Asignatura getSubjectSelected() {
