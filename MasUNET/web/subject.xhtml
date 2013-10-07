@@ -13,10 +13,10 @@
         </ui:define>
         <ui:define name="body">
             <p:layout fullPage="false" style="width: 99.9%;height: 99.9%;min-height: 600px; ">
-                <p:layoutUnit position="west" size="252" style="height: 300px" >
+                <p:layoutUnit position="west" size="330" style="height: 300px; " >
                     <h:panelGrid  columns="1" style="text-align: center; " >
                         <h:form id="form_menu">
-                            <p:menu style="width: 230px">                               
+                            <p:menu style="width: 300px; border-color: transparent">                               
                                 <p:submenu label="#{bundle.CalendarMenuSubject}">  
                                     <c:forEach var="subject" items="#{subjectBean.getAllSubjectsCurrentUser()}" >
                                         <p:menuitem value="#{subject.nombre}" action="#{subjectBean.selectSubject(subject)}" ajax="false" icon="ui-icon-note"/>  
@@ -28,24 +28,25 @@
                 </p:layoutUnit>
                 <p:layoutUnit position="center" size="300" style="height: 300px; background: transparent;">
                     <h:form id="form">
-                        <p:tabView id="tab">
+                        <p:tabView id="tab" rendered="#{subjectBean.showTabContent()}" >
                             <p:tab title="Información" id="tabinfo">
-                                <h:panelGrid columns="2">
-                                    <p:graphicImage value="resources/images/profiles/#{subjectBean.currentSubjectTeacher.fotoUrl}"  />  
-                                    <h:panelGrid columns="2">
+                                <h:panelGrid columns="2">              
+                                    <p:graphicImage value="resources/images/profiles/#{subjectBean.currentSubjectTeacher.fotoUrl}"  width="100px" height="100px" />
+                                    
+                                    <h:panelGrid columns="2" >
                                         <h:outputText value="Profesor: " styleClass="ui-label"/>
                                         <h:outputText value="#{subjectBean.currentSubjectTeacher.nombre}"/>
                                         <h:outputText value="Nombre Materia:" styleClass="ui-label"/>
                                         <h:outputText value="#{subjectBean.currentSubject.nombre}"/>
                                         <h:outputText value="Codigo Materia:" styleClass="ui-label"/>
-                                        <h:outputText value="#{subjectBean.currentSubject.codMateria}"/>
-                                        <h:outputText value="Descripcion:" styleClass="ui-label"/>
-                                        <h:outputText value="#{subjectBean.currentSubject.descripcion}" escape="false"/>
+                                        <h:outputText value="#{subjectBean.currentSubject.codMateria}"/>                                        
                                         <h:outputLabel value=""/>
-                                        <p:editor value="#{subjectBean.currentSubject.descripcion}"/>
+                                        <p:editor value="#{subjectBean.currentSubject.descripcion}" rendered="#{subjectBean.validateTeacher()}"/>
                                         <h:outputLabel value=""/>   
-                                        <p:commandButton value="Guardar" action="#{subjectBean.saveDescriptionSubject()}" ajax="false" update="tabinfo"/>
+                                        <p:commandButton value="Guardar" action="#{subjectBean.saveDescriptionSubject()}" ajax="false" update="tabinfo" rendered="#{subjectBean.validateTeacher()}"/>
                                     </h:panelGrid>
+                                      <h:outputText value="Descripcion:" styleClass="ui-label"/>
+                                     <h:outputText value="#{subjectBean.currentSubject.descripcion}" escape="false"/>
                                 </h:panelGrid>
                             </p:tab >
                             <p:tab title="Alumnos">
@@ -56,7 +57,7 @@
 
                                     <p:panel header="#{user.alias}" style="text-align:center">  
                                         <h:panelGrid columns="1" style="width:100%">  
-                                            <p:graphicImage value="resources/images/profiles/#{user.fotoUrl}" width="150" height="150"/>  
+                                            <p:graphicImage value="resources/images/profiles/#{user.fotoUrl}" width="120" height="120"/>  
 
                                             <h:outputText value="#{user.nombre}" />  
                                             <h:outputText value="#{user.descripcion}" />  

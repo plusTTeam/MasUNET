@@ -47,13 +47,14 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
     private Usuario userSelected;
     private List<Usuario> usersAutoComplete;
     private UsuMen usermessage;
-
+    private FacesContext context;
     public MessagesBean() {
         super(Mensaje.class);
         if(getSelected()==null) {
             prepareCreate(null);
         }
         usermessage = new UsuMen();
+        context = FacesContext.getCurrentInstance();
     }
 
     public List<Mensaje> getAllMessageUSer() {
@@ -82,14 +83,15 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
                 ejbFacade_usumen.create(usermessage);
                 prepareCreate(null);                
                 usermessage = new UsuMen();
-                //FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje Enviado", "Tu mensaje a sido enviado correctamente"));
+                //context.addMessage(ejbFacade.getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje Enviado", "Tu mensaje a sido enviado correctamente"));
                 
             } else {
-                FacesContext.getCurrentInstance().addMessage(getFacade().getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_INFO, "Mensaje Vacio", "Tu mensaje debe tener texto"));
-                
+                 //context.addMessage(ejbFacade.getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mensaje Fallido", "El mensaje no pudo ser enviado, vuelva a intentarlo"));
+             
             }
         } else {
-            addMessageInfo("Selecciona un Usuario", "Es necesario seleccionar un usuario para poder enviar un mensaje");
+            //context.addMessage(ejbFacade.getIdCurrentUser().toString(), new FacesMessage(FacesMessage.SEVERITY_WARN, "Selecciona un Usuario", "Es necesario seleccionar un usuario para poder enviar un mensaje"));
+                
         }
     }
 
