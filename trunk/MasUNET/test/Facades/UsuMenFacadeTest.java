@@ -305,7 +305,7 @@ public class UsuMenFacadeTest {
         EJBContainer container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         UsuMenFacade instance = (UsuMenFacade)container.getContext().lookup("java:global/classes/UsuMenFacade");
         List expResult = null;
-        List result = instance.getMessageUser(iduser, idusermessage);
+        List result = null;//instance.getMessageUser(iduser, idusermessage);
         assertEquals(expResult, result);
         container.close();
         // TODO review the generated test code and remove the default call to fail.

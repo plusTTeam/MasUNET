@@ -55,7 +55,7 @@ public class Mensaje implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "fecha")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
