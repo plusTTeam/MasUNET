@@ -80,6 +80,9 @@ public class ResourcesBean {
 
     //Constructor!
     public ResourcesBean() {
+        if(e_Recurso==null) {
+            e_Recurso= new Recurso();
+        }
     }
 
     public RecursoController getC_Recurso() {

@@ -43,7 +43,7 @@ public class SubjectBean implements Serializable {
 
     public List<Usuario> getStudentsfromSubject() {
         try {
-            return ejbfacade_usuario.findAllStudentsSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso(),currentSubject.getSeccion());
+            return ejbfacade_usuario.findAllStudentsSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso(), currentSubject.getSeccion());
         } catch (Exception e) {
             return null;
         }
@@ -61,16 +61,33 @@ public class SubjectBean implements Serializable {
     public void selectSubject(Asignatura subject) {
         currentSubject = subject;
         if (currentSubject != null) {
-            currentSubjectTeacher = ejbfacade_usuario.findTheacherSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso(),currentSubject.getSeccion());
+            currentSubjectTeacher = ejbfacade_usuario.findTheacherSubject(currentSubject.getCodMateria(), ejbfacade_asignatura.getCurrentLapso(), currentSubject.getSeccion());
         }
 
     }
 
     public void saveDescriptionSubject() {
-        if (currentSubject != null && currentSubject.getIdasignatura()!=null) {   
-            
+        if (currentSubject != null && currentSubject.getIdasignatura() != null) {
+
             ejbfacade_asignatura.edit(currentSubject);
-            addMessage(new FacesMessage("Asignatura Updated", currentSubject.getNombre()+"updated"));
+            addMessage(new FacesMessage("Asignatura Updated", currentSubject.getNombre() + "updated"));
+        }
+    }
+
+    public boolean validateTeacher() {
+        if (currentSubject != null) {
+            if (ejbfacade_usuario.getRolIdCurrentUser() == 1 || ejbfacade_usuario.getRolIdCurrentUser() == 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean showTabContent() {
+        if (currentSubject != null && currentSubject.getCodMateria() != null) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -97,6 +114,7 @@ public class SubjectBean implements Serializable {
     public void setCurrentSubjectStudent(Usuario currentSubjectStudent) {
         this.currentSubjectStudent = currentSubjectStudent;
     }
+
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(ejbfacade_asignatura.getIdCurrentUser().toString(), message);
     }

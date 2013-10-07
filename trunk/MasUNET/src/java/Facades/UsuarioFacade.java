@@ -62,7 +62,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
     }
     public Usuario findTheacherSubject(String codmateria,String lapso,int seccion){
-        Query q = em.createQuery("SELECT u from Usuario u,VistaControlProfesor vcp where vcp.cedula=u.cedula and vcp.codMateria = :codmateria and vcp.lapso= :lapso and vcp.seccion = :seccion BY u.nombre");
+        Query q = em.createQuery("SELECT u from Usuario u,VistaControlProfesor vcp where vcp.cedula=u.cedula and vcp.codMateria = :codmateria and vcp.lapso= :lapso and vcp.seccion = :seccion ORDER BY u.nombre");
         q.setParameter("codmateria", codmateria);
         q.setParameter("lapso",lapso);
         q.setParameter("seccion",seccion);
