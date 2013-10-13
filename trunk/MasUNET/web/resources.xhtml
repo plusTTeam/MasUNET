@@ -18,86 +18,181 @@
 
 
         <ui:define name="body">
+            <h:form enctype="multipart/form-data">  
+                <p:fieldset legend="Cargar un Recurso!" toggleable="true" toggleSpeed="500" style="text-align: center;" collapsed="true">
 
-            <p:fieldset legend="Cargar un Recurso!" toggleable="true" toggleSpeed="500" style="text-align: center;" collapsed="false">
-                <h:form>  
                     <h:panelGrid columns="3" cellpadding="4" style="text-align: center"  >  
 
                         <h:outputLabel for="tittle" value="Nombre Del Recurso: *"  />  
-                        <p:inputText id="tittle" required="true" value="#{resourcesBean.e_Recurso.nombre}"/>  
+                        <p:inputText id="tittle" required="true" value="#{resourcesBean.selected.nombre}"/>  
                         <p:tooltip for="tittle" showEvent="focus" value="Ingrese el nombre del recurso" hideEvent="blur" />   
 
                         <h:outputLabel for="description" value="Descripcion Del Recurso: *"  />  
-                        <p:inputTextarea id="description" required="true" rows="2" cols="15" autoResize="true" value="#{resourcesBean.e_Recurso.descripcion}"/>  
+                        <p:inputTextarea id="description" required="true" rows="2" cols="15" autoResize="true" value="#{resourcesBean.selected.descripcion}"/>  
                         <p:tooltip for="description" showEvent="focus" value="Ingrese La Descripcion del recurso" hideEvent="blur" />   
 
 
                         <h:outputText value="Asignatura: * " />  
 
-                        <p:selectOneMenu id="select1materia" value="#{resourcesBean.asignaturaSeleccionada}" >
-                            <f:selectItem itemLabel="Seleccione una Materia" itemValue=""></f:selectItem>
+                        <p:selectOneMenu id="select1materia" value="#{resourcesBean.e_Asignatura}" >
+                            <f:selectItem itemLabel="Seleccione una Materia" itemValue=""></f:selectItem> 
                             <f:selectItems value="#{resourcesBean.select1Item()}" var="v_Asig" itemLabel="#{v_Asig.nombre}" itemValue="#{v_Asig}"></f:selectItems>
-                            
+                            <f:converter binding="#{asignaturaConverter}"/>
                         </p:selectOneMenu>  
                         <p:tooltip for="select1materia" showEvent="focus" value="Selecciona la asignatura en donde cargaras el recurso!" hideEvent="blur" />  
 
 
                         <h:outputText value="Archivo: * " />  
-                        <h:form enctype="multipart/form-data">  
-                            <p:fileUpload fileUploadListener="#{resourcesBean.handleFileUpload}" showButtons="true" 
-                                          invalidSizeMessage="Se ha producido un error: El tamaño del archivo sobrepasa el maximo permitido!"
-                                          invalidFileMessage="Se ha producido un error: El tipo de archivo no es permitido!"
-                                          requiredMessage="Se ha producido un error: Debe seleccionar un archivo!"
-                                          label="Seleccionar" cancelLabel="CANCELAR" uploadLabel="CARGAR" 
-                                          dragDropSupport="true" 
-                                          mode="advanced"
-                                          update="messages"  
-                                          sizeLimit="100000"   
-                                          allowTypes="/(\.|\/)(gif|jpe?g|png|jpg|pdf|doc|docx)$/"/> 
 
-                            <p:growl id="messages" showDetail="true"/></h:form>
+                        <p:fileUpload value="#{resourcesBean.file}" mode="simple" 
+                                      sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png|jpg|pdf|doc|docx|xls|xlsx)$/"
+                                      dragDropSupport="true"
+                                      invalidSizeMessage="Se ha producido un error: El tamaño del archivo sobrepasa el maximo permitido!"
+                                      invalidFileMessage="Se ha producido un error: El tipo de archivo no es permitido!"
+                                      requiredMessage="Se ha producido un error: Debe seleccionar un archivo!"
+                                      label="Seleccionar Archivo"
+
+                                      />  
+
+                        <p:commandButton value="Subir  !!!! ;)" ajax="false"  
+                                         label="Este es label" title="Este el tittle"
+                                         actionListener="#{resourcesBean.upload}"/>
+
+
                     </h:panelGrid>  
 
+
+                </p:fieldset> 
+            </h:form>
+
+
+
+
+            <h:form>
+                <p:contextMenu for="resourcesTree">  
+                    <p:menuitem value="View" update="documentPanel" icon="ui-icon-search" oncomplete="PF('documentDialog').show()"/>  
+                    <p:menuitem value="Delete" update="resourcesTree" icon="ui-icon-close"/>  
+                </p:contextMenu>  
+
+
+                <p:dialog header="Document Detail" showEffect="fade" widgetVar="documentDialog" modal="true">  
+                    <p:outputPanel id="documentPanel">  
+                        <h:panelGrid  columns="2" cellpadding="5" rendered="#{not empty resourcesBean.selectedNode}">  
+                            <h:outputLabel for="name" value="Name: " />  
+                            <h:outputText id="name" value="#{v_node.nombre}" style="font-weight:bold" />  
+
+                            <h:outputLabel for="size" value="Size: " />  
+                            <h:outputText id="size" value="#{v_node.    descripcion}" style="font-weight:bold" />  
+
+                            <h:outputLabel for="type" value="Type " />  
+                            <h:outputText id="type" value="#{v_node.tipo}" style="font-weight:bold" />  
+                        </h:panelGrid>  
+                    </p:outputPanel>  
+                </p:dialog>  
+
+
+                <p:fieldset legend="Ver Recursos Disponibles!" toggleSpeed="1000" toggleable="true" style="
+                            text-align: center" collapsed="true"  >
+
+                    <p:treeTable value="#{resourcesBean.treeRoot}" var="v_node" id="resourcesTree" selectionMode="single" selection="#{resourcesBean.selectedNode}">  
+                        <p:column>  
+                            <f:facet name="header">  
+                                ► Nombre  
+                            </f:facet>  
+                            <h:outputText value="#{v_node.nombre}" />  
+                        </p:column>
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                ► Descripcion  
+                            </f:facet>  
+                            <h:outputText value="#{v_node.descripcion}" />  
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">  
+                                ► Tipo
+                            </f:facet>  
+                            <h:outputText value="#{v_node.tipo}" />  
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                Valoracion ♥
+                            </f:facet>
+                            <h:outputText value="#{v_node.valoracion}" />  
+                        </p:column>
+                    </p:treeTable>  
+
+
+                </p:fieldset>
+
+            </h:form>
+
+            <p:fieldset  legend="Resource Detail Should look like this" toggleSpeed="1000" toggleable="true" style="
+                         text-align: center" collapsed="true" >
+
+                <h:form>
+                    <p:commandButton value="Resource Dialog" type="button" onclick="PF('resourceDialogWV').show();" >  
+
+                    </p:commandButton>  
+
                 </h:form>
-            </p:fieldset> 
+                <p:dialog id="resourceDialog" header="Atributos del Recurso" widgetVar="resourceDialogWV" modal="true" height="400" width="400" showEffect="explode" hideEffect="bounce">  
+                    <h:outputText value="Aqui va todo" />  
+                </p:dialog>  
 
-            <p:fieldset legend="Ver Recursos Disponibles!" toggleSpeed="1000" toggleable="true" style="
-                        text-align: center" collapsed="false" >
 
-                <p:treeTable value="#{resourcesBean.treeRoot}" var="v_node">  
-                    <p:column>  
-                        <f:facet name="header">  
-                            ► Nombre  
-                        </f:facet>  
-                        <h:outputText value="#{v_node.nombre}" />  
-                    </p:column>
+                <p:panelGrid columns="2" style="text-align: center;alignment-adjust: middle" >
+                    <f:facet name="header">
+                        Atributos del Recurso!
+                    </f:facet>
+                    <h:outputLabel for="resourceName" value="Nombre: "/>
+                    <p:inputText id="resourceName" value="Entrega #2 Ingenieria Del Software" label="Nombre Del Recurso" disabled="true"/>
 
-                    <p:column>  
-                        <f:facet name="header">  
-                            ► Tamaño  
-                        </f:facet>  
-                        <h:outputText value="#{v_node.descripcion}" />  
-                    </p:column>
+                    <h:outputLabel for="resourceDescription" value="Descripcion: " />
+                    <p:inputText id="resourceDescription" value="Esta es la entrega que se enfoca en pruebas" label="Descripcion del recurso" disabled="true"/>
 
-                    <p:column>
-                        <f:facet name="header">  
-                            ► Tipo
-                        </f:facet>  
-                        <h:outputText value="#{v_node.tipo}" />  
-                    </p:column>
+                    <h:outputLabel for="resourceUploadDate" value="Fecha de subida: " />
+                    <p:inputText id="resourceUploadDate" value="30-09-2013" label="Fecha de subida del recurso" disabled="true"/>
 
-                    <p:column>
-                        <f:facet name="header">
-                            Valoracion ♥
-                        </f:facet>
-                        <h:outputText value="#{v_node.valoracion}" />  
-                    </p:column>
-                </p:treeTable>  
+                    <h:outputLabel for="resourceDownloadCount" value="Numero de Descargas: " />
+                    <p:inputText id="resourceDownloadCount" value="999" label="Numero de descargas" disabled="true"/>
 
+                    <h:outputLabel for="resourceRating" value="Valoracion del recurso: " />
+                    <p:rating value="4" /> 
+
+
+                </p:panelGrid>
+
+                <p:fieldset toggleable="true" toggleSpeed="1000" legend="Comentarios!" collapsed="true">
+
+                    <p:accordionPanel>
+
+                        <p:tab title="Comentario 1" >  
+                            <h:panelGrid columns="2" cellpadding="10">  
+                                <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" />  
+                                <h:outputText  
+                                    value="Lorem ipsum dolor sit amet, saepe salutandi ea qui. Modus tritani quo et, his no noster veritus abhorreant, meis detraxit no eos. Et quas nonumy populo mea, natum vocent ut sit, nemore lucilius sit ea. Ex nam elitr legere. Nibh democritum delicatissimi in ius, pro dicat senserit forensibus ne.
+
+Sed ea sumo vero splendide. Laudem consequuntur mel cu, minim sonet intellegat at mel. Cu quando debitis sit, ex modo malorum partiendo eam. Cum legimus omnesque oporteat ea. Altera detraxit eum ut, aperiam molestiae mel cu." />  
+                            </h:panelGrid>  
+                        </p:tab>  
+
+                        <p:tab title="Comentario 2">  
+                            <h:panelGrid columns="2" cellpadding="10">  
+                                <p:graphicImage value="resources/images/profiles/#{loginBean.user.fotoUrl}" />  
+                                <h:outputText value="Lorem ipsum dolor sit amet, saepe salutandi ea qui. Modus tritani quo et, his no noster veritus abhorreant, meis detraxit no eos. Et quas nonumy populo mea, natum vocent ut sit, nemore lucilius sit ea. Ex nam elitr legere. Nibh democritum delicatissimi in ius, pro dicat senserit forensibus ne.
+
+Sed ea sumo vero splendide. Laudem consequuntur mel cu, minim sonet intellegat at mel. Cu quando debitis sit, ex modo malorum partiendo eam. Cum legimus omnesque oporteat ea. Altera detraxit eum ut, aperiam molestiae mel cu." />  
+                            </h:panelGrid>  
+                        </p:tab> 
+
+                    </p:accordionPanel>
+
+                </p:fieldset>
 
             </p:fieldset>
-
-
         </ui:define>
 
     </ui:composition>

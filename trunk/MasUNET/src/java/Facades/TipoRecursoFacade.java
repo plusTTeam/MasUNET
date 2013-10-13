@@ -8,6 +8,7 @@ import Entities.TipoRecurso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -25,6 +26,24 @@ public class TipoRecursoFacade extends AbstractFacade<TipoRecurso> {
 
     public TipoRecursoFacade() {
         super(TipoRecurso.class);
+    }
+    
+        
+    public TipoRecurso FindByExtension(String ExtensionF) {
+        //Hago el Query:
+        Query query = em.createNamedQuery("TipoRecurso.findByExtension");
+        query.setParameter("extension", ExtensionF);
+        TipoRecurso objAuxTipoRecurso;
+        try {
+            objAuxTipoRecurso = (TipoRecurso) query.getSingleResult();
+            if (objAuxTipoRecurso != null) {
+                return objAuxTipoRecurso;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
     
 }
