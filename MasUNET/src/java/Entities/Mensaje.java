@@ -63,7 +63,7 @@ public class Mensaje implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mensaje", fetch = FetchType.LAZY)
     private List<UsuMen> usuMenList;
 
-    public Mensaje() {
+    public Mensaje() {                                                                                          
     }
 
     public Mensaje(Integer idmensaje) {
