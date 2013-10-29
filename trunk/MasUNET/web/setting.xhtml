@@ -37,10 +37,12 @@
                                 <p:inputText value="#{settingBean.selected.alias}" maxlength="45"/>
 
                                 <h:outputLabel value="#{bundle.ViewUsuarioLabel_email}" styleClass="ui-label"/> 
-                                <p:inputText  value="#{settingBean.selected.email}" maxlength="45" />
+                                <p:inputText  value="#{settingBean.selected.email}" maxlength="45" validatorMessage="#{settingBean.selected.email} No es un correo Valido" >
+                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                </p:inputText>
 
                                 <h:outputLabel value="#{bundle.ViewUsuarioLabel_telefono}" styleClass="ui-label"/> 
-                                <p:inputText value="#{settingBean.selected.telefono}" maxlength="45"/>
+                                <p:inputMask mask="+99-999-999-9999" value="#{settingBean.selected.telefono}" />
                             </h:panelGrid>                          
                         </h:panelGrid>  
                     </p:fieldset>  

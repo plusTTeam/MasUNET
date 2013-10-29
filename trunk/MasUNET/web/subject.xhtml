@@ -17,7 +17,7 @@
                     <h:panelGrid  columns="1" style="text-align: center; " >
                         <h:form id="form_menu">
                             <p:menu style="width: 300px; border-color: transparent">                               
-                                <p:submenu label="#{bundle.CalendarMenuSubject}">  
+                                <p:submenu label="#{bundle.SubjectSelectionTitle}">  
                                     <c:forEach var="subject" items="#{subjectBean.getAllSubjectsCurrentUser()}" >
                                         <p:menuitem value="#{subject.nombre}" action="#{subjectBean.selectSubject(subject)}" ajax="false" icon="ui-icon-note"/>  
                                     </c:forEach> 
@@ -52,8 +52,9 @@
                             <p:tab title="Alumnos">
                                 <p:dataGrid var="user"  columns="3"  
                                             rows="12" paginator="true"  value="#{subjectBean.getStudentsfromSubject()}"
+                                            currentPageReportTemplate="{startRecord} Pagina de {totalRecords}"
                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
-                                            rowsPerPageTemplate="9,12,15">  
+                                            rowsPerPageTemplate="9,12,15" >  
 
                                     <p:panel header="#{user.alias}" style="text-align:center">  
                                         <h:panelGrid columns="1" style="width:100%">  

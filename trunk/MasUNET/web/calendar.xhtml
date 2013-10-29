@@ -25,7 +25,7 @@
                                     <p:menuitem value="#{bundle.CalendarMenuItemAll}" action="#{calendarBean.getAllEventsUser()}" ajax="false" icon="ui-icon-home"/>  
                                     <p:menuitem value="#{bundle.CalendarMenuItemPersonal}" action="#{calendarBean.getEventsPersonal()}" ajax="false" icon="ui-icon-star"/>  
                                 </p:submenu> 
-                                <p:submenu label="#{bundle.CalendarMenuSubject}">  
+                                <p:submenu label="#{bundle.CalendarMenuSubjectTitle}">  
                                     <c:forEach var="subject" items="#{calendarBean.getAllSubjectsCurrentUser()}" >
                                         <p:menuitem value="#{subject.nombre}" action="#{calendarBean.getEventsSubject(subject)}" ajax="false" icon="ui-icon-note"/>  
                                     </c:forEach> 
@@ -43,7 +43,7 @@
                             <p:ajax event="eventMove" listener="#{calendarBean.onEventMove}" update=":growl,@this"  />
                         </p:schedule>
 
-                        <p:dialog widgetVar="eventDialog" header="Event" resizable="false" closable="true">
+                        <p:dialog widgetVar="eventDialog" header="#{bundle.EventDialogTittle}" resizable="false" closable="true">
                             <h:panelGrid id="eventDetails" columns="2">
                                 <h:outputLabel for="titulo" value="#{bundle.CalendarDialogNombre}" />
                                 <p:inputText id="titulo" value="#{calendarBean.selected.nombre}" required="true" rendered="#{calendarBean.isMyEvent()}" requiredMessage="#{bundle.CalendarDialogNombreRequeridMessage}"/>
@@ -54,7 +54,7 @@
                                 <h:outputLabel id="description2" value="#{calendarBean.selected.descripcion}" rendered="#{!calendarBean.isMyEvent()}" />
                                 
                                 <h:outputLabel for="type" value="#{bundle.CalendarDialogTipo}" />
-                                <p:selectOneMenu id="type" value="#{calendarBean.selected.tipoEventoIdtipoEvento}" required="true" rendered="#{calendarBean.isMyEvent()}"  requiredMessage="#{bundle.CalendarDialogTipoRequeridMessage}">
+                            <p:selectOneMenu id="type" value="#{calendarBean.selected.tipoEventoIdtipoEvento}" required="true" rendered="#{calendarBean.isMyEvent()}"  requiredMessage="#{bundle.CalendarDialogTipoRequeridMessage}">
                                     <f:selectItems value="#{tipoEventoController.items}" var="item" itemLabel="#{item.nombre}" itemValue="#{item}"/>
                                     <f:converter binding="#{tipoEventoConverter}"/>
                                 </p:selectOneMenu>
