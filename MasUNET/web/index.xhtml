@@ -9,24 +9,42 @@
         <title><h:outputText value="#{bundle.AppName}"></h:outputText></title>
         <p:growl widgetVar="growl" life="3000" />
         <link type="image/x-icon" rel="shortcut icon" href="resources/images/favicon.ico"></link>
+        <h:outputStylesheet library="css" name="index.css"/>
+
     </h:head>
     <h:body>
         <h:form> 
             <p:graphicImage value="resources/images/background.jpg" style="z-index:-1; min-height: 100%; min-width: 1024px; width: 100%; height: auto;position: fixed; top: 0;  left: 0;" />
+            <p:graphicImage value="resources/images/Shape5_University_logo.png" style="z-index:2; min-height: 20%; min-width: 394px; width: 20%; height: auto; min-height:85px; position: fixed; top: 10%;  left: 37%;" />
+
             <p:dialog header="Ingreso a +UNET" rendered="true" visible="true" resizable="false" closable="false" hideEffect="puff" showEffect="bounce">
-                
-                <h:panelGroup id="display">
+
+                <h:panelGroup id="display" >
                     <p:panelGrid columns="2" >
                         <h:outputLabel for="input_username" value="Usuario"/>
                         <p:inputText id="input_username" value="#{loginBean.username}" maxlength="45" />
+
                         <h:outputLabel for="input_password" value="Contraseña"/>
                         <p:password id="input_password" value="#{loginBean.password}" maxlength="45" />
+
                         <h:outputLabel value=" "/>
                         <p:commandButton value="Iniciar Sesión" action="#{loginBean.login()}"  ajax="false" update="growl"/>
+
                     </p:panelGrid>
                 </h:panelGroup>
+               
+                <a style="padding: 0; position: relative; left: 25%;"
+                   href="https://intranet.unet.edu.ve/intranet2/modulos/usuario/contrasena2.php">¿Olvido su contraseña?</a>
+
             </p:dialog>
         </h:form>
+
+        <div class="moduletable">
+            <p>
+                <span style="font-size: 12px;">Avenida Universidad, Sector Paramillo. San Cristóbal, Venezuela. +58 (276) 353-0422.</span>
+                <a href="mailto:webmaster@unet.edu.ve" style=" color: #FFFFFF;">Contáctenos</a>
+            </p>
+        </div>
     </h:body>
 
 </html>
