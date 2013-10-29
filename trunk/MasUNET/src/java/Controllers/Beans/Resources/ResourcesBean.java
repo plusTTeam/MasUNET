@@ -11,6 +11,8 @@ import Controllers.TipoRecursoController;
 import Entities.Asignatura;
 import Entities.Recurso;
 import Entities.TipoRecurso;
+import Entities.Usuario;
+import Entities.Valoracion;
 import Facades.AsignaturaFacade;
 import Facades.RecursoFacade;
 import Facades.TipoRecursoFacade;
@@ -23,6 +25,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
@@ -143,9 +146,9 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
         if (file != null && e_Asignatura != null && e_Asignatura.getIdasignatura() != null) {
 
             ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
-            File Folder = new File(extContext.getRealPath("..//..//web//NimRod//" + e_Asignatura.getNombre() + "//"));
+            File Folder = new File(extContext.getRealPath("..//..//web//NimRod//" + e_Asignatura.getCodMateria() + "//"));
             Folder.mkdir();
-            File result = new File(extContext.getRealPath("..//..//web//NimRod//" + e_Asignatura.getNombre() + "//" + file.getFileName()));
+            File result = new File(extContext.getRealPath("..//..//web//NimRod//" + e_Asignatura.getCodMateria() + "//" + file.getFileName()));
 
 
             try {
@@ -185,34 +188,35 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
 //                        "\nEl archivo se subío exitosamente!\n" +
 //                        "\nA la asignatura:" + e_Asignatura.getNombre() + "Con Nombre :" + getSelected().getNombre()); 
 
-                String[] ext = file.getContentType().split("/");
-                //addMessageInfo("TEST",ext[1]);
+                String[] ext = file.getFileName().toLowerCase().split("\\.");
                 //Setting values to Recurso Object before creating on DB 
-                TipoRecurso tipo = null;
-                for (TipoRecurso aux : ejbFacade_TipoRecurso.findAll()) {
-                    if (ext[1].toLowerCase().contains(aux.getExtension().toLowerCase())) {
-                        tipo = aux;
-                    }
-                }
+                TipoRecurso tipo = ejbFacade_TipoRecurso.FindByExtension(ext[ext.length - 1]);
+
                 if (tipo != null) {
-                    super.getSelected().setUrl(Folder.toString());
+                    super.getSelected().setUrl(file.getFileName());
                     super.getSelected().setFechaSubida(new Date());
                     super.getSelected().setUsuarioIdusuario(ejbFacade_Usuario.find(ejbFacade_Usuario.getIdCurrentUser()));
                     super.getSelected().setIdTiporecurso(tipo);
-                    //super.getSelected().setValoracionList(new ArrayList<Valoracion>());   
                     super.getSelected().setNumeroDescargas(0);
                     super.getSelected().setAsignaturaIdasignatura(e_Asignatura);
                     //Save new automatically calls Facade that comunicates directly with DB
                     ejbFacade.create(super.getSelected()); //SAve para editar... //Delete para eliminar 
-                    //super.saveNew(null);
+                    FacesMessage msg2 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Recurso Subido", "Carga Exitosa del Archivo");
+                    FacesContext.getCurrentInstance().addMessage(ejbFacade.getIdCurrentUser().toString(), msg2);
+                } else {
+                    FacesMessage msg3 = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al Subir archivo", "Extension del Archivo Invalida");
+                    FacesContext.getCurrentInstance().addMessage(ejbFacade.getIdCurrentUser().toString(), msg3);
                 }
 
 
             } catch (IOException e) {
                 e.printStackTrace();
-                FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Se ha producido un error interno del sistema en el intento de carga de archivo. Hemos registrado este error. Intentelo nuevamente.", "");
+                FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error en el Recurso", "Se ha producido un error interno del sistema en el intento de carga de archivo. Hemos registrado este error. Intentelo nuevamente.");
                 FacesContext.getCurrentInstance().addMessage(null, error);
             }
+        } else {
+            FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error en el Recurso", "Debe seleccionar una Asignatura");
+            FacesContext.getCurrentInstance().addMessage(null, error);
         }
     }
 
@@ -255,10 +259,40 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
     public List<Recurso> getRecursosOrderedByTipoRecurso() {
         return getC_Recurso().getRecursosOrderedByTipoRecurso();
     }
+
     /**
      * Vista de un recurso en particular;)
      *
      * @author RoyCalderon 
      */
     //private Integer resourceRatingPromedio;
+    public float getRatingResource() {
+        if (getSelected() != null) {
+            float rating = 0;
+            if (getSelected().getValoracionList() != null && getSelected().getValoracionList().size() > 0) {
+                for (Valoracion val : getSelected().getValoracionList()) {
+                    rating += val.getCalificacion();
+                }
+                return (rating / getSelected().getValoracionList().size());
+            }            
+        }
+        return 0;
+    }
+
+    public List<Recurso> completeResource(String query) {
+        List<Recurso> resourceAutoComplete = new ArrayList<Recurso>();
+        for (Recurso u : ejbFacade.findAll()) {
+            if (u.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                resourceAutoComplete.add(u);
+            }
+        }
+        return resourceAutoComplete;
+    }
+
+    public List<Valoracion> getRatingResourceSelected() {
+        if (getSelected() != null) {
+            return getSelected().getValoracionList();
+        }
+        return null;
+    }
 }
