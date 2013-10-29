@@ -15,7 +15,7 @@
             <h:form>
                 <p:panel header="#{bundle.MessageTitlePanelLeft}" style="width: 20%;float: left; " >
                     <h:panelGrid columns="1" style="width: 100%">
-                        <h:outputLabel value="Chats"/>   
+                        <h:outputLabel value="Chats Recientes"/>   
                         <p:selectOneListbox  id="currentsChats" value="#{messagesBean.userSelected}" style="width: 100%;" converter="#{usuarioConverter}" > 
                             <f:selectItems value="#{messagesBean.getChatsUsers()}" var="user2" itemValue="#{user2}" itemLabel="#{user2.nombre}"/>
                             <f:converter binding="#{usuarioConverter}"/>
@@ -31,7 +31,7 @@
                             </p:column>  
                             <p:ajax update="chatPanel" event="itemSelect"/>
                         </p:autoComplete>
-                        <h:outputLabel value="#{bundle.Subject}" for="subjectList"/>
+                        <h:outputLabel value="#{bundle.SubjectOfSemester}" for="subjectList"/>
                         <p:selectOneListbox id="subjectList" value="#{messagesBean.subjectSelected}" style="width: 100%" immediate="true"> 
                             <f:selectItems value="#{messagesBean.subjectsUser}" var="subject" itemValue="#{subject}" itemLabel="#{subject.nombre} - Sec.#{subject.seccion} "/>                   
                             <f:converter binding="#{asignaturaConverter}"/>
