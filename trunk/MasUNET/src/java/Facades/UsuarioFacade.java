@@ -115,4 +115,20 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
         
     }
+    public List<Usuario> getAllUsersMessages(int idUser){
+        Query q = em.createQuery("SELECT DISTINCT um.usuario FROM UsuMen um WHERE um.usuario.idusuario = :user OR um.mensaje.idusuario.idusuario = :user");
+        q.setParameter("user", idUser);   
+        try {
+            List<Usuario> usuarios = (List<Usuario>) q.getResultList();      
+            for (Usuario usuario : usuarios) {
+                if(usuario.getIdusuario() == idUser){
+                    usuarios.remove(usuario);
+                    break;
+                }
+            }
+            return usuarios;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

@@ -94,7 +94,9 @@ public class MessagesBean extends AbstractController<Mensaje> implements Seriali
                 
         }
     }
-
+    public List<Usuario> getChatsUsers() {
+        return ejbFacade_student.getAllUsersMessages(ejbFacade.getIdCurrentUser());
+    }
     public List<Usuario> completeUser(String query) {
             usersAutoComplete = new ArrayList<Usuario>();
             for (Usuario u : ejbFacade_student.findAll()) {

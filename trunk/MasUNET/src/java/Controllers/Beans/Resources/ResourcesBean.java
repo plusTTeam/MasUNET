@@ -74,19 +74,22 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
     @EJB
     private UsuarioFacade ejbFacade_Usuario;
 
+    //Constructor!
+    public ResourcesBean() {
+        super(Recurso.class);   //Para que sepa que clase esta implementando
+        if (e_Asignatura == null) {
+            e_Asignatura = new Asignatura();
+        }
+        if (getSelected() == null) {
+            prepareCreate(null);
+        }
+    }
+
     //SETTERS AND GETTERS !!!!
     public RecursoController getC_Recurso() {
         //Deberia Tomar en cuenta el caso de que venga Vacio...      
         return c_Recurso;
     }
-
-    //Constructor!
-    public ResourcesBean() {
-        super(Recurso.class);   //Para que sepa que clase esta implementando
-        e_Asignatura = new Asignatura();
-        super.prepareCreate(null);
-    }
-
     //Entidades... 
 //    public Recurso getE_Recurso() {
 //        return e_Recurso;
@@ -95,12 +98,15 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
 //    public void setE_Recurso(Recurso e_Recurso) {
 //        this.e_Recurso = e_Recurso;
 //    }
+
     public Asignatura getE_Asignatura() {
         return e_Asignatura;
     }
 
     public void setE_Asignatura(Asignatura e_Asignatura) {
-        this.e_Asignatura = e_Asignatura;
+        if (e_Asignatura != null) {
+            this.e_Asignatura = e_Asignatura;
+        }
     }
 
     //Componentes...
@@ -134,7 +140,7 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
     }
 
     public void upload() {
-        if (file != null) {
+        if (file != null && e_Asignatura != null && e_Asignatura.getIdasignatura() != null) {
 
             ExternalContext extContext = FacesContext.getCurrentInstance().getExternalContext();
             File Folder = new File(extContext.getRealPath("..//..//web//NimRod//" + e_Asignatura.getNombre() + "//"));
@@ -182,23 +188,28 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
                 String[] ext = file.getContentType().split("/");
                 //addMessageInfo("TEST",ext[1]);
                 //Setting values to Recurso Object before creating on DB 
-
-                super.getSelected().setUrl(Folder.toString());
-                super.getSelected().setFechaSubida(date);
-                super.getSelected().setUsuarioIdusuario(ejbFacade_Usuario.find(ejbFacade_Usuario.getIdCurrentUser()));
-                super.getSelected().setIdTiporecurso(ejbFacade_TipoRecurso.FindByExtension(ext[1]));
-                //super.getSelected().setValoracionList(new ArrayList<Valoracion>());
-                super.getSelected().setNumeroDescargas(0);
-                super.getSelected().setAsignaturaIdasignatura(e_Asignatura);
-
-                //Save new automatically calls Facade that comunicates directly with DB
-                //ejbFacade.create(super.getSelected()); //SAve para editar... //Delete para eliminar 
-                super.saveNew(null);
+                TipoRecurso tipo = null;
+                for (TipoRecurso aux : ejbFacade_TipoRecurso.findAll()) {
+                    if (ext[1].toLowerCase().contains(aux.getExtension().toLowerCase())) {
+                        tipo = aux;
+                    }
+                }
+                if (tipo != null) {
+                    super.getSelected().setUrl(Folder.toString());
+                    super.getSelected().setFechaSubida(new Date());
+                    super.getSelected().setUsuarioIdusuario(ejbFacade_Usuario.find(ejbFacade_Usuario.getIdCurrentUser()));
+                    super.getSelected().setIdTiporecurso(tipo);
+                    //super.getSelected().setValoracionList(new ArrayList<Valoracion>());   
+                    super.getSelected().setNumeroDescargas(0);
+                    super.getSelected().setAsignaturaIdasignatura(e_Asignatura);
+                    //Save new automatically calls Facade that comunicates directly with DB
+                    ejbFacade.create(super.getSelected()); //SAve para editar... //Delete para eliminar 
+                    //super.saveNew(null);
+                }
 
 
             } catch (IOException e) {
                 e.printStackTrace();
-
                 FacesMessage error = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Se ha producido un error interno del sistema en el intento de carga de archivo. Hemos registrado este error. Intentelo nuevamente.", "");
                 FacesContext.getCurrentInstance().addMessage(null, error);
             }
@@ -220,8 +231,8 @@ public class ResourcesBean extends AbstractController<Recurso> implements Serial
      * @author RoyCalderon 
      */
     public TreeNode getTreeRoot() {
-        List<Asignatura> userAsignatures =  ejbFacade_Asignatura.getAllSubjectsStudent(ejbFacade.getCedulaCurrentUser(), ejbFacade.getCurrentLapso()); 
-       
+        List<Asignatura> userAsignatures = ejbFacade_Asignatura.getAllSubjectsStudent(ejbFacade.getCedulaCurrentUser(), ejbFacade.getCurrentLapso());
+
         if (treeRoot == null) {
             treeRoot = new DefaultTreeNode("root", null);
 
