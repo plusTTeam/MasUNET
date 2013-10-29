@@ -1,0 +1,22 @@
+/* 
+    Document   : index
+    Created on : 28-oct-2013, 23:26:11
+    Author     : jhonangel mireles
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.moduletable {
+    padding: 0;
+     color: #FFFFFF;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    top:90%;
+    right: 10%;
+    font-family: Helvetica,Arial,Sans-Serif;
+}
